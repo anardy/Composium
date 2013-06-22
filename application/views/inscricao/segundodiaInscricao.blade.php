@@ -1,89 +1,92 @@
-@layout('template.main')
+@layout('template.mainsemfooter')
 
 @section('title')
 - Inscrição
 @endsection
 
 @section('otherscss')
-{{ HTML::style('css/wizard.css') }}
+    {{ HTML::style('css/wizard.css') }}
+    <style type="text/css">
+    #desmarca {
+        margin-bottom: 10px;
+    }
+    </style>
 @endsection
 
 @section('content')
 <div class="wizard">
-	<a><span class="badge">1</span>Dados Pessoais</a>
-	<a><span class="badge">2</span>1º Dia</a>
-	<a class="current"><span class="badge badge-inverse">3</span>2º Dia</a>
-	<a><span class="badge">4</span>3º Dia</a>
-    <a><span class="badge">5</span>Confirmação</a>
+	<a><span class="badge">1</span>1º Dia</a>
+	<a class="current"><span class="badge badge-inverse">2</span>2º Dia</a>
+	<a><span class="badge">3</span>3º Dia</a>
+    <a><span class="badge">4</span>Confirmação</a>
 </div>
 
-<div>
+<div class="span12">
     <h3>17/04 - Terça-Feira</h3>
     {{ Form::open('cadSegundodia') }}
-    <div class="span8">        
-		{{ Form::submit('Próximo &raquo;', array('class' => 'btn btn-larg')) }}
-
-	</div>
-    <div class="span4">
-        {{ HTML::link('#', 'Desmarcar Tudo', array('class' => 'btn btn-larg', 'id' => 'desmarca')); }}
-    </div>
-                <table class="table table-striped">
-                    <thead>
-                    	<th></th>
-                        <th>Horário</th>
-                        <th>Título</th>
-                        <th>Palestrante / Ministrante</th>
-                        <th>Local</th>
-                    </thead>
+    {{ HTML::link('#', 'Desmarcar', array('class' => 'btn btn-larg', 'id' => 'desmarca')); }}
+    <table class="table table-hover">
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
                                 @if (($segunda14 == "MCI - PT1") && ($user->hora == "14:00"))
                                     @if ($user->abreviacao == "MCI - PT2")
-                                        <td>{{ Form::radio($user->dia.$user->hora, str_replace(' ','',$user->abreviacao), true); }}</td>
+                                        <td style="width: 1%">{{ Form::radio($user->data, str_replace(' ','',$user->abreviacao), true); }}</td>
                                     @else
                                         <td></td>
                                     @endif
                                 @elseif (($segunda14 == "MCIII - PT1") && ($user->hora == "14:00"))
                                     @if ($user->abreviacao == "MCIII - PT2")
-                                        <td>{{ Form::radio($user->dia.$user->hora, str_replace(' ','',$user->abreviacao), true); }}</td>
+                                        <td style="width: 1%">{{ Form::radio($user->data, str_replace(' ','',$user->abreviacao), true); }}</td>
                                     @else
                                         <td></td>
                                     @endif
                                 @elseif (($segunda14 == "MCIV - PT1") && ($user->hora == "19:00"))
                                     @if ($user->abreviacao == "MCIV - PT2")
-                                        <td>{{ Form::radio($user->dia.$user->hora, str_replace(' ','',$user->abreviacao), true); }}</td>
+                                        <td style="width: 1%">{{ Form::radio($user->data, str_replace(' ','',$user->abreviacao), true); }}</td>
                                     @else
                                         <td></td>
                                     @endif
                                 @elseif (($segunda14 != "MCI - PT1") || ($segunda14 != "MCIII - PT1") || ($segunda14 != "MCIV - PT1"))
                                     @if (($user->abreviacao == "MCI - PT2") || ($user->abreviacao == "MCIII - PT2") || ($user->abreviacao == "MCIV - PT2"))
                                         <td></td>
-                                @else
-                                        <td>{{ Form::radio($user->dia.$user->hora, $user->abreviacao, false); }}</td>
+                                    @else
+                                        @if ($user->vagas == 0)
+                                            <td>Lotado</td>
+                                        @else
+                                            <td style="width: 1%">{{ Form::radio($user->data, $user->abreviacao, false); }}</td>
+                                        @endif
                                     @endif
                                 @else
-                                    <td>{{ Form::radio($user->dia.$user->hora, $user->codabreviacaoigo, false); }}</td>
+                                    @if ($user->vagas == 0)
+                                        <td>Lotado</td>
+                                    @else
+                                        <td style="width: 1%">{{ Form::radio($user->data, $user->codabreviacaoigo, false); }}</td>
+                                    @endif
                                 @endif
-	                            <td>{{ $user->hora }}</td>
-	                            <td>{{ $user->abreviacao.' - '.$user->nome }}</td>
-	                            <td>{{ $user->palestrante }}</td>
-	                            <td>{{ $user->local }}</td>
+                <td style="width: 5%">{{ date('H:i', strtotime($user->data)) }}</td>
+                <td style="width: 30%">{{ $user->nome }}</td>
+                <td style="width: 19%">{{ $user->palestrante }}<br/><small>{{ $user->infopalestrante }}</small></td>
+                @if ($user->abreviacao[0] == 'M')
+                    <td style="width: 45%">{{ $user->ementa }} <strong>Pré-requisito</strong>: {{ $user->pre_requisito }}</td>
+                @else
+                    <td>{{ $user->ementa }}</td>
+                @endif
                         	</tr>
                         @endforeach
                     </tbody>
                 </table>
 	<p>
-		{{ Form::submit('Próximo &raquo;', array('class' => 'btn btn-larg')) }}
+		{{ Form::submit('Próximo &raquo;', array('class' => 'btn btn-large btn btn-success')) }}
 	</p>
 
-{{ Form::hidden('opSeg9', Input::get('2012-04-1609:00')) }}
-{{ Form::hidden('opSeg10', Input::get('2012-04-1610:30')) }}
-{{ Form::hidden('opSeg14', Input::get('2012-04-1614:00')) }}
-{{ Form::hidden('opSeg16', Input::get('2012-04-1616:00')) }}
-{{ Form::hidden('opSeg18', Input::get('2012-04-1618:30')) }}
-{{ Form::hidden('opSeg19', Input::get('2012-04-1619:00')) }}
-{{ Form::hidden('opSeg20', Input::get('2012-04-1620:30')) }}
+{{ Form::hidden('opSeg9', Input::get('2012-04-16 09:00')) }}
+{{ Form::hidden('opSeg10', Input::get('2012-04-16 10:30')) }}
+{{ Form::hidden('opSeg14', Input::get('2012-04-16 14:00')) }}
+{{ Form::hidden('opSeg16', Input::get('2012-04-16 16:00')) }}
+{{ Form::hidden('opSeg18', Input::get('2012-04-16 18:30')) }}
+{{ Form::hidden('opSeg19', Input::get('2012-04-16 19:00')) }}
+{{ Form::hidden('opSeg20', Input::get('2012-04-16 20:30')) }}
 
 </div>
     {{ Form::close() }}

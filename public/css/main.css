@@ -1,0 +1,13 @@
+body {
+	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+section {padding-top:30px;}
+
+footer {
+  height: 150px;
+  margin-top:40px;
+  padding-top:20px;
+  padding-bottom:20px;
+  background-color:#eeeeee;
+}

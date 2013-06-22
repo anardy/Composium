@@ -9,6 +9,7 @@
 *.vi
 *~
 *.sass-cache
+*.pdf
 
 # OS or Editor folders
 .DS_Store
@@ -35,3 +36,11 @@ dwsync.xml
 intermediate
 publish
 .idea
+
+storage/
+application/config/
+application/language/
+application/migrations/*.php
+bundles/
+laravel/
+public/laravel/

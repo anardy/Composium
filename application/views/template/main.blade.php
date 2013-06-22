@@ -1,49 +1,55 @@
 <!DOCTYPE HTML>
 <html lang="pt-br">
     <head>
-        <meta charset="Content-Type: text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="shortcut icon" href="img/logosite.png" type="image/x-icon" />
         <title>III Composium @yield('title')</title>
         {{ HTML::style('css/bootstrap.min.css') }}
-        {{ HTML::style('css/mystyle.css') }}
+        {{ HTML::style('css/main.css') }}
         @yield('otherscss')
     </head>
-<body>
-        <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <div id="menu">
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li class="divider-vertical"></li>
-                        <li><a href="#">Exemplo</a></li>
-                    </ul>
-                </div>
-            </div> <!-- container-fluid -->
-        </div> <!-- .navbar-inner -->
+<body data-spy="scroll" data-target="#menu">
+    <div class="navbar navbar-fixed-top container-fluid navbar-inner">        
+            @yield('menu')
     </div> <!-- .navbar navbar-fixed-top -->
 
     <div class="container">
         <div class="row">
-            @yield('content')
+        
+        @yield('content')
+
         </div>
+    </div> <!-- .container -->
+
+    <footer>
+        <div class="container">
+        <div class="span12">
+        <div class="span4">
+            <h5>ENDEREÇO</h5>
+                <strong>Universidade Federal de Itajubá</strong><br />
+                Avenida BPS, Pinherinho<br />
+                Itajubá, Minas Gerais<br />
+                <abbr title="Phone">T:</abbr> (35) 3629-1434<br />
+                <strong>E-mail</strong> <a href="mailto:composium@unifei.edu.br">composium@unifei.edu.br</a>
+        </div> <!-- .span4 -->
+        <div class="span2">
+            <h5>REDES SOCIAIS</h5>
+                {{ HTML::image('img/facebook.png', ''); }}
+                &nbsp;{{ HTML::image('img/twitter.png', ''); }}
+        </div> <!-- .span2 -->
+        <div class="span3 offset1">
+            <h5>ABOUT</h5>
+            {{ HTML::image('img/logo.png', '', array('class' => 'pull-left')); }}
+        </div> <!-- .span6 -->
     </div>
 
-    <div id="footer">
-        <div class="span4">
-            <p style="background:url('../../public/img/result.png') -0px -203px;width: 160px; height: 122px;"></p>
-        </div> <!-- .span4 -->
-        <div class="span9">
-            <p>III Composium - Simpósio de Computação da Universidade Federal de Itajubá.</p>
-            <p>Av. BPS, 1303, Pinheirinho, Itajubá/MG</p>
-            <p>Copyright © 2013.</p>
-        </div> <!-- .span9 -->
-        <div class="span2">
-            <img src="../../public/img/logo.png" />
-        </div> <!-- .span2 -->
-    </div> <!-- #footer -->
+    </footer> <!-- #footer -->
 
     {{ HTML::script('js/jquery.min.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js'); }}
+    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js'); }}
+    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js'); }}
     @yield('othersjs')
-</body>
+    </body>
 </html>

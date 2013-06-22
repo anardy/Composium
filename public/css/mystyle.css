@@ -1,17 +1,60 @@
-body {
-	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-}
-#footer {
-	height: 150px;
-	clear:both;
-	padding-top:20px;
-	background-color:#eeeeee;
-}
-
-#historico {
-	height: 750px;
+#googleMap {
+  height:380px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
 }
 
-#carregando {
-	display:none;
+.sprite-barracavermelha,.sprite-barracavermelhablack,.sprite-uppertools,.sprite-uppertoolsblack,
+.sprite-dedoprosa,.sprite-dedoprosablack,.sprite-fapepe,.sprite-fapepeblack,.sprite-fupai,.sprite-fupaiblack,
+.sprite-sebrae,.sprite-sebraeblack {
+  background-image: url('../img/patrocionadores.png');
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
 }
+
+.sprite-barracavermelha{ background-position: 0 0; width: 120px; height: 85px; } 
+.sprite-barracavermelhablack{ background-position: -170px 0; width: 120px; height: 85px; } 
+.sprite-uppertools{ background-position: -340px 0; width: 466px; height: 110px; } 
+.sprite-uppertoolsblack{ background-position: -856px 0; width: 466px; height: 110px; } 
+.sprite-dedoprosa{ background-position: -1372px 0; width: 80px; height: 85px; } 
+.sprite-dedoprosablack{ background-position: -1502px 0; width: 80px; height: 85px; } 
+.sprite-fapepe{ background-position: 0 -160px; width: 222px; height: 110px; } 
+.sprite-fapepeblack{ background-position: -1632px 0; width: 222px; height: 110px; } 
+.sprite-fupai{ background-position: -1904px 0; width: 64px; height: 110px; }
+.sprite-fupaiblack{ background-position: -1904px 0; width: 64px; height: 110px; }
+.sprite-sebrae{ background-position: -272px -160px; width: 113px; height: 85px; } 
+.sprite-sebraeblack{ background-position: -435px -160px; width: 113px; height: 85px; } 
+
+
+.sprite-cco,.sprite-ccoblack,.sprite-eco,.sprite-ecoblack,.sprite-efei,.sprite-efeiblack,.sprite-ice,
+.sprite-iceblack,.sprite-iesti,.sprite-iestiblack,.sprite-pettec,.sprite-pettecblack,.sprite-sin,.sprite-sinblack {
+  background-image: url('../img/realizacao.png');
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.sprite-cco{ background-position: 0 0; width: 132px; height: 121px; } 
+.sprite-ccoblack{ background-position: -182px 0; width: 132px; height: 121px; } 
+.sprite-eco{ background-position: -364px 0; width: 192px; height: 121px; } 
+.sprite-ecoblack{ background-position: -606px 0; width: 192px; height: 121px; } 
+.sprite-efei{ background-position: -848px 0; width: 160px; height: 122px; } 
+.sprite-efeiblack{ background-position: -1058px 0; width: 160px; height: 122px; } 
+.sprite-ice{ background-position: -1268px 0; width: 184px; height: 122px; } 
+.sprite-iceblack{ background-position: -1502px 0; width: 184px; height: 122px; } 
+.sprite-iesti{ background-position: -1736px 0; width: 250px; height: 122px; } 
+.sprite-iestiblack{ background-position: 0 -172px; width: 250px; height: 122px; } 
+.sprite-pettec{ background-position: -300px -172px; width: 167px; height: 122px; } 
+.sprite-pettecblack{ background-position: -517px -172px; width: 167px; height: 122px; } 
+.sprite-sin{ background-position: -734px -172px; width: 120px; height: 121px; } 
+.sprite-sinblack{ background-position: -734px -172px; width: 120px; height: 121px; } 
