@@ -27,7 +27,7 @@
 <script>
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
-    $("#1F").toggleClass('active');
+    $("#1G").toggleClass('active');
 });
 </script>
 @endsection

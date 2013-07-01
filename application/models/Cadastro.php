@@ -9,6 +9,12 @@ class Cadastro extends Eloquent {
 		return $users;
 	}
 
+	public static function remover_usuario($cpf) {
+		DB::table('cadastros')
+		->where('cpf', '=', $cpf)
+		->delete();
+	}
+
 	public static function get_nome($cpf) {
 		return DB::table('cadastros')->where('cpf', '=', $cpf)->get(array('firstnome', 'lastnome'));
 	}
@@ -19,5 +25,13 @@ class Cadastro extends Eloquent {
 
 	public static function get_dados($cpf) {
 		return DB::table('cadastros')->where('cpf', '=', $cpf)->get();
+	}
+
+	public static function count_users() {
+		return DB::table('cadastros')->count();
+	}
+
+	public static function ultimos_users() {
+		return DB::table('cadastros')->take(8)->get(array('data', 'firstnome', 'lastnome'));
 	}
 }

@@ -43,13 +43,6 @@
                 </ul>
 @endsection
 
-    @if (Session::has('login_errors'))
-    <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Username ou Senha incorretos! Tente novamente.
-    </div>
-    @endif
-
 @section('content')
     <section id="home">
         <div class="hero-unit">
@@ -63,8 +56,6 @@
                 <div class="well" style="max-width: 340px; padding: 8px 0;">
               <ul class="nav nav-list">
                 <li><a href="#"><i class="icon-camera"></i> Galeria de Fotos</a></li>
-                <li class="divider"></li>
-                <li><a href="#"><i class="icon-hdd"></i> Material - Apresentações</a></li>
               </ul>
             </div>
                 </div>

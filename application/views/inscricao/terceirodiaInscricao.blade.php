@@ -1,4 +1,4 @@
-@layout('template.mainsemfooter')
+@layout('template.inscricoes')
 
 @section('title')
 - Inscrição
@@ -14,13 +14,6 @@
 @endsection
 
 @section('content')
-<div class="wizard">
-	<a><span class="badge">1</span>1º Dia</a>
-	<a><span class="badge">2</span>2º Dia</a>
-	<a class="current"><span class="badge badge-inverse">3</span>3º Dia</a>
-    <a><span class="badge">4</span>Confirmação</a>
-</div>
-
 <div class="span12">
     <h3>18/04 - Quarta-Feira</h3>
     {{ Form::open('cadTerceirodia') }}
@@ -69,6 +62,14 @@
 @section('othersjs')
 <script>
 $(document).ready(function(){
+    $('.wizard>a').removeClass('current');
+    $('#span1B').removeClass('badge badge-inverse');
+    $('#span1B').addClass('badge');
+
+    $("#1C").toggleClass('current');
+    $("#span1C").toggleClass('badge');
+    $("#span1C").addClass('badge badge-inverse');
+
     $("#desmarca").click(function() {
         $('input[type=radio]').prop('checked', false); // desmarca todos
     });

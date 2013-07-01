@@ -1,4 +1,4 @@
-@layout('template.rh')
+@layout('template.coordenador')
 
 @section('title')
 - RH
@@ -7,25 +7,25 @@
 @section('conteudo-topo')
 <div class="span3 stat">
     <div class="data">
-        <span class="number">X</span>??
-    </div>
-    <span class="date">??</span>
-</div>
-<div class="span3 stat">
-    <div class="data">
-        <span class="number">Y</span>usuários
+        <span class="number">{{$c_users}}</span>Usuários
     </div>
     <span class="date">Inscritos</span>
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">X</span>reinscrição
+        <span class="number">{{$c_pagantes}}</span>usuários
     </div>
-    <span class="date">Solicitações</span>
+    <span class="date">Confirmados</span>
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">X</span>voluntários
+        <span class="number">{{$c_artigos}}</span>Artigos
+    </div>
+    <span class="date">Enviados</span>
+</div>
+<div class="span3 stat">
+    <div class="data">
+        <span class="number">{{$c_voluntarios}}</span>voluntários
     </div>
     <span class="date">Candidatados</span>
 </div>

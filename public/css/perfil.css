@@ -185,6 +185,21 @@ body {
     right: 50px;
 }
 
-.teste {
-    height: 100%;
+.subtext {
+font-size: 12px;
+margin-left: 0;
+color: #778391;
+font-style: italic;
+margin-top: 0;
+}
+
+.wraper {
+    border-left: 1px solid #dddde2;
+    padding-left: 20px;
+    margin-top: 5px;
+
+}
+
+.r-wraper {
+    padding-left: 10px;
 }

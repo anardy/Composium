@@ -8,10 +8,18 @@ class Artigo extends Eloquent {
 	}
 
 	public static function get_all_artigos() {
-		return DB::table('artigos')->get();
+		return DB::table('artigos')->paginate(5);
 	}
 
-	public static function get_artigos_total() {
+	public static function get_artigo($cpf) {
+		return DB::table('artigos')->where('cpf', '=', $cpf)->get();
+	}
+
+	public static function aprovar_artigo($cpf) {
+		DB::table('artigos')->where('cpf', '=', $cpf)->update(array('status' => '1'));
+	}
+
+	public static function count_artigos() {
 		return DB::table('artigos')->count();
 	}
 }

@@ -17,4 +17,8 @@ class Reinscricao extends Eloquent {
 	public static function autoriza_reinscricao($cpf) {
 		DB::table('reinscricoes')->where('cpf', '=', $cpf)->update(array('status' => '1'));
 	}
+
+	public static function count_reinscricao() {
+		return DB::table('reinscricoes')->count();
+	}
 }

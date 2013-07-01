@@ -5,41 +5,77 @@
 @endsection
 
 @section('conteudo')
-<div class="box span6">
+<div class="box span5">
     <div class="box-header">
         <h2><i class="icon-signal"></i><span class="break"></span>Páginas em Manutenção</h2>
-        <div class="box-icon">
-            <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-            <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-        </div>
     </div>
     <div class="sparkLineStats">
         <div class="box-content">
     <label class="checkbox">
-        Encerrar Inscrições
+        Página Principal
         {{Form::checkbox('name', 'value', Input::had('name')); }}
     </label>
     <label class="checkbox">
-        Encerrrar Submissão de Artigos
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-
-    <label class="checkbox">
-        Página Inscrições em Manutentação
+        Página Inscrições
         {{Form::checkbox('name', 'value', Input::had('name')); }}
     </label>
     <label class="checkbox">
-        Página Minha Área em Manutenção
+        Página Minha Área
         {{Form::checkbox('name', 'value', Input::had('name')); }}
     </label>
     <label class="checkbox">
-        Formulário Submissão de Artigos em Manutenção
+        Formulário Submissão de Artigos
         {{Form::checkbox('name', 'value', Input::had('name')); }}
     </label>
-
-    <p>{{ HTML::link('cadAdmin', 'Atualizar', array('class' => 'btn btn-large btn btn-success')); }}</p>
+    <label class="checkbox">
+        Página RH
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+    <label class="checkbox">
+        Página Revisor
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+    <label class="checkbox">
+        Página Coordenador
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
         </div>
+</div>
+</div>
 
+<div class="box span5">
+    <div class="box-header">
+        <h2><i class="icon-signal"></i><span class="break"></span>Desativar</h2>
+    </div>
+    <div class="sparkLineStats">
+        <div class="box-content">
+    <label class="checkbox">
+        Inscrições
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+    <label class="checkbox">
+        Submissão de Artigos
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+    <label class="checkbox">
+        Candidatura de Voluntário
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+
+    <label class="checkbox">
+        Solicitação de Reinscrição
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+
+    <label class="checkbox">
+        Notificações
+        {{Form::checkbox('name', 'value', Input::had('name')); }}
+    </label>
+        </div>
+</div>
+</div>
+<div class="span8">
+{{ HTML::link('#', 'Atualizar', array('class' => 'btn btn-large btn btn-success')); }}
 </div>
 @endsection
 

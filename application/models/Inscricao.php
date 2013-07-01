@@ -26,6 +26,7 @@ class Inscricao extends Eloquent {
 		return DB::table('inscricoes')
 		->where('inscricoes.cpf', 'LIKE', '%'.$cpf.'%')
 		->join('cadastros', 'inscricoes.cpf', '=', 'cadastros.cpf')
+		->order_by('firstnome')
 		->paginate(7);
 	}
 
@@ -35,5 +36,9 @@ class Inscricao extends Eloquent {
 		->where('status', '=', '0')
 		->join('cadastros', 'inscricoes.cpf', '=', 'cadastros.cpf')
 		->paginate(7);
+	}
+
+	public static function count_pagantes() {
+		return DB::table('inscricoes')->where('status', '=', '1')->count();
 	}
 }

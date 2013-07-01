@@ -4,11 +4,9 @@
 - Acesso
 @endsection
 
-
 @section('content')
 <div class="container">
     <div class="row-fluid">
-        <h2 class="page-header">Acesso ao Composium</h2>
        	<div class="span12">
            	<div class="span4">
                 @if (Session::has('login_errors'))

@@ -18,7 +18,7 @@
 <script>
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
-    $("#1C").toggleClass('active');
+    $("#1D").toggleClass('active');
 });
 </script>
 @endsection

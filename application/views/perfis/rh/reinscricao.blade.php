@@ -6,7 +6,7 @@
 
 @section('conteudo')
 <h2>Reinscrição</h2>
-@if ($reinscricoes)
+@if ($reinscricoes->results)
 	{{ Form::open('autReinscricao') }}
 		<table class="table table-hover">
 			<tbody>

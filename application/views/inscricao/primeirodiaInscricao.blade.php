@@ -1,4 +1,4 @@
-@layout('template.mainsemfooter')
+@layout('template.inscricoes')
 
 @section('title')
 - Inscrição
@@ -14,15 +14,8 @@
 @endsection
 
 @section('content')
-<div class="wizard">
-	<a class="current"><span class="badge badge-inverse">1</span>1º Dia</a>
-	<a><span class="badge">2</span>2º Dia</a>
-	<a><span class="badge">3</span>3º Dia</a>
-    <a><span class="badge">4</span>Confirmação</a>
-</div>
-
-    <h3>16/04 - Segunda-Feira</h3>
-    {{ Form::open('cadPrimeirodia') }}
+<h3>16/04 - Segunda-Feira</h3>
+{{ Form::open('cadPrimeirodia') }}
     
     {{ HTML::link('#', 'Desmarcar', array('class' => 'btn', 'id' => 'desmarca')); }}
 
@@ -55,12 +48,16 @@
 	<p>
         {{ Form::submit('Próximo &raquo;', array('class' => 'btn btn-large btn btn-success')) }}
 	</p>
-    {{ Form::close() }}
+{{ Form::close() }}
 @endsection
 
 @section('othersjs')
 <script>
 $(document).ready(function(){
+    $('.wizard>a').removeClass('current');
+    $('#span1A').removeClass('badge');
+    $('#span1A').addClass('badge badge-inverse');
+    
     $("input[type=radio]").click(function() {
         $('input[type=radio]').show()
         if ($(this).val() == 'CI') {

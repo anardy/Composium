@@ -13,21 +13,21 @@
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">Y</span>usuários
+        <span class="number">{{$c_users}}</span>usuários
     </div>
     <span class="date">Inscritos</span>
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">X</span>reinscrição
+        <span class="number">{{$c_reinscricao}}</span>reinscrição
     </div>
     <span class="date">Solicitações</span>
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">X</span>voluntários
+        <span class="number">{{$c_voluntarios}}</span>voluntários
     </div>
-    <span class="date">Candidatados</span>
+    <span class="date">Solicitações</span>
 </div>
 @endsection
 

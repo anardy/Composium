@@ -8,10 +8,11 @@ class Programacao extends Eloquent {
 	}
 
 	public static function gerar_horario_user($cpf) {
-		$users = DB::table('palestras')->join('presencas', 'palestras.abreviacao', '=', 'presencas.abreviacao')->where(
-		'presencas.cpf', '=', $cpf)->order_by('abreviacao')->get(
-			array('palestras.data', 'palestras.abreviacao', 'palestras.nome', 'palestras.local')
-		);
+		$users = DB::table('palestras')
+		->join('presencas', 'palestras.abreviacao', '=', 'presencas.abreviacao')
+		->where('presencas.cpf', '=', $cpf)
+		->order_by('abreviacao')
+		->get(array('palestras.data', 'palestras.abreviacao', 'palestras.nome', 'palestras.local'));
 		return $users;
 	}
 

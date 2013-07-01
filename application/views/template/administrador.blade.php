@@ -36,7 +36,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ Auth::user()->firstnome }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="minharea"><i class="icon-map-marker"></i> Minha Área</a></li>
+                    <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
                 </ul>
@@ -46,13 +46,13 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A" class="active"><a href="Administrador"><i class="icon-home"></i> <span>Home</span></a></li>
-            <li id="1B"><a href="#"><i class="icon-sitemap"></i> <span>Perfis</span></a></li>
-            <li id="1C"><a href="#"><i class="icon-group"></i> <span>Usuários</span></a></li>
+            <li id="1A"><a href="Administrador"><i class="icon-home"></i> <span>Home</span></a></li>
+            <li id="1B">{{ HTML::decode(HTML::link('perfis', '<i class="icon-sitemap"></i> <span>Perfis</span>')) }}</li>
+            <li id="1C">{{ HTML::decode(HTML::link('adminusuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
             <li id="1D"><a href="#"><i class="icon-fire-extinguisher"></i> <span>Logs</span></a></li>
             <li id="1E"><a href="#"><i class="icon-camera"></i> <span>Galeria Fotos</span></a></li>
             <li id="1F"><a href="#"><i class="icon-calendar"></i> <span>Programação</span></a></li>
-            <li id="1G"><a href="manutencao"><i class="icon-cogs"></i> <span>Manutenção</span></a></li>
+            <li id="1G">{{ HTML::decode(HTML::link('manutencao', '<i class="icon-cogs"></i> <span>Manutenção</span>')) }}</li>
             <li id="1H"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
         </ul>
     </div>

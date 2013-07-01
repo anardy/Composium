@@ -4,6 +4,15 @@
 - Efetuar Pagamento
 @endsection
 
+@section('otherscss')
+<style type="text/css">
+form {
+    margin: 0;
+    padding: 0;
+}
+</style>
+@endsection
+
 @section('conteudo')
     @if ($cu)
     <div class="alert alert-success">  
@@ -58,7 +67,7 @@
 {{ HTML::script('js/jquery.masked.min.js'); }}
 <script>
 $("#cpf").inputmask("mask", {"mask": "999.999.999-99"});
-$(document).ready(function(){        
+$(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
     $("#1B").toggleClass('active');
 });
