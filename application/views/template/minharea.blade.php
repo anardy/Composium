@@ -22,12 +22,12 @@
         <ul class="nav pull-right">
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notificar">
-                    <i class="icon-envelope icon-only"></i> 
+                    <i class="icon-bell-alt icon-only"></i>
                     @if ($notificacao > 0)
-                        <span class="badge badge-info">{{$notificacao}}</span>
-                    @endif
+                        <span class="badge badge-info" id="nro_notificacoes">{{$notificacao}}</span>
+                    @endif                  
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
                     <div id="notificacao"></div>
                 </ul>
             </li>
@@ -47,12 +47,17 @@
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
             <li id="1A"><a href="minharea"><i class="icon-home"></i> <span>Home</span></a></li>
-            <li id="1B"><a href="artigo"><i class="icon-paper-clip"></i> <span>Submissão Artigo</span></a></li>
-            <li id="1C"><a href="presenca"><i class="icon-check"></i> <span>Controle Presença</span></a></li>
-            <li id="1D"><a href="certificado"><i class="icon-bookmark"></i> <span>Certificados</span></a></li>
-            <li id="1E"><a href="voluntario"><i class="icon-male"></i> <span>Voluntário</span></a></li>
-            <li id="1F"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
-            <li id="1G"><a href="meudados"><i class="icon-wrench"></i> <span>Meus Dados</span></a></li>
+            @if ((Inscricao::user_pagou(Auth::user()->cpf)) && (Inscricao::user_pagou(Auth::user()->cpf)[0]->status))
+                <li id="1B"><a href="artigo"><i class="icon-paper-clip"></i> <span>Submissão Artigo</span></a></li>
+                <li id="1C"><a href="presenca"><i class="icon-check"></i> <span>Controle Presença</span></a></li>
+                <li id="1D"><a href="certificado"><i class="icon-bookmark"></i> <span>Certificados</span></a></li>
+                <li id="1E"><a href="voluntario"><i class="icon-male"></i> <span>Voluntário</span></a></li>
+                <li id="1G"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
+            @elseif (Inscricao::user_pagou(Auth::user()->cpf))
+                <li id="1I"><a href="boleto"><i class="icon-barcode"></i> <span>Boleto</span></a></li>
+                <li id="1F"><a href="reinscricao"><i class="icon-bookmark"></i> <span>Reinscrição</span></a></li>
+            @endif
+            <li id="1H"><a href="meudados"><i class="icon-wrench"></i> <span>Meus Dados</span></a></li>
         </ul>
     </div>
 

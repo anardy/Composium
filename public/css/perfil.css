@@ -203,3 +203,16 @@ margin-top: 0;
 .r-wraper {
     padding-left: 10px;
 }
+
+
+.wraper-esquerda {
+    border-right: 1px solid #dddde2;
+    padding-right: 20px;
+    margin-top: 5px;
+
+}
+
+.dados {
+    border-bottom: 1px solid #dddde2;
+    margin-bottom: 10px;
+}

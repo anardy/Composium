@@ -147,30 +147,23 @@ Route::post('login', function() {
 
 Route::get('minharea', array('before' => 'auth', 'do' => function() {
 	$cpf = Auth::user()->cpf;
-	$userinscrito = Inscricao::busca_inscricao($cpf);
-	$verificapgto = Inscricao::user_pagou($cpf);
+	$user_pagou = Inscricao::user_pagou($cpf);
 	$horario = Programacao::gerar_horario_user($cpf);
-	$reinscricao = Reinscricao::get_reinscricao_user($cpf);
 
-	foreach ($verificapgto as $d) {
-        $user_pagou = $d->status;
-    }
-
-    if (!isset($user_pagou)) {
-    	$user_pagou = NULL;
-    }
-    if (!isset($reinscricao)) {
-    	$reinscricao = 0;
-    }
 	return View::make('account.area')
-	->with('userinscrito', $userinscrito)
 	->with('horario', $horario)
-	->with('user_pagou', $user_pagou)
-	->with('reinscricao', $reinscricao);
+	->with('user_pagou', $user_pagou);
 }));
 
 Route::get('notificacao', function() {
 	return View::make('account.notificacao');
+});
+
+Route::get('reinscricao', function() {
+	$cpf = Auth::user()->cpf;
+	$reinscricao = Reinscricao::get_reinscricao_user($cpf);
+	return View::make('account.reinscricao')
+	->with('reinscricao', $reinscricao);
 });
 
 Route::post('reinscricao', array('before' => 'auth', 'do' => function() {
@@ -183,7 +176,66 @@ Route::post('reinscricao', array('before' => 'auth', 'do' => function() {
 }));
 
 Route::get('certificado', array('before' => 'auth', 'do' => function() {
-	return View::make('account.certificados');
+	$cpf =  Auth::user()->cpf;
+	$certificados = Presenca::get_certificados($cpf);
+	$total_presenca_user = Presenca::nrouser_presencauser($cpf);
+	$total_user = Presenca::nrototal_user($cpf);
+	return View::make('account.certificados')
+	->with('certificados', $certificados)
+	->with('total_presenca_user', $total_presenca_user)
+	->with('total_user', $total_user);
+}));
+
+Route::get('certParticipacao', array('before' => 'auth', 'do' => function() {
+	
+	$headers = array('Content-Type' => 'application/pdf');
+$pdf = new Fpdf();
+	$pdf = new FPDF( 'P','cm','A4' );
+	$pdf->Open();
+	$pdf->AddPage();
+
+	//$pdf->Image('images/LogoEFEI.jpg',3,5,15,15,jpg);
+
+	$pdf->SetFont('Arial','',29);
+	$pdf->SetMargins(0,0,0);
+	$pdf->setY("3.0");
+	$pdf->setX("6.1");
+	$pdf->Cell(0, 0, "CERTIFICADO");
+
+	$pdf->SetFont('Arial','',15);
+	$pdf->setY("7.0");
+	$pdf->setX("2.1");
+	$pdf->Cell(0, 0, "Certificamos que");
+
+	$pdf->SetFont('Arial','',15);
+	$pdf->setY("9.0");
+	$pdf->setX("3.5");
+	$pdf->Cell(0, 0, utf8_decode('André Mack Nardy'));
+
+	$pdf->SetFont('Arial','',15);
+	$pdf->setY("11.0");
+	$pdf->setX("2.0");
+	$pdf->Multicell(18, 0.8, "participou do II Composium ~ " . utf8_decode('Simpósio') . " de " . utf8_decode('Computação') . " 2012, realizado em" . utf8_decode('Itajubá') . ", de 16 a 18 de abril na UNIFEI - Universidade Federal de " . utf8_decode('Itajubá'));
+
+	//$pdf->Image('images/assinatura.png',9,15.4,3.5,1,png);
+
+	$pdf->SetFont('Arial','',15);
+	$pdf->setY("16.0");
+	$pdf->setX("6.5");
+	$pdf->Cell(0, 0, "____________________________");
+
+	$pdf->SetFont('Arial','',13);
+	$pdf->setY("16.5");
+	$pdf->setX("7.8");
+	$pdf->Multicell(18, 0.8, "Coordenador II Composium");
+
+
+
+//	$pdf->Image('images/certificado.png',2,2,3,2,png);
+
+	$pdf->Output("certificado","I");
+
+	return Response::make($pdf->Output(), 200, $headers);
 }));
 
 Route::get('presenca', array('before' => 'auth', 'do' => function() {
@@ -254,14 +306,9 @@ Route::get('logar', function() {
     return View::make('account.home')->with('praonde','index');
 });
 
-Route::get('inscricao', array('before' => 'auth', 'do' => function() {
-	if (Auth::user()) {
-		$userinscrito = Inscricao::busca_inscricao(Auth::user()->cpf);
-    	return View::make('inscricao.home')->with('userinscrito', $userinscrito);
-    } else {
-    	return View::make('account.home');
-    }
-}));
+Route::get('inscricao', function() {
+    	return View::make('inscricao.home');
+});
 
 Route::post('cadDadosPessoais', function() {
 	$new_date = array(
@@ -312,6 +359,37 @@ Route::post('cadDadosPessoais', function() {
     }
 });
 
+Route::post('altDadosPessoais', array('before' => 'auth', 'do' => function() {
+	$new_date = array(
+		'firstnome' => Input::get('firstnome'),
+		'lastnome' => Input::get('lastnome'),
+		'matricula' => Input::get('matricula'),
+		'email' => Input::get('email'),
+		'instituicao' => Input::get('instituicao'),
+		'curso' => Input::get('curso'),
+		'ano' => Input::get('ano'),
+		'periodo' => Input::get('periodo')
+		);
+
+	$regras = array(
+		'firstnome' => 'required',
+		'lastnome' => 'required',
+		'email' => 'required',
+		'ano' => 'required',
+		'periodo' => 'required'
+		);
+
+	$v = Validator::make($new_date, $regras);
+
+	if ($v->fails()) {
+		return Redirect::to('meudados')->with_errors($v)->with_input();
+	}
+
+	Cadastro::atualizar_dados(Auth::user()->cpf, $new_date);
+
+	return Redirect::to('meudados');
+}));
+
 Route::get('iniciarinscricao', array('before' => 'auth', 'do' => function() {
 	$users = Programacao::teste('2012-04-16');
 	return View::make('inscricao.primeirodiaInscricao')->with('users',$users);
@@ -360,7 +438,7 @@ Route::post('cadTerceirodia', array('before' => 'auth', 'do' => function() {
 			array_push($minicursos, $all_palestras[$i]);
 		}
 		if (!empty($all_palestras[$i])) {
-			Presenca::inserir_presenca($cpf, $all_palestras[$i]);
+			//Presenca::inserir_presenca($cpf, $all_palestras[$i]);
 		}
 	}
 
@@ -384,7 +462,7 @@ Route::post('cadTerceirodia', array('before' => 'auth', 'do' => function() {
 
 	$total = (((int) $contaminicuros * (int) $precoMiniCurso)+(int)$precoTaxa);
 
-	Inscricao::inserir_inscricao($cpf, $total);
+	//Inscricao::inserir_inscricao($cpf, $total);
 
 	$nome_minicurso = Presenca::buscar_presenca($cpf);
 
@@ -397,12 +475,32 @@ Route::get('meudados', array('before' => 'auth', 'do' => function() {
 }));
 
 Route::get('voluntario', array('before' => 'auth', 'do' => function() {
-	$result = Voluntario::get_voluntario(Auth::user()->cpf);
-	return View::make('account.voluntario')->with('result', $result);
+	return View::make('account.voluntario');
 }));
 
+Route::post('cadVoluntario', array('before' => 'auth', 'do' => function() {
+	$new_date = array(
+		'cpf' => Auth::user()->cpf,
+		'primeiraopcao' => Input::get('primeiraopcao'),
+		'segundaopcao' => Input::get('segundaopcao'),
+		'terceiraopcao' => Input::get('terceiraopcao'),
+		'status' => '0'
+		);
+
+	Voluntario::inserir_voluntario($new_date);
+
+	return Redirect::to('voluntario');
+}));
+
+
 Route::get('boleto', array('before' => 'auth', 'do' => function() {
-	return View::make('inscricao.boleto');
+	$cpf = Auth::user()->cpf;
+	$result = Cadastro::get_nome($cpf);
+	$total = Inscricao::get_valor($cpf);
+
+	return View::make('inscricao.boleto')
+	->with('total', $total[0]->valor)
+	->with('result', $result);
 }));
 
 Route::get('RH', array('before' => 'auth', 'do' => function() {
@@ -423,7 +521,54 @@ Route::get('controlePresenca', array('before' => 'auth', 'do' => function() {
 
 Route::post('listarParticipantes', array('before' => 'auth', 'do' => function() {
 	$participantes = Presenca::lista_participantes(Input::get('abreviacao'));
-	return View::make('perfis.rh.participantes')->with('participantes', $participantes);
+	$palestra = Programacao::get_infoPalestras(Input::get('abreviacao'));
+
+	return View::make('perfis.rh.participantes')
+	->with('participantes', $participantes)
+	->with('palestra', $palestra);
+}));
+
+Route::post('atuPresenca', array('before' => 'auth', 'do' => function() {
+	$participantes = Input::get('participantes');
+	$abreviacao = Input::get('abreviacao');
+
+	$todos = Presenca::get_all_cpfs($abreviacao);
+
+	$foram = array();
+	$naoforam = array();
+
+	foreach ($participantes as $u) {
+		array_push($foram, $u);
+	}
+
+	foreach ($todos as $u) {
+		array_push($naoforam, $u->cpf);
+	}
+
+	foreach ($naoforam as $key => $t) {
+		foreach ($foram as $key2 => $u) {
+			if ($t == $u) {
+				unset($naoforam[$key]);
+			}
+		}
+	}
+	
+	foreach ($naoforam as $u) {
+		Presenca::atualizar_presenca_nok($u, $abreviacao);
+	}
+
+	foreach ($foram as $u) {
+		Presenca::atualizar_presenca_ok($u, $abreviacao);
+	}
+	return Redirect::to('controlePresenca');
+}));
+
+Route::get('imprimirListaPresenca/(:any)', array('before' => 'auth', 'do' => function($abreviacao) {
+	$participantes = Presenca::lista_participantes($abreviacao);
+	$palestra = Programacao::get_infoPalestras($abreviacao);
+	return View::make('perfis.rh.Listaparticipantes')
+	->with('participantes',$participantes)
+	->with('palestra',$palestra);
 }));
 
 Route::get('foraLista', array('before' => 'auth', 'do' => function() {
@@ -456,17 +601,16 @@ Route::get('listaPresenca', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.rh.listapresenca')->with('palestras',$array);
 }));
 
-Route::post('gerarListaPresenca', array('before' => 'auth', 'do' => function() {
-	$abreviacao = Input::get('abreviacao');
-	$participantes = Presenca::lista_presenca($abreviacao);
-	$info_palestras = Programacao::get_infoPalestras($abreviacao);
-	return View::make('perfis.rh.Listaparticipantes')->with('participantes', $participantes)->with('info_palestras',$info_palestras);
-}));
-
 Route::get('autReinscricao', array('before' => 'auth', 'do' => function() {
 	$reinscricoes = Reinscricao::get_reinscricoes();
 
 	return View::make('perfis.rh.reinscricao')->with('reinscricoes', $reinscricoes);
+}));
+
+Route::post('buscaAutReinscricao', array('before' => 'auth', 'do' => function() {
+	$reinscricoes = Reinscricao::busca_reinscricoes(Input::get('nome'));
+	return View::make('perfis.rh.reinscricao')
+	->with('reinscricoes', $reinscricoes);
 }));
 
 Route::post('autReinscricao', array('before' => 'auth', 'do' => function() {
@@ -476,13 +620,39 @@ Route::post('autReinscricao', array('before' => 'auth', 'do' => function() {
 		Reinscricao::autoriza_reinscricao($u);
 		Inscricao::excluir_inscricao($u);
 		Presenca::excluir_presenca($u);
+		$new_date = array(
+			'destinatario' => $u,
+			'perfil' => 'usuario',
+			'mensagem' => '1'
+		);
 	}
+	Notificacao::inserir_notificacao($new_date);
 	return Redirect::to('autReinscricao');
 }));
 
 Route::get('voluntarios', array('before' => 'auth', 'do' => function() {
 	$voluntarios = Voluntario::get_voluntarios();
 	return View::make('perfis.rh.voluntarios')->with('voluntarios', $voluntarios);
+}));
+
+Route::post('autVoluntario', array('before' => 'auth', 'do' => function() {
+	$teste = Input::get('cpfs');
+
+	foreach ($teste as $u) {
+		Voluntario::autoriza_voluntario($u);
+		$new_date = array(
+			'destinatario' => $u,
+			'perfil' => 'usuario',
+			'mensagem' => '3'
+		);
+		$voluntario = array(
+			'cpf' => $u,
+			'perfil' => 'Voluntario'
+		);
+	}
+	Notificacao::inserir_notificacao($new_date);
+	Perfil::inserir_perfil($voluntario);
+	return Redirect::to('voluntarios');
 }));
 
 Route::get('pagamento', array('before' => 'auth', 'do' => function() {
@@ -513,7 +683,11 @@ Route::post('estoutestando', array('before' => 'auth', 'do' => function() {
 
 Route::get('usuarios', array('before' => 'auth', 'do' => function() {
 	$registros = Inscricao::busca_cpf(Input::get('cpf'));
+	return View::make('perfis.rh.usuarios')->with('registros', $registros);
+}));
 
+Route::post('usuarios', array('before' => 'auth', 'do' => function() {
+	$registros = Inscricao::busca_cpf(Input::get('cpf'));
 	return View::make('perfis.rh.usuarios')->with('registros', $registros);
 }));
 
@@ -638,18 +812,4 @@ Route::get('conArtigo/(:any)', array('before' => 'auth', 'do' => function($cpf) 
 
 Route::get('Voluntario', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.voluntario');
-}));
-
-Route::post('cadVoluntario', array('before' => 'auth', 'do' => function() {
-	$new_date = array(
-		'cpf' => Auth::user()->cpf,
-		'primeiraopcao' => Input::get('primeiraopcao'),
-		'segundaopcao' => Input::get('segundaopcao'),
-		'terceiraopcao' => Input::get('terceiraopcao'),
-		'status' => '0'
-		);
-
-	Voluntario::inserir_voluntario($new_date);
-
-	return View::make('account.voluntario');
 }));

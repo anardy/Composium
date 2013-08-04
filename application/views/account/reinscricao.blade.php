@@ -6,7 +6,6 @@
 
 @section('conteudo')
 <div class="span8 main-content">
-    @if ($user_pagou == 0)
         <h2>Solicitação de Reinscrição</h2>
                     <div id="result" class="well hide"></div>
                     @if ($reinscricao > 0)
@@ -25,7 +24,6 @@
                             {{ Form::close() }}
                         </div>
                     @endif
-    @endif
 </div>
 @endsection
 
@@ -34,7 +32,7 @@
 <script>
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
-    $("#1E").toggleClass('active');
+    $("#1F").toggleClass('active');
 });
 </script>
 @endsection

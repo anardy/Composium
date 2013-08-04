@@ -5,12 +5,7 @@
 @endsection
 
 @section('conteudo')
-@if ($userinscrito < 1)
-    {{ HTML::link('inscricao', 'Faça sua Inscrição', array('class' => 'btn btn-large btn-block btn-success')); }}
-@endif
-@if (($user_pagou == 0) && ($userinscrito > 0))
-    {{ HTML::decode(HTML::link('boleto', 'Gerar Boleto', array('class' => 'btn btn-large btn-block btn-success'))); }}
-@endif
+@if (($user_pagou) || ($user_pagou == 1))
 <h3>Meu Horário</h3>
 <table class="table table-hover">
     <tr>
@@ -26,28 +21,15 @@
         </tr>
     @endforeach
 </table>
-
-    <div class="span8">
-    @if ($user_pagou == 0)
-        <h2>Solicitação de Reinscrição</h2>
-                    <div id="result" class="well hide"></div>
-                    @if ($reinscricao > 0)
-                        <div class="well">
-                            <h4>Status Aguardando...</h4>
-                            <p>Assim que sua Reinscrição for autorizada você receberá um e-mail para realizar a Inscrição novamente</p>
-                            <p>Dúvidas entre em contato: composium@unifei.edu.com.br</p>
-                            <p>Obrigado,</p>
-                            <p>Equipe de Organização do III Composium</p>
-                        </div>
-                    @else
-                        <div id="areaSolreins">
-                            <p>Caso não esteja satisfeito com a sua inscrição você pode refazê-la.</p>
-                            {{ Form::open('reinscricao', '', array('id' => 'solReins')) }}
-                                <p>{{ Form::submit('Solicitar Reinscrição', array('class' => 'btn btn-large btn btn-primary')) }}</p>
-                            {{ Form::close() }}
-                        </div>
-                    @endif
-    @endif
+@else
+    <h2>Minha Área!</h2>
+    Você ainda não fez a inscrição no III Composium?<br>
+    Não perca tempo e faça agora mesmo!<br>
+    BLA BLA
+    <p>HA</p>
+    {{ HTML::link('inscricao', 'Faça sua Inscrição', array('class' => 'btn btn-large btn-block btn-success')); }}
+    <p>HA</p>
+@endif
 @endsection
 
 

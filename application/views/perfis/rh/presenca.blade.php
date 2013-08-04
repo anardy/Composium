@@ -5,12 +5,11 @@
 @endsection
 
 @section('conteudo')
-<h2>Controle Presença</h2>
-{{ Form::open('listarParticipantes', '', array('id' => 'listarparticipantes')) }}
-   	<p>{{ Form::select('palestras', array('' => 'Selecione..') + $palestras, null, array('id' => 'palestras')) }}</p>
-   	<p>{{ Form::submit('Buscar', array('class' => 'btn btn-large btn btn-success')); }}</p>
+{{ Form::open('listarParticipantes', '', array('class' => 'form-inline')) }}
+   	{{ Form::select('palestras', array('' => 'Selecione..') + $palestras, null, array('id' => 'palestras', 'class' => 'span4')) }}
 {{ Form::close() }}
-	<div id="result" class="hide"></div>
+    <hr>
+	<div id="result"></div>
 	<div id="carregando" class="hide"></div>
 @endsection
 
@@ -20,9 +19,9 @@ $(document).ready(function(){
     $('#menu>li').removeClass('active');
     $("#1C").toggleClass('active');
 
-    $('#listarparticipantes').submit(function(e) {
+    $('#palestras').change(function(e) {
         e.preventDefault();
-        var action = $(this).attr('action'),
+        var action = 'listarParticipantes',
             form_data = {
                 abreviacao: $('#palestras').val()
             };

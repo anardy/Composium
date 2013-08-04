@@ -123,54 +123,53 @@
                 <li class="span6">
                     <h3>Coordenadores</h3>
                     <div class="thumbnail">
-                        
-                        <h4 class="media-heading">Profa. Dra. Adriana Prest Mattedi</h4>
-                        <p><span class="label label-inverse">DMC-ICE/UNIFEI</span></p>
-                        <h4 class="media-heading">Prof. Dr. Enzo Seraphim</h4>
-                        <p><span class="label label-inverse">IESTI/UNIFEI</span></p>
-                        <h4 class="media-heading">Profa. Dra. Melise M. Veiga de Paula</h4>
-                        <p><span class="label label-inverse">DMC-ICE/UNIFEI</span></p>
-                        <h4 class="media-heading">Prof. Msc. Rodrigo Maximiano A. de Almeida</h4>
-                        <p><span class="label label-inverse">IESTI/UNIFEI</span></p>
+                        <h4 class="media-heading">Nome 1</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
+                        <h4 class="media-heading">Nome 2</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
+                        <h4 class="media-heading">Nome 3</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
+                        <h4 class="media-heading">Nome 4</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
                     </div>
 
                      <h3>Comissão de Divulgação</h3>
                     <div class="thumbnail">
-                        <h4 class="media-heading">Prof. Msc. Bruno Y. L. Kimura</h4>
-                        <p><span class="label label-inverse">DMC-ICE/UNIFEI</span></p>
-                        <h4 class="media-heading">André Mack Nardy</h4>
-                        <p><span class="label label-inverse">SISTEMAS DE INFORMAÇÃO</span></p>
-                        <h4 class="media-heading">Rui Martins Lacerda</h4>
-                        <p><span class="label label-inverse">SISTEMAS DE INFORMAÇÃO</span></p>
+                        <h4 class="media-heading">Nome 5</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
+                        <h4 class="media-heading">Nome 6</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
+                        <h4 class="media-heading">Nome 7</h4>
+                        <p><span class="label label-inverse">Departamento</span></p>
                     </div>
                 </li>
                 <li class="span6">
                     <h3>Comissão de Feira-Estágio</h3>
                     <div class="thumbnail">
-                    <h4 class="media-heading">Profa. Dra. Elizabete R. Sanches da Silva</h4>
-                    <span class="label label-inverse">DMC-ICE/UNIFEI</span>
-                    <h4 class="media-heading">Domingos Savio Faria Paes</h4>
-                    <span class="label label-inverse">SISTEMAS DE INFORMAÇÃO</span>
+                    <h4 class="media-heading">Nome 8</h4>
+                    <span class="label label-inverse">Departamento</span>
+                    <h4 class="media-heading">Nome 9</h4>
+                    <span class="label label-inverse">Departamento</span>
                     </div>
 
                     <h3>Comissão de Infraestrutura / Patrocínio</h3>
                     <div class="thumbnail">
-                    <h4 class="media-heading">Guilherme Hilst Ribeiro</h4>
-                    <p><span class="label label-inverse">CIÊNCIA DA COMPUTAÇÃO</span></p>
-                    <h4 class="media-heading">Thatiane Azevedo Sugiyama</h4>
-                    <p><span class="label label-inverse">CIÊNCIA DA COMPUTAÇÃO</span></p>
-                    <h4 class="media-heading">Douglas William Lima</h4>
-                    <p><span class="label label-inverse">SISTEMAS DE INFORMAÇÃO</span></p>
-                    <h4 class="media-heading">Leandro Juvêncio Mendes</h4>
-                    <p><span class="label label-inverse">SISTEMAS DE INFORMAÇÃO</span></p>
-                    <h4 class="media-heading">Tiago Henrique de Paula Miranda</h4>
-                    <p><span class="label label-inverse">SISTEMAS DE INFORMAÇÃO</span></p>
+                    <h4 class="media-heading">Nome 10</h4>
+                    <p><span class="label label-inverse">Departamento</span></p>
+                    <h4 class="media-heading">Nome 11</h4>
+                    <p><span class="label label-inverse">Departamento</span></p>
+                    <h4 class="media-heading">Nome 12</h4>
+                    <p><span class="label label-inverse">Departamento</span></p>
+                    <h4 class="media-heading">Nome 13</h4>
+                    <p><span class="label label-inverse">Departamento</span></p>
+                    <h4 class="media-heading">Nome 14</h4>
+                    <p><span class="label label-inverse">Departamento</span></p>
                     </div>
 
                                         <h3>Comissão de Programação</h3>
                     <div class="thumbnail">
-                    <h4 class="media-heading">Profa. Msc. Vanessa C. Oliveira de Souza</h4>
-                    <p><span class="label label-inverse">DMC-ICE/UNIFEI</span></p>
+                    <h4 class="media-heading">Nome 15</h4>
+                    <p><span class="label label-inverse">Departamento</span></p>
                     </div>
                 </li>
             </ul>
@@ -185,76 +184,54 @@
         <section id="realizacao">
                 <h2>Realização</h2>
                 <ul class="thumbnails">
-                    <li><div class="sprite-ccoblack" rel="sprite-cco"></div></li>
-                    <li><div class="sprite-ecoblack" rel="sprite-eco"></div></li>
-                    <li><div class="sprite-sin" rel="sprite-sin"></div></li>
+                    <li><img src="img/realizacao.png"></li>
+                    <li><img src="img/realizacao.png"></li>
+                    <li><img src="img/realizacao.png"></li>
+					<li><img src="img/realizacao.png"></li>
                 </ul>
                 <ul class="thumbnails">
-                    <li><div class="sprite-efeiblack" rel="sprite-efei"></div></li>
-                    <li><div class="sprite-iceblack" rel="sprite-ice"></div></li>
-                    <li><div class="sprite-iestiblack" rel="sprite-iesti"></div></li>
-                    <li><div class="sprite-pettecblack" rel="sprite-pettec"></div></li>
+                    <li><img src="img/realizacao.png"></li>
+                    <li><img src="img/realizacao.png"></li>
+                    <li><img src="img/realizacao.png"></li>
+                    <li><img src="img/realizacao.png"></li>
                 </ul>
         </section> <!-- #relizacao -->
 
         <section id="patrocinadores">
                 <h2>Patrocionadores</h2>
+				<h2>Golden</h2>
                 <ul class="thumbnails">
-                    <li><div class="sprite-fapepeblack" rel="sprite-fapepe"></div></li>
-                    <li><div class="sprite-uppertoolsblack" rel="sprite-uppertools"></div></li>
-                    <li><div class="sprite-fupaiblack" rel="sprite-fupai"></div></li>
+                    <li><img src="img/golden.png"></li>
+                    <li><img src="img/golden.png"></li>
                 </ul>
+				<h2>Silver</h2>
                 <ul class="thumbnails">
-                    <li><div class="sprite-barracavermelhablack" rel="sprite-barracavermelha"></div></li>
-                    <li><div class="sprite-dedoprosablack" rel="sprite-dedoprosa"></div></li>
-                    <li><div class="sprite-sebraeblack" rel="sprite-sebrae"></div></li>
+                    <li><img src="img/silver.png"></li>
+                    <li><img src="img/silver.png"></li>
+                </ul>
+				<h2>Bronze</h2>
+                <ul class="thumbnails">
+                    <li><img src="img/bronze.png"></li>
+                    <li><img src="img/bronze.png"></li>
                 </ul>
         </section> <!-- #patrocionadores -->
             
         <section id="historico">
                 <h2>Histórico de Eventos</h2>
-                <div id="timeline">
-                    <ul>
-                        <li data-date="1999">12º SBM – Congresso da Sociedade Brasileira de Microeletrônica</li>
-                        <li data-date="2000">1° SETI – Seminário em Tecnologia da Informação</li>
-                        <li data-date="2003">I SECOMP – Seminário em Computação</li>
-                        <li data-date="2004">SAT – Semana Acadêmica de Tecnologia</li>
-                        <li data-date="2005">II SECOMP – Seminário em Computação</li>
-                        <li data-date="2006">IV EMECOMP Encontro Mineiro dos Estudantes de Computação</li>
-                        <li data-date="2007">III SECOMP – Seminário em Computação: Tecnologias Móveis</li>
-                        <li data-date="2008">I COMPOSIUM – I Simpósio em Computação da UNIFEI</li>
-                        <li data-date="2009">EMSL – Encontro Mineiro de Software Livre</li>
-                        <li data-date="2011">I OW – Open Week e Workshop de Software</li>
-                        <li data-date="2012">II Composium – II Simpósio em Computação da UNIFEI</li>
-                        <li data-date="2013">III Composium – III Simpósio em Computação da UNIFEI</li>
-                    </ul>
-                </div>
+				<p><span class="label label-inverse">1999</span> 12º SBM – Congresso da Sociedade Brasileira de Microeletrônica</p>
+                <p><span class="label label-inverse">2000</span> 1° SETI – Seminário em Tecnologia da Informação</p>
+                <p><span class="label label-inverse">2003</span> I SECOMP – Seminário em Computação</p>
+                <p><span class="label label-inverse">2004</span> SAT – Semana Acadêmica de Tecnologia</p>
+                <p><span class="label label-inverse">2005</span> II SECOMP – Seminário em Computação</p>
+                <p><span class="label label-inverse">2006</span> IV EMECOMP Encontro Mineiro dos Estudantes de Computação</p>
+                <p><span class="label label-inverse">2007</span> III SECOMP – Seminário em Computação: Tecnologias Móveis</p>
+                <p><span class="label label-inverse">2008</span> I COMPOSIUM – I Simpósio em Computação da UNIFEI</p>
+                <p><span class="label label-inverse">2009</span> EMSL – Encontro Mineiro de Software Livre</p>
+                <p><span class="label label-inverse">2011</span> I OW – Open Week e Workshop de Software</p>
+                <p><span class="label label-inverse">2012</span> II Composium – II Simpósio em Computação da UNIFEI</p>
+                <p><span class="label label-inverse">2013</span> III Composium – III Simpósio em Computação da UNIFEI</p>
         </section>  <!-- #historico -->
 @endsection
-
-    <footer>
-        <div class="container">
-        <div class="span12">
-        <div class="span4">
-            <h5>ENDEREÇO</h5>
-                <strong>Universidade Federal de Itajubá</strong><br />
-                Avenida BPS, Pinherinho<br />
-                Itajubá, Minas Gerais<br />
-                <abbr title="Phone">T:</abbr> (35) 3629-1434<br />
-                <strong>E-mail</strong> <a href="mailto:composium@unifei.edu.br">composium@unifei.edu.br</a>
-        </div> <!-- .span4 -->
-        <div class="span2">
-            <h5>REDES SOCIAIS</h5>
-                <strong>Twitter</strong> <a href="#">Twitter</a><br />
-                <strong>Facebook</strong> <a href="#">Facebook</a>
-        </div> <!-- .span2 -->
-        <div class="span3 offset1">
-            <h5>ABOUT</h5>
-            {{ HTML::image('img/logo.png', '', array('class' => 'pull-left')); }}
-        </div> <!-- .span6 -->
-    </div>
-@endsection
-
 
 @section('othersjs')
     {{ HTML::script('http://maps.google.com/maps/api/js?sensor=false'); }}

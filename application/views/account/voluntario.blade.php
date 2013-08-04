@@ -5,10 +5,7 @@
 @endsection
 
 @section('conteudo')
-@if ($result)
-    <h2>Você já se candidatou, por favor aguarde a notificação de confirmação!</h2>
-@else
-    <div class="span6">
+<div class="span6">
         <h3>Venha fazer parte desta equipe</h3>
         {{ Form::open('cadVoluntario', '', array('class' => 'form-horizontal')) }}
             <div class="control-group">
@@ -57,7 +54,6 @@
             <p>Observação: Sua escala de trabalho não irá atrapalhar seus horários de palestras ou minicursos do evento.</p>
         </div>
     </div>
-@endif
 @endsection
 <?php Session::forget('artigo');?>
 

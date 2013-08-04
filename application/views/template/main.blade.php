@@ -36,8 +36,8 @@
         </div> <!-- .span4 -->
         <div class="span2">
             <h5>REDES SOCIAIS</h5>
-                {{ HTML::image('img/facebook.png', ''); }}
-                &nbsp;{{ HTML::image('img/twitter.png', ''); }}
+                <a href="https://www.facebook.com/composium" target="_blank">{{ HTML::image('img/facebook.png', ''); }}</a>
+                &nbsp;<a href="https://twitter.com/ComposiumUnifei" target="_blank">{{ HTML::image('img/twitter.png', ''); }}</a>
         </div> <!-- .span2 -->
         <div class="span3 offset1">
             <h5>ABOUT</h5>

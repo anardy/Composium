@@ -15,6 +15,10 @@ class Voluntario extends Eloquent {
 	}
 
 	public static function get_voluntario($cpf) {
-		return DB::table('voluntarios')->where('cpf', '=', $cpf)->count();
+		return DB::table('voluntarios')->where('cpf', '=', $cpf);
+	}
+
+	public static function autoriza_voluntario($cpf) {
+		DB::table('voluntarios')->where('cpf', '=', $cpf)->update(array('status' => '1'));
 	}
 }

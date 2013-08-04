@@ -49,7 +49,6 @@
             <li id="1A"><a href="Administrador"><i class="icon-home"></i> <span>Home</span></a></li>
             <li id="1B">{{ HTML::decode(HTML::link('perfis', '<i class="icon-sitemap"></i> <span>Perfis</span>')) }}</li>
             <li id="1C">{{ HTML::decode(HTML::link('adminusuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
-            <li id="1D"><a href="#"><i class="icon-fire-extinguisher"></i> <span>Logs</span></a></li>
             <li id="1E"><a href="#"><i class="icon-camera"></i> <span>Galeria Fotos</span></a></li>
             <li id="1F"><a href="#"><i class="icon-calendar"></i> <span>Programação</span></a></li>
             <li id="1G">{{ HTML::decode(HTML::link('manutencao', '<i class="icon-cogs"></i> <span>Manutenção</span>')) }}</li>

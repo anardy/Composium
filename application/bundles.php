@@ -37,4 +37,6 @@ return array(
 
 	'docs' => array('handles' => 'docs'),
 
+	'fpdf' => array('auto' => true),
+
 );

@@ -7,22 +7,8 @@
 @section('conteudo')
 <div class="span6 offset3">
     {{ Form::open('perfis', '', array('class' => 'form-inline')) }}
-    <div class="input-append">
-        {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
-            <div class="btn-group">
-                {{ Form::submit('Buscar', array('class' => 'btn btn-primary', 'tabindex' => '-1')) }}
-                <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </div>
-            </div>
+		{{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
+		{{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
     {{ Form::close() }}
 </div>
 

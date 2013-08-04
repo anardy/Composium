@@ -46,11 +46,11 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A"><a href="RH"><i class="icon-home"></i> <span>Home</span></a></li>
-            <li id="1B"><a href="pagamento"><i class="icon-money"></i> <span>Vagas</span></a></li>
-            <li id="1C"><a href="controlePresenca"><i class="icon-check"></i> <span>Inscrições</span></a></li>
-            <li id="1D"><a href="autReinscricao"><i class="icon-repeat"></i> <span>Presenças</span></a></li>
-            <li id="1E"><a href="voluntarios"><i class="icon-male"></i> <span>Contabilidade</span></a></li>
+            <li id="1A"><a href="Coordenador"><i class="icon-home"></i> <span>Home</span></a></li>
+            <li id="1B"><a href="#"><i class="icon-money"></i> <span>Vagas</span></a></li>
+            <li id="1C"><a href="#"><i class="icon-check"></i> <span>Inscrições</span></a></li>
+            <li id="1D"><a href="#"><i class="icon-repeat"></i> <span>Presenças</span></a></li>
+            <li id="1E"><a href="#"><i class="icon-male"></i> <span>Contabilidade</span></a></li>
         </ul>
     </div>
 

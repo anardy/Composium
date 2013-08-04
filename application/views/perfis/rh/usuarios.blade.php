@@ -6,23 +6,9 @@
 
 @section('conteudo')
 <div class="span6 offset3">
-    {{ Form::open('pagamento', '', array('class' => 'form-inline')) }}
-    <div class="input-append">
+    {{ Form::open('usuarios', '', array('class' => 'form-inline')) }}
         {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
-            <div class="btn-group">
-                {{ Form::submit('Buscar', array('class' => 'btn btn-primary', 'tabindex' => '-1')) }}
-                <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </div>
-            </div>
+		{{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
     {{ Form::close() }}
 </div>
 
@@ -38,7 +24,7 @@
         <tbody>
             @foreach ($registros->results as $r)
                     <tr>
-                        <td>{{ $r->cpf }}</td>
+                        <td><a href="conUsuario/{{$r->cpf}}">{{ $r->cpf }}</a></td>
                         <td>{{ $r->firstnome }} {{ $r->lastnome}}</td>
                         <td>{{ $r->email }}</td>
                         <td>{{ date('d/m/Y H:i', strtotime($r->data)) }}</td>

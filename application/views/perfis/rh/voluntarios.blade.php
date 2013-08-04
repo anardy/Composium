@@ -16,7 +16,7 @@
 			<tbody>
 				@foreach ($voluntarios->results as $r)
 					<tr>
-						<td>{{ Form::checkbox('reinscricao[]', $r->cpf, false) }}</td>
+						<td>{{ Form::checkbox('cpfs[]', $r->cpf, false) }}</td>
 						<td>{{ $r->cpf }}</td>
 						<td>{{ date('d/m/Y à\s H:i', strtotime($r->data)) }}</td>
 					</tr>

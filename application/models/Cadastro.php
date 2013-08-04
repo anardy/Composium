@@ -34,4 +34,8 @@ class Cadastro extends Eloquent {
 	public static function ultimos_users() {
 		return DB::table('cadastros')->take(8)->get(array('data', 'firstnome', 'lastnome'));
 	}
+
+	public static function atualizar_dados($cpf, $new_date) {
+		DB::table('cadastros')->where('cpf', '=', $cpf)->update($new_date);
+	}
 }

@@ -33,14 +33,38 @@ class Presenca extends Eloquent {
 	}
 
 	public static function lista_participantes($abreviacao) {
-		return DB::table('presencas')->join('cadastros', 'cadastros.cpf', '=', 'presencas.cpf')
+		return DB::table('presencas')
 		->where('presencas.abreviacao', '=', $abreviacao)
-		->get(array('cadastros.firstnome'));
+		->join('cadastros', 'cadastros.cpf', '=', 'presencas.cpf')
+		->order_by('cadastros.firstnome')
+		->get(array('cadastros.firstnome', 'cadastros.lastnome', 'presencas.cpf', 'presencas.presenca'));
 	}
 
-	public static function lista_presenca($abreviacao) {
-		return DB::table('presencas')->join('cadastros', 'cadastros.cpf', '=', 'presencas.cpf')
-		->where('presencas.abreviacao', '=', $abreviacao)
-		->get(array('cadastros.firstnome', 'cadastros.lastnome'));
+	public static function get_all_cpfs($abreviacao) {
+		return DB::table('presencas')
+		->where('abreviacao', '=', $abreviacao)
+		->get(array('cpf'));
+	}
+
+	public static function atualizar_presenca_ok($cpf, $abreviacao) {
+		return DB::table('presencas')
+		->where('cpf', '=', $cpf)
+		->where('abreviacao', '=', $abreviacao)
+		->update(array('presenca' => '1'));
+	}
+
+	public static function atualizar_presenca_nok($cpf, $abreviacao) {
+		return DB::table('presencas')
+		->where('cpf', '=', $cpf)
+		->where('abreviacao', '=', $abreviacao)
+		->update(array('presenca' => '0'));
+	}
+
+	public static function get_certificados($cpf) {
+		return DB::table('presencas')
+		->where('presencas.cpf', '=', $cpf)
+		->where('presencas.presenca', '=', '1')
+		->join('palestras', 'palestras.abreviacao', '=', 'presencas.abreviacao')
+		->get(array('presencas.abreviacao', 'palestras.nome'));
 	}
 }

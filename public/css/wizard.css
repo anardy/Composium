@@ -59,3 +59,9 @@
 .wizard .current:after {
     border-left-color: #007ACC;
 }
+
+.wraper-r {
+    border-right: 1px solid #dddde2;
+    padding-right: 35px;
+    margin-top: 5px;
+}

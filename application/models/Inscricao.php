@@ -6,6 +6,10 @@ class Inscricao extends Eloquent {
 		DB::table('inscricoes')->insert(array('cpf' => $cpf, 'status' => '0', 'valor' => $total));
 	}
 
+	public static function get_valor($cpf) {
+		return DB::table('inscricoes')->where('cpf', '=', $cpf)->get(array('valor'));
+	}
+
 	public static function excluir_inscricao($cpf) {
 		DB::table('inscricoes')->where('cpf', '=', $cpf)->delete();
 	}
