@@ -7,7 +7,7 @@
 @section('conteudo')
 @if (($user_pagou) || ($user_pagou == 1))
 <h3>Meu Horário</h3>
-<table class="table table-hover">
+<table class="table table-hover table-striped">
     <tr>
         <th>Horário</th>
         <th>Palestra / Minicurso</th>

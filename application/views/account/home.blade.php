@@ -48,7 +48,7 @@
 @endsection
 
 @section('othersjs')
-{{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js'); }}
+{{ HTML::script('js/bootstrap.min.js'); }}
 {{ HTML::script('js/jquery.masked.min.js'); }}
 <script>
     $(document).ready(function(){

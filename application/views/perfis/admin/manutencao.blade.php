@@ -5,7 +5,9 @@
 @endsection
 
 @section('conteudo')
-<div class="box span5">
+<div class="span12">
+    <div class="row-fluid">
+<div class="box span6">
     <div class="box-header">
         <h2><i class="icon-signal"></i><span class="break"></span>Páginas em Manutenção</h2>
     </div>
@@ -43,7 +45,7 @@
 </div>
 </div>
 
-<div class="box span5">
+<div class="box span6">
     <div class="box-header">
         <h2><i class="icon-signal"></i><span class="break"></span>Desativar</h2>
     </div>
@@ -74,8 +76,11 @@
         </div>
 </div>
 </div>
-<div class="span8">
+
+<div class="span12">
 {{ HTML::link('#', 'Atualizar', array('class' => 'btn btn-large btn btn-success')); }}
+</div>
+</div>
 </div>
 @endsection
 

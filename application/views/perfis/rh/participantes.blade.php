@@ -1,5 +1,5 @@
 @if ($participantes)
-{{ HTML::link('imprimirListaPresenca/'.$palestra[0]->abreviacao, 'Imprimir Lista de Presença', array('class' => 'btn btn-primary pull-right')); }}
+{{ HTML::link('imprimirListaPresenca/'.$palestra[0]->abreviacao, 'Imprimir Lista de Presença', array('class' => 'btn btn-primary pull-right', 'target' => '_blank')); }}
 <div class="span6">
 {{ Form::open('atuPresenca') }}
 <table class="table table-hover">

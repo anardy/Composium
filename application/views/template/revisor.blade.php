@@ -12,7 +12,10 @@
         @yield('otherscss')
     </head>
 <body>
-    <div class="navbar container-fluid navbar-inner">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <div class="nav-collapse collapse">
         <ul class="nav">
                 <li><h4>III Composium</h4></li>
         </ul>
@@ -42,6 +45,9 @@
                 </ul>
             </li>
         </ul>
+    </div>
+    </div>
+    </div>
     </div> <!-- .navbar navbar-fixed-top -->
 
     <div id="sidebar-nav">
@@ -58,14 +64,16 @@
                         @yield('conteudo-topo')
                     </div>
                 </div>
-                @yield('conteudo')
+                <div id="teste">
+                    @yield('conteudo')
+                </div>
             </div>
         </div>
     </div> <!-- .container -->
 
 
     {{ HTML::script('js/jquery.min.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js'); }}
+    {{ HTML::script('js/bootstrap.min.js'); }}
     @yield('othersjs')
     </body>
 </html>

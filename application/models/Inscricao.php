@@ -27,9 +27,8 @@ class Inscricao extends Eloquent {
 	}
 
 	public static function busca_cpf($cpf) {
-		return DB::table('inscricoes')
-		->where('inscricoes.cpf', 'LIKE', '%'.$cpf.'%')
-		->join('cadastros', 'inscricoes.cpf', '=', 'cadastros.cpf')
+		return DB::table('cadastros')
+		->where('cadastros.cpf', 'LIKE', '%'.$cpf.'%')
 		->order_by('firstnome')
 		->paginate(7);
 	}
@@ -37,7 +36,6 @@ class Inscricao extends Eloquent {
 	public static function busca_pgto_cpf($cpf) {
 		return DB::table('inscricoes')
 		->where('inscricoes.cpf', 'LIKE', '%'.$cpf.'%')
-		->where('status', '=', '0')
 		->join('cadastros', 'inscricoes.cpf', '=', 'cadastros.cpf')
 		->paginate(7);
 	}

@@ -65,7 +65,7 @@
 
 
     {{ HTML::script('js/jquery.min.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js'); }}
+    {{ HTML::script('js/bootstrap.min.js'); }}
     @yield('othersjs')
     </body>
 </html>

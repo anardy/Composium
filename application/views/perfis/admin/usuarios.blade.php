@@ -5,6 +5,8 @@
 @endsection
 
 @section('conteudo')
+<div class="span12">
+    <div class="row-fluid">
 <div class="span6 offset3">
     {{ Form::open('adminusuarios', '', array('class' => 'form-inline')) }}
         {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
@@ -12,14 +14,12 @@
     {{ Form::close() }}
 </div>
 
-<div class="span11">
     <table class="table">
         <thead>
             <th>CPF</th>
             <th>Nome</th>
             <th>E-mail</th>
             <th>Data Inscrição</th>
-            <th>Status</th>
             <th>&nbsp;</th>
         </thead>
         <tbody>
@@ -29,19 +29,13 @@
                         <td>{{ $r->firstnome }} {{ $r->lastnome}}</td>
                         <td>{{ $r->email }}</td>
                         <td>{{ date('d/m/Y H:i', strtotime($r->data)) }}</td>
-                        <td>
-                            @if ($r->status == 0)
-                                <span class="label label-important">Pagamento em aberto</span>
-                            @else
-                                <span class="label label-success">Pagamento confirmado</span>
-                            @endif
-                        </td>
                         <td><a href="remUsuario/{{$r->cpf}}">Deletar</a></td>
                     </tr>
             @endforeach
         </tbody>
     </table>
     <?php echo $registros->links(); ?>
+</div>
 </div>
 @endsection
 

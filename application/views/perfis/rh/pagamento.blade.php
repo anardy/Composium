@@ -6,6 +6,7 @@
 
 @section('otherscss')
 <style type="text/css">
+/* CSS para remover espaço do botão Confirmar Pagamento da Tabela */
 form {
     margin: 0;
     padding: 0;
@@ -14,7 +15,10 @@ form {
 @endsection
 
 @section('conteudo')
-    @if ($cu)
+<div class="span12">
+    <h3>Pagamento</h3>
+    <div class="row-fluid">
+        @if ($cu)
     <div class="alert alert-success">  
         Pagamento realizado com Sucesso!
     </div>
@@ -26,9 +30,10 @@ form {
     {{ Form::close() }}
 </div>
 <?php Session::forget('cu');?>
-<div class="span11">
+
     <table class="table">
         <thead>
+            <th>CPF</th>
             <th>Nome</th>
             <th>Data Inscrição</th>
             <th>Status</th>
@@ -39,6 +44,7 @@ form {
             @foreach ($registros->results as $r)
                     <tr>
                         <td>{{ $r->cpf }}</td>
+                        <td>{{ $r->firstnome }} {{ $r->lastnome}}</td>
                         <td>{{ date('d/m/Y H:i', strtotime($r->data)) }}</td>
                         <td>
                             @if ($r->status == 0)
@@ -59,7 +65,8 @@ form {
             @endforeach
         </tbody>
     </table>
-    <?php echo $registros->links(); ?>
+        <?php echo $registros->links(); ?>
+    </div>
 </div>
 @endsection
 

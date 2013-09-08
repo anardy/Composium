@@ -5,8 +5,11 @@
 @endsection
 
 @section('conteudo')
-<h3>Meus dados</h3>
-<div class="span6 wraper-esquerda">
+
+<div class="span12">
+<h2>Meus Dados</h2>
+<div class="row-fluid">
+<div class="span6">
     {{ Form::open('altDadosPessoais', '', array('class' => 'form-horizontal')) }}
         <div class="control-group">
             <label class="control-label">Primeiro nome:</label>
@@ -63,49 +66,62 @@
         </div>
         {{ Form::close() }}
 </div>
-        <div class="span5 r-wraper">
-            <div class="alert alert-info">
-                <i class="icon-lightbulb icon-2x pull-left"></i>
-                <h5>Alguma informação aqui!!</h5>
-
-            </div>
-            {{ Form::open('cadDadosPessoais', '', array('class' => 'form-inline')) }}
-                    <div class="control-group">
-            <div class="controls">
-                {{ Form::password('password', array('placeholder' => 'Senha Antiga', 'class' => 'span4')) }}
-            </div>
-        </div>
-                    <div class="control-group">
-            <div class="controls">
-                {{ Form::password('password', array('placeholder' => 'Senha Nova', 'class' => 'span4')) }}
-            </div>
-        </div>
-                    <div class="control-group">
-            <div class="controls">
-                {{ Form::password('password', array('placeholder' => 'Re-digite Senha Nova', 'class' => 'span5')) }}
-            </div>
-        </div>
+        <div class="span6">
             <div class="control-group">
                     <div class="controls">
-                        {{ Form::submit('Alterar Senha', array('class' => 'btn btn-large btn-primary')) }}
+                        <button href="#alterarSenha" class="btn btn-large btn-block btn-primary" data-toggle="modal">Alterar Senha</button>                        
                     </div>
                 </div>
-                {{ Form::close() }}
                 <hr>
-                            <div class="control-group">
+                <div class="control-group">
                     <div class="controls">
                         {{ Form::submit('Deletar Conta', array('class' => 'btn btn-large btn-block btn-danger')) }}
                     </div>
                 </div>
         </div>
         </div>
+        </div>
+
+<div id="alterarSenha" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Alterar Senha</h3>
+  </div>
+  <div class="modal-body">
+    {{ Form::open('cadDadosPessoais', '', array('class' => 'form-inline')) }}
+        <div class="control-group">
+            <label>Digite a senha Antiga:</label>
+            <div class="controls">
+                {{ Form::password('password', array('placeholder' => 'Senha Antiga')) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label>Digite a senha Nova:</label>
+            <div class="controls">
+                {{ Form::password('password', array('placeholder' => 'Senha Nova')) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label>Redigite a senha Antiga:</label>
+            <div class="controls">
+                {{ Form::password('password', array('placeholder' => 'Re-digite Senha Nova')) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                {{ Form::submit('Alterar', array('class' => 'btn btn-large btn btn-success')) }}
+            </div>
+        </div>
+    {{ Form::close() }}
+  </div>
+</div>
 @endsection
 
 @section('othersjs')
 <script>
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
-    $("#1G").toggleClass('active');
+    $("#1H").toggleClass('active');
 });
 </script>
 @endsection

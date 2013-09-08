@@ -3,7 +3,6 @@
 @section('otherscss')
     {{ HTML::style('css/mystyle.css') }}
     {{ HTML::style('css/main.css') }}
-    {{ HTML::style('css/jquery.timeline.css') }}
 @endsection
 
 @section('menu')
@@ -184,36 +183,44 @@
         <section id="realizacao">
                 <h2>Realização</h2>
                 <ul class="thumbnails">
-                    <li><img src="img/realizacao.png"></li>
-                    <li><img src="img/realizacao.png"></li>
-                    <li><img src="img/realizacao.png"></li>
-					<li><img src="img/realizacao.png"></li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
+					<li>{{ HTML::image('img/realizacao.png', ''); }}</li>
                 </ul>
                 <ul class="thumbnails">
-                    <li><img src="img/realizacao.png"></li>
-                    <li><img src="img/realizacao.png"></li>
-                    <li><img src="img/realizacao.png"></li>
-                    <li><img src="img/realizacao.png"></li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
+                    <li>{{ HTML::image('img/realizacao.png', ''); }}</li>
                 </ul>
         </section> <!-- #relizacao -->
 
         <section id="patrocinadores">
+            <div class="span12">
+                <div class="row">
                 <h2>Patrocionadores</h2>
-				<h2>Golden</h2>
-                <ul class="thumbnails">
-                    <li><img src="img/golden.png"></li>
-                    <li><img src="img/golden.png"></li>
-                </ul>
-				<h2>Silver</h2>
-                <ul class="thumbnails">
-                    <li><img src="img/silver.png"></li>
-                    <li><img src="img/silver.png"></li>
-                </ul>
-				<h2>Bronze</h2>
-                <ul class="thumbnails">
-                    <li><img src="img/bronze.png"></li>
-                    <li><img src="img/bronze.png"></li>
-                </ul>
+                <div class="span6">
+    				<h2>Golden</h2>
+                    <ul class="thumbnails">
+                        <li>{{ HTML::image('img/golden.png', ''); }}</li>
+                        <li>{{ HTML::image('img/golden.png', ''); }}</li>
+                    </ul>
+                </div>
+                <div class="span6">
+    				<h3>Silver</h3>
+                    <ul class="thumbnails">
+                        <li>{{ HTML::image('img/silver.png', ''); }}</li>
+                        <li>{{ HTML::image('img/silver.png', ''); }}</li>
+                    </ul>
+    				<h4>Bronze</h4>
+                    <ul class="thumbnails">
+                        <li>{{ HTML::image('img/bronze.png', ''); }}</li>
+                        <li>{{ HTML::image('img/bronze.png', ''); }}</li>
+                    </ul>
+                </div>
+                </div>
+            </div>
         </section> <!-- #patrocionadores -->
             
         <section id="historico">
@@ -235,8 +242,5 @@
 
 @section('othersjs')
     {{ HTML::script('http://maps.google.com/maps/api/js?sensor=false'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js'); }}
-    {{ HTML::script('js/jquery.timeline.js'); }}
     {{ HTML::script('js/script.js'); }}
 @endsection

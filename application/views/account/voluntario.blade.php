@@ -33,7 +33,7 @@
             </div>
         {{ Form::close() }}
     </div>
-    <div class="span5 wraper">
+    <div class="span6">
         <div class="alert alert-info">
             <i class="icon-lightbulb icon-2x pull-left"></i>
             <h5>Benéficios de ser um voluntário:</h5>
@@ -52,7 +52,7 @@
             <p>Essa aprovação chegará via <strong>e-mail</strong> e por notificação na sua área aqui no site. A notificação alertará em quais das opções você foi aceito. Lembrando que você pode ser aceito em mais de uma opção!</p>
             <p>Com a aprovação, você terá acesso ao espaço de voluntário onde você encontrará a sua escala de trabalho no evento, além de mensagens de convoção!</p>
             <p>Observação: Sua escala de trabalho não irá atrapalhar seus horários de palestras ou minicursos do evento.</p>
-        </div>
+		</div>
     </div>
 @endsection
 <?php Session::forget('artigo');?>

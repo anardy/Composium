@@ -7,6 +7,7 @@
         <link rel="shortcut icon" href="img/logosite.png" type="image/x-icon" />
         <title>III Composium @yield('title')</title>
         {{ HTML::style('css/bootstrap.min.css') }}
+		{{ HTML::style('css/bootstrap-responsive.min.css') }}
         {{ HTML::style('css/perfil.css') }}
         {{ HTML::style('css/font-awesome.min.css') }}
         @yield('otherscss')
@@ -15,7 +16,11 @@
     <?php
         $notificacao = Notificacao::count_notificacao_novas_user(Auth::user()->cpf);
     ?>
-    <div class="navbar container-fluid navbar-inner">
+    	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+			<div class="nav-collapse collapse">
+	
         <ul class="nav">
                 <li><h4>III Composium</h4></li>
         </ul>
@@ -43,6 +48,9 @@
             </li>
         </ul>
     </div> <!-- .navbar navbar-fixed-top -->
+</div>
+</div>
+</div>
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
@@ -54,7 +62,7 @@
                 <li id="1E"><a href="voluntario"><i class="icon-male"></i> <span>Voluntário</span></a></li>
                 <li id="1G"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
             @elseif (Inscricao::user_pagou(Auth::user()->cpf))
-                <li id="1I"><a href="boleto"><i class="icon-barcode"></i> <span>Boleto</span></a></li>
+                <li id="1I"><a href="boleto" target="_blank"><i class="icon-barcode"></i> <span>Boleto</span></a></li>
                 <li id="1F"><a href="reinscricao"><i class="icon-bookmark"></i> <span>Reinscrição</span></a></li>
             @endif
             <li id="1H"><a href="meudados"><i class="icon-wrench"></i> <span>Meus Dados</span></a></li>
@@ -62,16 +70,18 @@
     </div>
 
     <div class="content">
-        <div class="container-fluid">
+        <div class="container-narrow">
             <div class="row-fluid">
+			<div id="teste">
                 @yield('conteudo')
+				</div>
             </div>
         </div>
     </div> <!-- .container -->
 
 
     {{ HTML::script('js/jquery.min.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js'); }}
+    {{ HTML::script('js/bootstrap.min.js'); }}
     <script>
         var BASE = "<?php echo URL::base(); ?>";
         $(document).ready(function(){

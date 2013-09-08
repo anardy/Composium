@@ -32,7 +32,9 @@
 @endsection
 
 @section('conteudo')
-<div class="box span6">
+<div class="span12">
+    <div class="row-fluid">
+<div class="box span7">
     <div class="box-header">
         <h2><i class="icon-signal"></i><span class="break"></span>Últimas Ações</h2>
         <div class="box-icon">
@@ -43,9 +45,11 @@
     <div class="sparkLineStats">
         <div class="box-content">
             <ul class="unstyled">
+                @foreach ($ultimas_realizacoes as $r)
                 <li>
-                    <span class="sparkLineStats1 "></span> Visits: <span class="number">356</span>
+                    {{date('d/m/Y à\s H:i', strtotime($r->data))}} - {{$r->oque}}
                 </li>
+                @endforeach
             </ul>
         </div>
     </div>
@@ -61,12 +65,16 @@
     <div class="sparkLineStats">
         <div class="box-content">
             <ul class="unstyled">
+                @foreach ($ultimos_users as $r)
                 <li>
-                    <span class="sparkLineStats1 "></span> Visits: <span class="number">356</span>
+                    {{date('d/m/Y à\s H:i', strtotime($r->data))}} - {{$r->firstnome}} {{$r->lastnome}}
                 </li>
+                @endforeach
             </ul>
         </div>
     </div>
+</div>
+</div>
 </div>
 @endsection
 

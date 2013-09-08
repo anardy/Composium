@@ -37,8 +37,12 @@
 <p><span class="label label-important">Atenção</span> Para minicursos de dois dias, será cobrado o valor referente a dois minicursos.</p>
 <p><span class="label label-info">Importante</span> Palestras estão inclusas na taxa de inscrição.</p>
 <p>&nbsp;</p>
-@if (!Auth::user())
-	<p>{{ HTML::link('iniciarinscricao', 'Iniciar Inscrição &raquo;', array('class' => 'btn btn-large btn btn-success')); }}</p>
+@if (Auth::user())
+	@if ($userinscrito < 1)
+		<p>{{ HTML::link('iniciarinscricao', 'Iniciar Inscrição &raquo;', array('class' => 'btn btn-large btn btn-success')); }}</p>
+	@else
+		<p>A inscrição já foi feita. Se não está contente com a sua inscrição, solicite uma <a href="#">nova inscrição</a>.
+	@endif
 @endif
 
 @endsection

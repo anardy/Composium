@@ -19,33 +19,6 @@ $(function () {
 			location.hash = linkTarget;
         });
 	});
-
-	$("#timeline").timeline();
-
-
-	$('#realizacao ul li div').mouseenter(function() {
-		var t = $(this).attr('class');
-		var e = $(this).attr('rel');
-		$('.'+t).toggleClass(t).toggleClass(e) 
-	});
-
-	$('#realizacao ul li div').mouseleave(function() {
-		var t = $(this).attr('class')+'black';
-		var e = $(this).attr('rel');
-		$('.'+e).toggleClass(e).toggleClass(t) 
-	});
-
-	$('#patrocinadores ul li div').mouseenter(function() {
-		var t = $(this).attr('class');
-		var e = $(this).attr('rel');
-		$('.'+t).toggleClass(t).toggleClass(e) 
-	});
-
-	$('#patrocinadores ul li div').mouseleave(function() {
-		var t = $(this).attr('class')+'black';
-		var e = $(this).attr('rel');
-		$('.'+e).toggleClass(e).toggleClass(t) 
-	});
 });
 
 function initialize() {

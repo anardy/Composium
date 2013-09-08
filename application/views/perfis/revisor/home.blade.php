@@ -8,6 +8,7 @@
 @endsection
 
 @section('conteudo')
+<h3>Artigos</h3>
 @if ($msgm)
     <div class="alert alert-success">  
         Artigo autorizado com Sucesso!

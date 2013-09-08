@@ -7,29 +7,32 @@
         <link rel="shortcut icon" href="img/logosite.png" type="image/x-icon" />
         <title>III Composium @yield('title')</title>
         {{ HTML::style('css/bootstrap.min.css') }}
+        {{ HTML::style('css/bootstrap-responsive.min.css') }}
         {{ HTML::style('css/perfil.css') }}
         {{ HTML::style('css/font-awesome.min.css') }}
         @yield('otherscss')
     </head>
 <body>
-    <div class="navbar container-fluid navbar-inner">
+    <?php
+        $notificacao = Notificacao::count_notificacao_novas_rh();
+    ?>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+            <div class="nav-collapse collapse">
         <ul class="nav">
                 <li><h4>III Composium</h4></li>
         </ul>
         <ul class="nav pull-right">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-bell-alt icon-only"></i> 
-                    <span class="badge badge-info">8</span>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notificar">
+                    <i class="icon-bell-alt icon-only"></i>
+                    @if ($notificacao > 0)
+                        <span class="badge badge-info" id="nro_notificacoes">{{$notificacao}}</span>
+                    @endif
                 </a>
-                <ul class="dropdown-menu">
-                    <li><a href="/"> Página Inicial</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/"> Página Inicial</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/"> Página Inicial</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/"> Página Inicial</a></li>
+                <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+                    <div id="notificacao"></div>
                 </ul>
             </li>
 
@@ -42,6 +45,9 @@
                 </ul>
             </li>
         </ul>
+        </div>
+        </div>
+        </div>
     </div> <!-- .navbar navbar-fixed-top -->
 
     <div id="sidebar-nav">
@@ -58,19 +64,36 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div id="main-stats">
-                    <div class="row-fluid stats-row">
-                        @yield('conteudo-topo')
-                    </div>
+                <div id="teste">
+                    @yield('conteudo')
                 </div>
-                @yield('conteudo')
             </div>
         </div>
     </div> <!-- .container -->
 
 
     {{ HTML::script('js/jquery.min.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js'); }}
+    {{ HTML::script('js/bootstrap.min.js'); }}
+    <script>
+        var BASE = "<?php echo URL::base(); ?>";
+        $(document).ready(function(){
+            $('#notificar').click(function(e) {
+                e.preventDefault();
+                if ($('#notificacao').is(':empty')) {
+                $.ajax({
+                    type: 'GET',
+                    url: BASE+'/notificacaoRh',
+                    beforeSend: function() {
+                        $('#notificacao').html('Carregando...');
+                    },
+                    success: function(data) {
+                        $('#notificacao').html(data);
+                    }
+                });
+                }
+            });
+        });
+    </script>
     @yield('othersjs')
     </body>
 </html>

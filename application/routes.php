@@ -159,6 +159,10 @@ Route::get('notificacao', function() {
 	return View::make('account.notificacao');
 });
 
+Route::get('notificacaoRh', function() {
+	return View::make('perfis.rh.notificacao');
+});
+
 Route::get('reinscricao', function() {
 	$cpf = Auth::user()->cpf;
 	$reinscricao = Reinscricao::get_reinscricao_user($cpf);
@@ -168,6 +172,11 @@ Route::get('reinscricao', function() {
 
 Route::post('reinscricao', array('before' => 'auth', 'do' => function() {
 	Reinscricao::inserir_reinscricao(Auth::user()->cpf);
+	$notificacao = array(
+			'perfil' => 'rh',
+			'mensagem' => '8'
+		);
+	Notificacao::inserir_notificacao($notificacao);
 	return "<h4>Sua Reinscrição foi enviada com sucesso!!</h4>
         	<p>Assim que sua Reinscrição for autorizada você receberá um e-mail para realizar a Inscrição novamente</p>
         	<p>Dúvidas entre em contato: composium@unifei.edu.com.br</p>
@@ -307,7 +316,12 @@ Route::get('logar', function() {
 });
 
 Route::get('inscricao', function() {
-    	return View::make('inscricao.home');
+ if (Auth::user()) {
+    $userinscrito = Inscricao::busca_inscricao(Auth::user()->cpf);
+      return View::make('inscricao.home')->with('userinscrito', $userinscrito);
+    } else {
+      return View::make('account.home');
+    }
 });
 
 Route::post('cadDadosPessoais', function() {
@@ -488,7 +502,12 @@ Route::post('cadVoluntario', array('before' => 'auth', 'do' => function() {
 		);
 
 	Voluntario::inserir_voluntario($new_date);
-
+	Reinscricao::inserir_reinscricao(Auth::user()->cpf);
+	$notificacao = array(
+			'perfil' => 'rh',
+			'mensagem' => '9'
+		);
+	Notificacao::inserir_notificacao($notificacao);
 	return Redirect::to('voluntario');
 }));
 
@@ -507,7 +526,9 @@ Route::get('RH', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.rh.home')
 	->with('c_voluntarios', Voluntario::count_voluntarios())
 	->with('c_reinscricao', Reinscricao::count_reinscricao())
-	->with('c_users', Cadastro::count_users());
+	->with('c_users', Cadastro::count_users())
+	->with('ultimos_users', Cadastro::ultimos_users())
+	->with('ultimas_realizacoes', Realizacao::ultimas_realizacoes(Auth::user()->cpf));
 }));
 
 Route::get('controlePresenca', array('before' => 'auth', 'do' => function() {
@@ -552,14 +573,25 @@ Route::post('atuPresenca', array('before' => 'auth', 'do' => function() {
 			}
 		}
 	}
-	
+	$realizacao_nok = array();
 	foreach ($naoforam as $u) {
 		Presenca::atualizar_presenca_nok($u, $abreviacao);
+		$realizacao_nok[] = array(
+			'quem' => Auth::user()->cpf,
+			'oque' => 'Removeu presença do usuário ' . $u . ' da ' . $abreviacao
+		);
 	}
-
+	Realizacao::inserir_realizacao($realizacao_nok);
+	$realizacao_ok = array();
 	foreach ($foram as $u) {
 		Presenca::atualizar_presenca_ok($u, $abreviacao);
+		$realizacao_ok[] = array(
+			'quem' => Auth::user()->cpf,
+			'oque' => 'Lançou presença do usuário ' . $u . ' para ' . $abreviacao
+		);
 	}
+	Realizacao::inserir_realizacao($realizacao_ok);
+	
 	return Redirect::to('controlePresenca');
 }));
 
@@ -592,15 +624,6 @@ Route::post('insUserPalestra', array('before' => 'auth', 'do' => function() {
 	}
 }));
 
-Route::get('listaPresenca', array('before' => 'auth', 'do' => function() {
-	$palestras = Programacao::get_palestra();
-	$array = array();
-	foreach($palestras as $p) {
-		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
-	}
-	return View::make('perfis.rh.listapresenca')->with('palestras',$array);
-}));
-
 Route::get('autReinscricao', array('before' => 'auth', 'do' => function() {
 	$reinscricoes = Reinscricao::get_reinscricoes();
 
@@ -615,18 +638,24 @@ Route::post('buscaAutReinscricao', array('before' => 'auth', 'do' => function() 
 
 Route::post('autReinscricao', array('before' => 'auth', 'do' => function() {
 	$teste = Input::get('reinscricao');
-
+	$notificacao = array();
+	$realizacao = array();
 	foreach ($teste as $u) {
 		Reinscricao::autoriza_reinscricao($u);
 		Inscricao::excluir_inscricao($u);
 		Presenca::excluir_presenca($u);
-		$new_date = array(
+		 $notificacao[] = array(
 			'destinatario' => $u,
 			'perfil' => 'usuario',
 			'mensagem' => '1'
 		);
+		$realizacao[] = array(
+			'quem' => Auth::user()->cpf,
+			'oque' => 'Autorizou a reinscrição do usuário ' . $u
+		);
 	}
-	Notificacao::inserir_notificacao($new_date);
+	Notificacao::inserir_notificacao($notificacao);
+	Realizacao::inserir_realizacao($realizacao);
 	return Redirect::to('autReinscricao');
 }));
 
@@ -637,7 +666,8 @@ Route::get('voluntarios', array('before' => 'auth', 'do' => function() {
 
 Route::post('autVoluntario', array('before' => 'auth', 'do' => function() {
 	$teste = Input::get('cpfs');
-
+	$voluntario = array();
+	$realizacao = array();
 	foreach ($teste as $u) {
 		Voluntario::autoriza_voluntario($u);
 		$new_date = array(
@@ -645,11 +675,16 @@ Route::post('autVoluntario', array('before' => 'auth', 'do' => function() {
 			'perfil' => 'usuario',
 			'mensagem' => '3'
 		);
-		$voluntario = array(
+		$voluntario[] = array(
 			'cpf' => $u,
 			'perfil' => 'Voluntario'
 		);
+		$realizacao[] = array(
+			'quem' => Auth::user()->cpf,
+			'oque' => 'Credenciou o usuário ' . $u . ' como Voluntário'
+		);
 	}
+	Realizacao::inserir_realizacao($realizacao);
 	Notificacao::inserir_notificacao($new_date);
 	Perfil::inserir_perfil($voluntario);
 	return Redirect::to('voluntarios');
@@ -676,8 +711,13 @@ Route::post('estoutestando', array('before' => 'auth', 'do' => function() {
 		'perfil' => 'usuario',
 		'mensagem' => '5'
 		);
+	$realizacao = array(
+		'quem' => Auth::user()->cpf,
+		'oque' => 'Realizou o pagamento do usuário ' . $cpf
+		);
 	Inscricao::confirma_pgto_user($cpf);
 	Notificacao::inserir_notificacao($new_date);
+	Realizacao::inserir_realizacao($realizacao);
 	return Redirect::to('pagamento');
 }));
 
@@ -694,7 +734,8 @@ Route::post('usuarios', array('before' => 'auth', 'do' => function() {
 Route::get('Administrador', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.admin.home')
 	->with('c_users', Cadastro::count_users())
-	->with('ultimos_users', Cadastro::ultimos_users());
+	->with('ultimos_users', Cadastro::ultimos_users())
+	->with('ultimas_realizacoes', Realizacao::ultimas_realizacoes_all());
 }));
 
 Route::get('manutencao', array('before' => 'auth', 'do' => function() {

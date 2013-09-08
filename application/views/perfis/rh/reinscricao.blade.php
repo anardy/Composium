@@ -5,6 +5,8 @@
 @endsection
 
 @section('conteudo')
+<div class="span12">
+	<h3>Reinscrição</h3>
 @if ($reinscricoes->results)
 <div class="span6 offset3">
     {{ Form::open('buscaAutReinscricao', 'busca', array('class' => 'form-inline')) }}
@@ -41,6 +43,7 @@
 @else
 	<h3>Nenhuma solicitação de Reinscrição!!</h3>
 @endif
+</div>
 @endsection
 
 @section('othersjs')

@@ -12,7 +12,10 @@
         @yield('otherscss')
     </head>
 <body>
-    <div class="navbar container-fluid navbar-inner">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+            <div class="nav-collapse collapse">
         <ul class="nav">
                 <li><h4>III Composium</h4></li>
         </ul>
@@ -42,11 +45,14 @@
                 </ul>
             </li>
         </ul>
+    </div>
+    </div>
+    </div>
     </div> <!-- .navbar navbar-fixed-top -->
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A"><a href="Administrador"><i class="icon-home"></i> <span>Home</span></a></li>
+            <li id="1A">{{ HTML::decode(HTML::link('Administrador', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
             <li id="1B">{{ HTML::decode(HTML::link('perfis', '<i class="icon-sitemap"></i> <span>Perfis</span>')) }}</li>
             <li id="1C">{{ HTML::decode(HTML::link('adminusuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
             <li id="1E"><a href="#"><i class="icon-camera"></i> <span>Galeria Fotos</span></a></li>
@@ -64,14 +70,16 @@
                         @yield('conteudo-topo')
                     </div>
                 </div>
-                @yield('conteudo')
+                <div id="teste">
+                    @yield('conteudo')
+                </div>
             </div>
         </div>
     </div> <!-- .container -->
 
 
     {{ HTML::script('js/jquery.min.js'); }}
-    {{ HTML::script('http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js'); }}
+    {{ HTML::script('js/bootstrap.min.js'); }}
     @yield('othersjs')
     </body>
 </html>

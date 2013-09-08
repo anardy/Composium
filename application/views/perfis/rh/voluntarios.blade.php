@@ -9,7 +9,8 @@
 
 
 @section('conteudo')
-<h2>Voluntários</h2>
+<div class="span12">
+<h3>Voluntários</h3>
 @if ($voluntarios->results)
 	{{ Form::open('autVoluntario') }}
 		<table class="table table-hover">
@@ -29,6 +30,7 @@
 @else
 	<h3>Nenhuma solicitação de Voluntário!!</h3>
 @endif
+</div>
 @endsection
 
 @section('othersjs')

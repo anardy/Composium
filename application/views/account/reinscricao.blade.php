@@ -27,7 +27,6 @@
 </div>
 @endsection
 
-
 @section('othersjs')
 <script>
 $(document).ready(function(){
