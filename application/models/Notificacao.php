@@ -53,37 +53,37 @@ class Notificacao extends Eloquent {
 		DB::table('notificacoes')->where('cpf', '=', $cpf)->update(array('status' => '1'));
 	}
 
-	public static function count_notificacao_total_rh() {
+	public static function count_notificacao_total($perfil) {
 		return DB::table('notificacoes')
-		->where('perfil', '=', 'rh')
+		->where('perfil', '=', $perfil)
 		->count();
 	}
 
-	public static function count_notificacao_rh() {
+	public static function count_notificacao($perfil) {
 		return DB::table('notificacoes')
-		->where('perfil', '=', 'rh')
+		->where('perfil', '=', $perfil)
 		->count();
 	}
 
-	public static function count_notificacao_novas_rh() {
+	public static function count_notificacao_novas($perfil) {
 		return DB::table('notificacoes')
-		->where('perfil', '=', 'rh')
+		->where('perfil', '=', $perfil)
 		->where('status', '=', '0')
 		->count();
 	}
 
-	public static function new_notificacao_rh() {
+	public static function new_notificacao($perfil) {
 		return DB::table('notificacoes')
-		->where('notificacoes.perfil', '=', 'rh')
+		->where('notificacoes.perfil', '=', $perfil)
 		->where('notificacoes.status', '=', '0')
 		->join('mensagens', 'mensagens.codigo', '=', 'notificacoes.mensagem')
 		->order_by('notificacoes.data', 'desc')
 		->get(array('mensagens.mensagem'));
 	}
 
-	public static function notificacao_rh() {
+	public static function notificacao_perfil($perfil) {
 		return DB::table('notificacoes')
-		->where('notificacoes.perfil', '=', 'rh')
+		->where('notificacoes.perfil', '=', $perfil)
 		->where('notificacoes.status', '=', '1')
 		->join('mensagens', 'mensagens.codigo', '=', 'notificacoes.mensagem')
 		->order_by('notificacoes.data', 'desc')

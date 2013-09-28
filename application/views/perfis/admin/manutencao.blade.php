@@ -6,6 +6,7 @@
 
 @section('conteudo')
 <div class="span12">
+    <h3>Manutenção</h3>
     <div class="row-fluid">
 <div class="box span6">
     <div class="box-header">
@@ -88,7 +89,7 @@
 <script>
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
-    $("#1G").toggleClass('active');
+    $("#1F").toggleClass('active');
 });
 </script>
 @endsection

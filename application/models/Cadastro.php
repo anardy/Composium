@@ -3,10 +3,9 @@ class Cadastro extends Eloquent {
 	public static $timestamps = false;
 
 	public static function pesquisa_usuario_calculo($cpf) {
-		$users = DB::table('cadastros')->where('cpf', '=', $cpf)->get(
+		return DB::table('cadastros')->where('cpf', '=', $cpf)->get(
 				array('instituicao', 'curso')
 			);
-		return $users;
 	}
 
 	public static function remover_usuario($cpf) {
@@ -16,7 +15,9 @@ class Cadastro extends Eloquent {
 	}
 
 	public static function get_nome($cpf) {
-		return DB::table('cadastros')->where('cpf', '=', $cpf)->get(array('firstnome', 'lastnome'));
+		return DB::table('cadastros')
+		->where('cpf', '=', $cpf)
+		->get(array('firstnome', 'lastnome'));
 	}
 
 	public static function get_valida($cpf) {
@@ -37,5 +38,13 @@ class Cadastro extends Eloquent {
 
 	public static function atualizar_dados($cpf, $new_date) {
 		DB::table('cadastros')->where('cpf', '=', $cpf)->update($new_date);
+	}
+
+	public static function grafico_porcuros() {
+		return json_encode(DB::query("select DISTINCT count(a.cpf) as value, a.curso as label from cadastros a group by a.curso"));
+	}
+
+	public static function grafico_porinstituicao() {
+		return json_encode(DB::query("select DISTINCT count(a.cpf) as value, a.instituicao as label from cadastros a group by a.instituicao"));
 	}
 }

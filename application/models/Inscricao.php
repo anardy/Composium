@@ -43,4 +43,16 @@ class Inscricao extends Eloquent {
 	public static function count_pagantes() {
 		return DB::table('inscricoes')->where('status', '=', '1')->count();
 	}
+
+	public static function get_emcaixa() {
+		return DB::table('inscricoes')
+		->where('status','=','1')
+		->sum('valor');
+	}
+
+	public static function get_areceber() {
+		return DB::table('inscricoes')
+		->where('status','=','0')
+		->sum('valor');
+	}
 }

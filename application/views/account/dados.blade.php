@@ -8,9 +8,9 @@
 
 <div class="span12">
 <h2>Meus Dados</h2>
-<div class="row-fluid">
-<div class="span6">
     {{ Form::open('altDadosPessoais', '', array('class' => 'form-horizontal')) }}
+    <fieldset>
+    <legend>Alteração dos Dados</legend>
         <div class="control-group">
             <label class="control-label">Primeiro nome:</label>
             <div class="controls">
@@ -64,30 +64,11 @@
                 {{ Form::submit('Atualizar', array('class' => 'btn btn-large btn btn-success')) }}
             </div>
         </div>
+    </fieldset>
         {{ Form::close() }}
-</div>
-        <div class="span6">
-            <div class="control-group">
-                    <div class="controls">
-                        <button href="#alterarSenha" class="btn btn-large btn-block btn-primary" data-toggle="modal">Alterar Senha</button>                        
-                    </div>
-                </div>
-                <hr>
-                <div class="control-group">
-                    <div class="controls">
-                        {{ Form::submit('Deletar Conta', array('class' => 'btn btn-large btn-block btn-danger')) }}
-                    </div>
-                </div>
-        </div>
-        </div>
-        </div>
 
-<div id="alterarSenha" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Alterar Senha</h3>
-  </div>
-  <div class="modal-body">
+<fieldset>
+    <legend>Alterar Senha</legend>
     {{ Form::open('cadDadosPessoais', '', array('class' => 'form-inline')) }}
         <div class="control-group">
             <label>Digite a senha Antiga:</label>
@@ -109,12 +90,21 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                {{ Form::submit('Alterar', array('class' => 'btn btn-large btn btn-success')) }}
+                {{ Form::submit('Alterar', array('class' => 'btn btn-large btn-primary')) }}
             </div>
         </div>
     {{ Form::close() }}
-  </div>
-</div>
+</fieldset>
+<fieldset>
+    <legend>Deletar conta</legend>
+                <div class="control-group">
+                    <div class="controls">
+                        {{ Form::submit('Deletar Conta', array('class' => 'btn btn-large btn-danger')) }}
+                    </div>
+                </div>
+                </fieldset>
+        </div>
+        </div>
 @endsection
 
 @section('othersjs')

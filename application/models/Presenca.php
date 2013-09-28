@@ -67,4 +67,60 @@ class Presenca extends Eloquent {
 		->join('palestras', 'palestras.abreviacao', '=', 'presencas.abreviacao')
 		->get(array('presencas.abreviacao', 'palestras.nome'));
 	}
+
+	public static function get_presentes($abreviacao) {
+		return DB::table('presencas')
+		->where('abreviacao', '=', $abreviacao)
+		->where('presenca', '=', '1')
+		->count('presenca');
+	}
+
+	public static function get_ausentes($abreviacao) {
+		return DB::table('presencas')
+		->where('abreviacao', '=', $abreviacao)
+		->where('presenca', '=', '0')
+		->count('presenca');
+	}
+
+	public static function nrototal_abreviacao($abreviacao) {
+		return DB::table('presencas')
+		->where('presencas.abreviacao', '=', $abreviacao)
+		->count();
+	}
+
+	public static function get_graph() {
+		return DB::query("select date_format(data, '%Y-%m-%d') as data, count(a.cpf) as valor from presencas a, palestras b
+where a.abreviacao = b.abreviacao and
+      a.presenca = 1
+group by day(b.data)");
+	}
+
+	public static function get_bestpresenca() {
+		return DB::query('select b.abreviacao, b.nome, count(a.presenca) as valor from presencas a, palestras b
+where a.abreviacao = b.abreviacao
+group by (b.abreviacao)
+order by rand() desc LIMIT 10');
+	}
+
+	public static function get_maisprocurados() {
+		return DB::query("select a.abreviacao, count(a.cpf) as total, b.nome from presencas a, palestras b
+where a.abreviacao = b.abreviacao group by a.abreviacao order by total desc limit 10");
+	}
+
+	public static function get_all_presentes() {
+		return DB::table('presencas')
+		->where('presenca', '=', '1')
+		->count('presenca');
+	}
+
+	public static function get_all_ausentes() {
+		return DB::table('presencas')
+		->where('presenca', '=', '0')
+		->count('presenca');
+	}
+
+	public static function get_total() {
+		return DB::table('presencas')
+		->count('presenca');
+	}
 }

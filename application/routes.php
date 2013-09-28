@@ -163,6 +163,22 @@ Route::get('notificacaoRh', function() {
 	return View::make('perfis.rh.notificacao');
 });
 
+Route::get('notificacaoVoluntario', function() {
+	return View::make('perfis.voluntario.notificacao');
+});
+
+Route::get('notificacaoRevisor', function() {
+	return View::make('perfis.revisor.notificacao');
+});
+
+Route::get('notificacaoAdmin', function() {
+	return View::make('perfis.admin.notificacao');
+});
+
+Route::get('notificacaoCoordenador', function() {
+	return View::make('perfis.coordenador.notificacao');
+});
+
 Route::get('reinscricao', function() {
 	$cpf = Auth::user()->cpf;
 	$reinscricao = Reinscricao::get_reinscricao_user($cpf);
@@ -731,96 +747,39 @@ Route::post('usuarios', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.rh.usuarios')->with('registros', $registros);
 }));
 
-Route::get('Administrador', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.admin.home')
-	->with('c_users', Cadastro::count_users())
-	->with('ultimos_users', Cadastro::ultimos_users())
-	->with('ultimas_realizacoes', Realizacao::ultimas_realizacoes_all());
-}));
-
-Route::get('manutencao', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.admin.manutencao');
+Route::get('controleVagas', array('before' => 'auth', 'do' => function() {
+	$palestras = Programacao::get_palestra();
+	$array = array();
+	foreach($palestras as $p) {
+		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
+	}
+	$topvagas = Programacao::get_topvagas();
+	return View::make('perfis.rh.vagas')
+	->with('palestras',$array)
+	->with('topvagas', $topvagas);
 }));
 
 Route::get('logs', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.admin.log');
 }));
 
-Route::get('perfis', array('before' => 'auth', 'do' => function() {
-	$registros = Perfil::busca_perfis(Input::get('cpf'));
-	return View::make('perfis.admin.perfis')->with('registros', $registros);
+Route::get('galeria', array('before' => 'auth', 'do' => function() {
+	return View::make('perfis.admin.galeria');
 }));
 
-Route::post('perfis', array('before' => 'auth', 'do' => function() {
-	$registros = Perfil::busca_perfis(Input::get('cpf'));
-	return View::make('perfis.admin.perfis')->with('registros', $registros);
-}));
-
-Route::get('cadPerfil', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.admin.cadPerfil');
-}));
-
-Route::get('altPerfil/(:any)/(:any)', array('before' => 'auth', 'do' => function($cpf, $perfil) {
-	return View::make('perfis.admin.altPerfil')->with('cpf', $cpf)->with('perfil', $perfil);
-}));
-
-Route::get('remPerfil/(:any)/(:any)', array('before' => 'auth', 'do' => function($cpf, $perfil) {
-	if ((isset($cpf)) || (isset($perfil))) {
-		Perfil::remover_perfil($cpf, $perfil);
-	}
-	return Redirect::to('perfis');
-}));
-
-Route::post('cadPerfil', array('before' => 'auth', 'do' => function() {
-	$new_date = array(
-		'cpf' => Input::get('cpf'),
-		'perfil' => Input::get('perfil')
-		);
-
-	$regras = array('cpf' => 'required');
-
-	$v = Validator::make($new_date, $regras);
-
-	if ($v->fails()) {
-		return Redirect::to('cadPerfil')->with_errors($v)->with_input();
-	}
-
-	Perfil::inserir_perfil($new_date);
-	return Redirect::to('perfis');
-}));
-
-Route::post('altPerfil', array('before' => 'auth', 'do' => function() {
-	$cpf = Input::get('cpf');
-	$perfilantigo = Input::get('perfilantigo');
-	$perfilnovo = Input::get('perfilnovo');
-	Perfil::alterar_perfil($cpf,$perfilantigo, $perfilnovo);
-	return Redirect::to('perfis');
-}));
-
-
-Route::get('adminusuarios', array('before' => 'auth', 'do' => function() {
-	$registros = Inscricao::busca_cpf(Input::get('cpf'));
-	return View::make('perfis.admin.usuarios')->with('registros', $registros);
-}));
-
-Route::post('adminusuarios', array('before' => 'auth', 'do' => function() {
-	$registros = Inscricao::busca_cpf(Input::get('cpf'));
-	return View::make('perfis.admin.usuarios')->with('registros', $registros);
-}));
-
-Route::get('remUsuario/(:any)', array('before' => 'auth', 'do' => function($cpf) {
-	if (isset($cpf)) {
-		Cadastro::remover_usuario($cpf);
-	}
-	return Redirect::to('adminusuarios');
-}));
-
-Route::get('conUsuario/(:any)', array('before' => 'auth', 'do' => function($cpf) {
-	if (isset($cpf)) {
-		$results = Cadastro::get_dados($cpf);
-		return View::make('perfis.admin.conUsuario')->with('results', $results);
-	}
-}));
+/* Rotas do Perfil Administrador */
+Route::controller('administrador');
+Route::get('administrador', array('as' => 'manutencao', 'before' => 'auth', 'uses' => 'administrador@administrador'));
+Route::get('administrador/manutencao', array('as' => 'manutencao', 'before' => 'auth', 'uses' => 'administrador@manutencao'));
+Route::get('administrador/programacao', array('as' => 'programacao', 'before' => 'auth', 'uses' => 'administrador@programacao'));
+Route::any('administrador/perfis', array('as' => 'perfis', 'before' => 'auth', 'uses' => 'administrador@perfis'));
+Route::any('administrador/CadPerfil', array('as' => 'CadPerfil', 'before' => 'auth', 'uses' => 'administrador@CadPerfil'));
+Route::any('administrador/AltPerfil/(:any)/(:any)', array('as' => 'AltPerfil', 'before' => 'auth', 'uses' => 'administrador@AltPerfil'));
+Route::get('administrador/RemPerfil/(:any)/(:any)', array('as' => 'AltPerfil', 'before' => 'auth', 'uses' => 'administrador@RemPerfil'));
+Route::any('administrador/usuarios', array('as' => 'usuarios', 'before' => 'auth', 'uses' => 'administrador@usuarios'));
+Route::get('administrador/ConUsuario/(:any)', array('as' => 'ConUsuario', 'before' => 'auth', 'uses' => 'administrador@ConUsuario'));
+Route::get('administrador/RemUsuario/(:any)', array('as' => 'RemUsuario', 'before' => 'auth', 'uses' => 'administrador@RemUsuario'));
+/* Fim Rotas do Perfil Administrador */
 
 Route::get('Coordenador', array('before' => 'auth', 'do' => function() {
 	return View::make('perfis.coordenador.home')
@@ -852,5 +811,108 @@ Route::get('conArtigo/(:any)', array('before' => 'auth', 'do' => function($cpf) 
 }));
 
 Route::get('Voluntario', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.voluntario');
+	return View::make('perfis.voluntario.voluntario');
+}));
+
+Route::get('Inscricoes', array('before' => 'auth', 'do' => function() {
+	$porcurso = Cadastro::grafico_porcuros();
+	$porinstuicao = Cadastro::grafico_porinstituicao();
+	$maisprocurados = Presenca::get_maisprocurados();
+	return View::make('perfis.coordenador.inscricoes')
+	->with('porcurso', $porcurso)
+	->with('porinstuicao', $porinstuicao)
+	->with('maisprocurados', $maisprocurados);
+}));
+
+Route::get('Vagas', array('before' => 'auth', 'do' => function() {
+	$palestras = Programacao::get_palestra();
+	$array = array();
+	foreach($palestras as $p) {
+		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
+	}
+	$topvagas = Programacao::get_topvagas();
+	return View::make('perfis.coordenador.vagas')
+	->with('palestras',$array)
+	->with('topvagas', $topvagas);
+}));
+
+Route::get('Contabilidade', array('before' => 'auth', 'do' => function() {
+	return View::make('perfis.coordenador.contabilidade')
+	->with('emcaixa', Inscricao::get_emcaixa())
+	->with('areceber', Inscricao::get_areceber());
+}));
+
+Route::get('Presencas', array('before' => 'auth', 'do' => function() {
+	$total = Presenca::get_total();
+	$mediaPresentes = (Presenca::get_all_presentes()/$total)*100;
+	$mediaAusentes = (Presenca::get_all_ausentes()/$total)*100;
+	if ($mediaPresentes > $mediaAusentes) {
+		$texto = "It's Good!!";
+	} else {
+		$texto = "It's Bad!";
+	}
+	$palestras = Programacao::get_palestra();
+	$array = array();
+	foreach($palestras as $p) {
+		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
+	}
+	$dados = Presenca::get_graph();
+	return View::make('perfis.coordenador.presencas')
+	->with('palestras',$array)
+	->with('dados', json_encode($dados))
+	->with('mediaPresentes', round($mediaPresentes))
+	->with('mediaAusentes', round($mediaAusentes))
+	->with('texto', $texto);
+}));
+
+Route::post('controleVagas', array('before' => 'auth', 'do' => function() {
+	$abreviacao = Input::get('abreviacao');
+	$texto = null;
+	if ($abreviacao == 'all') {
+		$vagas = Programacao::get_topvagas();
+	} else {
+		$vagas = Programacao::get_vagas($abreviacao);
+		$texto = "Vagas Restantes";
+	}
+	return View::make('perfis.coordenador.controlevagas')
+	->with('vagas', $vagas)
+	->with('texto', $texto);
+}));
+
+Route::get('controleArtigos', array('before' => 'auth', 'do' => function() {
+	$all_artigos = Artigo::get_all_artigos();
+	$msgm = Session::get('revisorartigo');
+	return View::make('perfis.rh.artigos')
+	->with('msgm', $msgm)
+	->with('artigos', $all_artigos);
+}));
+
+Route::post('gerarPresenca', array('before' => 'auth', 'do' => function() {
+	$abreviacao = Input::get('abreviacao');
+	if ($abreviacao == 'all') {
+		$dados = Presenca::get_bestpresenca();
+		return View::make('perfis.coordenador.controlepresencatop10')
+		->with('dados', $dados);
+	} else {
+		$presentes = Presenca::get_presentes($abreviacao);
+		$ausentes = Presenca::get_ausentes($abreviacao);
+		$total = Presenca::nrototal_abreviacao($abreviacao);
+		$percentual = ($presentes * 100)/$total;
+		return View::make('perfis.coordenador.controlepresenca')
+		->with('presentes', $presentes)
+		->with('ausentes', $ausentes)
+		->with('percentual', round($percentual));
+	}
+}));
+
+Route::get('Orcamento', array('before' => 'auth', 'do' => function() {
+	return View::make('perfis.coordenador.orcamento');
+}));
+
+Route::get('controleArtigosCoord', array('before' => 'auth', 'do' => function() {
+	$all_artigos = Artigo::get_all_artigos();
+	$msgm = Session::get('revisorartigo');
+	return View::make('perfis.coordenador.artigos')
+	->with('msgm', $msgm)
+	->with('artigos', $all_artigos);
 }));

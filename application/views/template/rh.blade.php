@@ -14,7 +14,7 @@
     </head>
 <body>
     <?php
-        $notificacao = Notificacao::count_notificacao_novas_rh();
+        $notificacao = Notificacao::count_notificacao_novas('rh');
     ?>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -39,6 +39,12 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ Auth::user()->firstnome }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                    @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
+                        @if ($a->perfil != 'RH')
+                            <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                            <li class="divider"></li>
+                        @endif
+                    @endforeach
                     <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
@@ -58,12 +64,19 @@
             <li id="1D"><a href="autReinscricao"><i class="icon-repeat"></i> <span>Reinscrição</span></a></li>
             <li id="1E"><a href="voluntarios"><i class="icon-male"></i> <span>Voluntários</span></a></li>
             <li id="1F"><a href="usuarios"><i class="icon-group"></i> <span>Usuários</span></a></li>
+            <li id="1G"><a href="controleArtigos"><i class="icon-group"></i> <span>Artigos</span></a></li>
+            <li id="1H"><a href="controleVagas"><i class="icon-money"></i> <span>Vagas</span></a></li>
         </ul>
     </div>
 
     <div class="content">
         <div class="container-fluid">
             <div class="row-fluid">
+                <div id="main-stats">
+                    <div class="row-fluid stats-row">
+                        @yield('conteudo-topo')
+                    </div>
+                </div>
                 <div id="teste">
                     @yield('conteudo')
                 </div>

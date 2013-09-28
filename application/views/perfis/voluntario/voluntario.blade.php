@@ -7,13 +7,9 @@
 @section('otherscss')
 @endsection
 
-@section('area')
-Coordenador
-@endsection
-
 @section('conteudo')
     <h1>Voluntário</h1>
-    <h4>Em construção...</h4>
+    <h4>Escala de trabalho</h4>
 @endsection
 
 @section('othersjs')

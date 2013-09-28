@@ -7,27 +7,27 @@
 @section('conteudo-topo')
 <div class="span3 stat">
     <div class="data">
-        <span class="number">X</span>??
-    </div>
-    <span class="date">??</span>
-</div>
-<div class="span3 stat">
-    <div class="data">
-        <span class="number">{{$c_users}}</span>usuários
+        <span class="number">X</span>Usuários
     </div>
     <span class="date">Inscritos</span>
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">{{$c_reinscricao}}</span>reinscrição
+        <span class="number">{{$c_users}}</span>Confirmados
     </div>
-    <span class="date">Solicitações</span>
+    <span class="date">???</span>
 </div>
 <div class="span3 stat">
     <div class="data">
-        <span class="number">{{$c_voluntarios}}</span>voluntários
+        <span class="number">{{$c_reinscricao}}</span>A pagar
     </div>
-    <span class="date">Solicitações</span>
+    <span class="date">??</span>
+</div>
+<div class="span3 stat">
+    <div class="data">
+        <span class="number">{{$c_voluntarios}}</span>Vencidos
+    </div>
+    <span class="date">??</span>
 </div>
 @endsection
 
@@ -80,9 +80,25 @@
 
 @section('othersjs')
 <script>
+var BASE = "<?php echo URL::base(); ?>";
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
     $("#1A").toggleClass('active');
+    $('#notificar').click(function(e) {
+                e.preventDefault();
+                if ($('#notificacao').is(':empty')) {
+                $.ajax({
+                    type: 'GET',
+                    url: BASE+'/notificacaoRh',
+                    beforeSend: function() {
+                        $('#notificacao').html('Carregando...');
+                    },
+                    success: function(data) {
+                        $('#notificacao').html(data);
+                    }
+         });
+       }
+    });
 });
 </script>
 @endsection

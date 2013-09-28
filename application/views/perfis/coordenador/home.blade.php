@@ -1,7 +1,7 @@
 @layout('template.coordenador')
 
 @section('title')
-- RH
+- Coordenador
 @endsection
 
 @section('conteudo-topo')
@@ -62,7 +62,7 @@
         <div class="box-content">
             <ul class="unstyled">
                 <li>
-                    <span class="sparkLineStats1 "></span> Visits: <span class="number">356</span>
+                    <span class="sparkLineStats1"></span> Visits: <span class="number">356</span>
                 </li>
             </ul>
         </div>

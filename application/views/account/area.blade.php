@@ -27,7 +27,7 @@
     Não perca tempo e faça agora mesmo!<br>
     BLA BLA
     <p>HA</p>
-    {{ HTML::link('inscricao', 'Faça sua Inscrição', array('class' => 'btn btn-large btn-block btn-success')); }}
+    {{ HTML::link('inscricao', 'Faça sua Inscrição', array('class' => 'btn btn-large btn-success')); }}
     <p>HA</p>
 @endif
 @endsection

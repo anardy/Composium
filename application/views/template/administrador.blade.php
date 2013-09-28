@@ -12,6 +12,9 @@
         @yield('otherscss')
     </head>
 <body>
+    <?php
+        $notificacao = Notificacao::count_notificacao_novas('administrador');
+    ?>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -21,24 +24,26 @@
         </ul>
         <ul class="nav pull-right">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-bell-alt icon-only"></i> 
-                    <span class="badge badge-info">8</span>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notificar">
+                    <i class="icon-bell-alt icon-only"></i>
+                    @if ($notificacao > 0)
+                        <span class="badge badge-info">{{$notificacao}}</span>
+                    @endif
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/"> Página Inicial</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/"> Página Inicial</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/"> Página Inicial</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/"> Página Inicial</a></li>
+                    <div id="notificacao"></div>
                 </ul>
             </li>
 
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ Auth::user()->firstnome }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                    @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
+                        @if ($a->perfil != 'Administrador')
+                            <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                            <li class="divider"></li>
+                        @endif
+                    @endforeach
                     <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
@@ -52,13 +57,13 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A">{{ HTML::decode(HTML::link('Administrador', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
-            <li id="1B">{{ HTML::decode(HTML::link('perfis', '<i class="icon-sitemap"></i> <span>Perfis</span>')) }}</li>
-            <li id="1C">{{ HTML::decode(HTML::link('adminusuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
-            <li id="1E"><a href="#"><i class="icon-camera"></i> <span>Galeria Fotos</span></a></li>
-            <li id="1F"><a href="#"><i class="icon-calendar"></i> <span>Programação</span></a></li>
-            <li id="1G">{{ HTML::decode(HTML::link('manutencao', '<i class="icon-cogs"></i> <span>Manutenção</span>')) }}</li>
-            <li id="1H"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
+            <li id="1A">{{ HTML::decode(HTML::link_to_action('administrador@administrador', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
+            <li id="1B">{{ HTML::decode(HTML::link_to_action('administrador@perfis', '<i class="icon-sitemap"></i> <span>Perfis</span>')) }}</li>
+            <li id="1C">{{ HTML::decode(HTML::link_to_action('administrador@usuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
+            <li id="1D">{{ HTML::decode(HTML::link('galeria', '<i class="icon-camera"></i> <span>Galeria Fotos</span>')) }}</li>
+            <li id="1E">{{ HTML::decode(HTML::link_to_action('administrador@programacao', '<i class="icon-calendar"></i> <span>Programação</span>')) }}</li>
+            <li id="1F">{{ HTML::decode(HTML::link_to_action('administrador@manutencao', '<i class="icon-cogs"></i> <span>Manutenção</span>')) }}</li>
+            <li id="1G"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
         </ul>
     </div>
 
@@ -80,6 +85,26 @@
 
     {{ HTML::script('js/jquery.min.js'); }}
     {{ HTML::script('js/bootstrap.min.js'); }}
+    <script>
+        var BASE = "<?php echo URL::base(); ?>";
+        $(document).ready(function(){
+            $('#notificar').click(function(e) {
+                e.preventDefault();
+                if ($('#notificacao').is(':empty')) {
+                $.ajax({
+                    type: 'GET',
+                    url: BASE+'/notificacaoAdmin',
+                    beforeSend: function() {
+                        $('#notificacao').html('Carregando...');
+                    },
+                    success: function(data) {
+                        $('#notificacao').html(data);
+                    }
+                });
+                }
+            });
+        });
+    </script>
     @yield('othersjs')
     </body>
 </html>
