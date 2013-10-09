@@ -13,7 +13,7 @@
 <div class="span8 main-content">
     <h2>Submeter Artigo</h2>
     <p>As normas para artigo e painel estão disponível para <a href='NormasTrabalho.pdf'>download</a>.</p>
-    {{ Form::open_for_files('enviarArtigo') }}
+    {{ Form::open_for_files(action('minharea@artigo')) }}
         <p>{{ Form::text('titulo', Input::old('titulo'), array('placeholder' => 'Título', 'class' => 'input-xlarge')) }} {{ $errors->first('titulo', 'Preenche está merda') }}</p>
         <p>{{ Form::text('autores', Input::old('autores'), array('placeholder' => 'Autores', 'class' => 'input-xlarge')) }} {{ $errors->first('autores', 'Preenche está merda') }}</p>
         <p>{{ Form::textarea('resumo', Input::old('resumo'), array('placeholder' => 'Resumo', 'class' => 'input-xlarge')) }} {{ $errors->first('resumo', 'Preenche está merda') }}</p>

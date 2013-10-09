@@ -7,7 +7,7 @@
 @section('conteudo')
 <div class="span6">
         <h3>Venha fazer parte desta equipe</h3>
-        {{ Form::open('cadVoluntario', '', array('class' => 'form-horizontal')) }}
+        {{ Form::open(action('minharea@voluntario'), '', array('class' => 'form-horizontal')) }}
             <div class="control-group">
                 <label class="control-label" for="inputEmail">Primeira Opção:</label>
                 <div class="controls">

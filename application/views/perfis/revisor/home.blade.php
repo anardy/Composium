@@ -36,7 +36,7 @@
 					<td>{{ HTML::link('../artigos/'.$a->nome_arquivo, 'Download'); }}</td>
 					@if ($a->status == 0)
 						<td>
-							{{ Form::open('aprovarartigo', $a->cpf) }}
+							{{ Form::open(action('revisor@aprovarartigo'), $a->cpf) }}
                                 {{ Form::hidden('cpf',$a->cpf) }}
                                 {{Form::submit('Aprovar', array('class' => 'btn btn-success')) }}
                             {{ Form::close() }}
@@ -76,7 +76,7 @@ $(document).ready(function(){
 	    $('#myModal').modal('show');
 	    $.ajax({
 		    type: 'GET',
-		    url: BASE+'/conArtigo/'+myBookId,
+		    url: BASE+'/revisor/conArtigo/'+myBookId,
 		    beforeSend: function() {
 		    	$('#bookId').html('Carregando...');
 		    },

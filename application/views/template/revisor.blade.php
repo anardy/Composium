@@ -40,11 +40,12 @@
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
                         @if ($a->perfil != 'Revisor')
-                            <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                            <!--<li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>-->
+                            <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                             <li class="divider"></li>
                         @endif
                     @endforeach
-                    <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
+                    <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
                 </ul>
@@ -57,7 +58,7 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A">{{ HTML::decode(HTML::link('Revisor', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
+            <li id="1A">{{ HTML::decode(HTML::link_to_action('Revisor@Revisor', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
         </ul>
     </div>
 
@@ -87,7 +88,7 @@
                 if ($('#notificacao').is(':empty')) {
                     $.ajax({
                         type: 'GET',
-                        url: BASE+'/notificacaoRevisor',
+                        url: BASE+'/revisor/notificacao',
                         beforeSend: function() {
                             $('#notificacao').html('Carregando...');
                         },

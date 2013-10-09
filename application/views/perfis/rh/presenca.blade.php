@@ -7,7 +7,7 @@
 @section('conteudo')
 <div class="span12">
 <h3>Presença</h3>
-{{ Form::open('listarParticipantes', '', array('class' => 'form-inline')) }}
+{{ Form::open(action('rh@listapresenca'), '', array('class' => 'form-inline')) }}
    	{{ Form::select('palestras', array('' => 'Selecione..') + $palestras, null, array('id' => 'palestras', 'class' => 'span4')) }}
 {{ Form::close() }}
     <hr>
@@ -24,7 +24,7 @@ $(document).ready(function(){
 
     $('#palestras').change(function(e) {
         e.preventDefault();
-        var action = 'listarParticipantes',
+        var action = 'listapresenca',
             form_data = {
                 abreviacao: $('#palestras').val()
             };

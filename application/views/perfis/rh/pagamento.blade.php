@@ -18,18 +18,16 @@ form {
 <div class="span12">
     <h3>Pagamento</h3>
     <div class="row-fluid">
-        @if ($cu)
-    <div class="alert alert-success">  
-        Pagamento realizado com Sucesso!
-    </div>
+    @if ($cell)
+        <div class="alert alert-success">Pagamento realizado com Sucesso do CPF {{$cell}}!</div>
     @endif
-<div class="span6 offset3">
-    {{ Form::open('pagamento', '', array('class' => 'form-inline')) }}
-        {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
-        {{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
-    {{ Form::close() }}
-</div>
-<?php Session::forget('cu');?>
+    <div class="span6 offset3">
+        {{ Form::open(action('rh@pagamento'), '', array('class' => 'form-inline')) }}
+            {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
+            {{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
+        {{ Form::close() }}
+    </div>
+<?php Session::forget('cell');?>
 
     <table class="table">
         <thead>
@@ -55,9 +53,9 @@ form {
                         <td>R$ {{ $r->valor }}</td>
                         <td>
                             @if ($r->status == 0)
-                                {{ Form::open('estoutestando', $r->cpf) }}
+                                {{ Form::open(action('rh@efetuarpagamento'), $r->cpf) }}
                                     {{ Form::hidden('cpf', $r->cpf) }}
-                                    {{Form::submit('Confirma Pagamento', array('class' => 'btn btn-success')) }}
+                                    {{ Form::submit('Confirma Pagamento', array('class' => 'btn btn-success')) }}
                                 {{ Form::close() }}
                             @endif
                         </td>

@@ -116,5 +116,14 @@ class Administrador_Controller extends Base_Controller {
 	public function get_manutencao() {
 		return View::make('perfis.admin.manutencao');
 	}
+
+	/* Acesso a View Galeria de Fotos */
+	public function get_galeria() {
+		return View::make('perfis.admin.galeria');
+	}
+
+	public function get_notificacao() {
+		return View::make('perfis.admin.notificacao');	
+	}
 }
 ?>

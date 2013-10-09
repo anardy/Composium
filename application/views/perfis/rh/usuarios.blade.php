@@ -8,12 +8,12 @@
 <div class="span12">
     <h3>Usuários</h3>
     <div class="row-fluid">
-<div class="span6 offset3">
-    {{ Form::open('usuarios', '', array('class' => 'form-inline')) }}
-        {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
-        {{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
-    {{ Form::close() }}
-</div>
+    <div class="span6 offset3">
+        {{ Form::open(action('rh@usuarios'), '', array('class' => 'form-inline')) }}
+            {{ Form::text('cpf', '', array('placeholder' => 'CPF', 'id' => 'cpf', 'class' => 'input-xlarge')) }}
+            {{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
+        {{ Form::close() }}
+    </div>
 
     <table class="table">
         <thead>

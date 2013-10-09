@@ -9,12 +9,12 @@
 	<h3>Reinscrição</h3>
 @if ($reinscricoes->results)
 <div class="span6 offset3">
-    {{ Form::open('buscaAutReinscricao', 'busca', array('class' => 'form-inline')) }}
+    {{ Form::open(action('rh@reinscricao'), 'busca', array('class' => 'form-inline')) }}
         {{ Form::text('nome', '', array('placeholder' => 'Digite o Nome', 'class' => 'input-xlarge')) }}
         {{ Form::submit('Buscar', array('class' => 'btn btn-primary')) }}
     {{ Form::close() }}
 </div>
-	{{ Form::open('autReinscricao') }}
+	{{ Form::open(action('rh@autorizareinscricao')) }}
 		<table class="table table-hover">
 	        <thead>
 	            <th>&nbsp;</th>

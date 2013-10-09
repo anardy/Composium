@@ -1,13 +1,13 @@
 @layout('template.mainsemfooter')
 @section('otherscss')
 <style type="text/css">
-.cu {
+.boleto {
   width: 100%;
   margin-bottom: 20px;
 }
 
-.cu th,
-.cu td {
+.boleto th,
+.boleto td {
   padding: 8px;
   line-height: 20px;
   text-align: left;
@@ -17,15 +17,15 @@
 </style>
 @endsection
 
-Instrução para Impressão
+@section('content')
+  Instrução para Impressão
 <ul>
 <li>Utilize folha A4 (210 x 297 mm) ou Carta (216 x 279 mm) e margens mínimas à esquerda e à direita do formulário.</li>
 <li>A primeira parte deve ficar com a organização do evento!</li>
 <li>A segunda parte é o comprovante do participante.</li>
 </ul>
-@section('content')
 <div class="span10">
-  <table class="cu">
+  <table class="boleto">
   <tr>
     <td colspan="3">{{ HTML::image('img/logoboleto.png', '', array('class' => 'pull-left')); }}</td>
     <td VALIGN=TOP align="right">Vencimento<br>03/07/2013</td>
@@ -33,7 +33,7 @@ Instrução para Impressão
   <tr>
     <td>Nome: {{ $result[0]->firstnome . " " . $result[0]->lastnome }}</td>
     <td colspan="2">Data Documento<br>{{date("d/m/Y")}}</td>
-    <td VALIGN=TOP align="right">Valor<br>R$ {{$total}}</td>
+    <td VALIGN=TOP align="right">Valor<br>R$ {{$total[0]->valor}}</td>
   </tr>
   <tr>
     <td VALIGN=TOP colspan="4">
@@ -47,7 +47,7 @@ Instrução para Impressão
   <small>Destaque aqui</small>
   <hr style="margin:0;border: 1px dashed #000000;">
   <br>
-<table class="cu">
+<table class="boleto">
   <tr>
     <td colspan="3">{{ HTML::image('img/logoboleto.png', '', array('class' => 'pull-left')); }}</td>
     <td VALIGN=TOP align="right">Vencimento<br>03/07/2013</td>
@@ -55,7 +55,7 @@ Instrução para Impressão
   <tr>
     <td>Nome: {{ $result[0]->firstnome . " " . $result[0]->lastnome }}</td>
     <td colspan="2">Data Documento<br>{{date("d/m/Y")}}</td>
-    <td VALIGN=TOP align="right">Valor<br>R$ {{$total}}</td>
+    <td VALIGN=TOP align="right">Valor<br>R$ {{$total[0]->valor}}</td>
   </tr>
   <tr>
     <td VALIGN=TOP colspan="4">

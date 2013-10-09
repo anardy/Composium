@@ -13,7 +13,7 @@
 	<h3>Presenças</h3>
 	<div class="row-fluid">
 		<div class="span6 offset3">
-    {{ Form::open('gerarPresenca', '', array('class' => 'form-inline')) }}
+    {{ Form::open(action('coordenador@presencas', '', array('class' => 'form-inline', 'id' => 'form'))) }}
    	{{ Form::select('palestras', array('all' => 'Selecione..') + $palestras, null, array('id' => 'palestras', 'class' => 'span8')) }}
 {{ Form::close() }}
 </div>
@@ -27,7 +27,7 @@
 
 
 <div class="span11">
-<div id="cu"></div>
+<div id="graph"></div>
 </div>
 
 <div class="span2">
@@ -51,9 +51,10 @@
 @section('othersjs')
 {{ HTML::script('js/morris.min.js'); }}
 {{ HTML::script('js/raphael.2.1.0.min.js'); }}
+{{ HTML::script('js/ajax.js'); }}
 <script>
 Morris.Line({
-  element: 'cu',
+  element: 'graph',
   data: {{$dados}},
   xkey: 'data',
   ykeys: ['valor'],
@@ -64,31 +65,20 @@ $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
     $("#1D").toggleClass('active');
 
+    var action = $('#form').attr('action')
+    var form_data = {
+          abreviacao: $('#palestras').val()
+    };
+
     $('#palestras').change(function(e) {
         e.preventDefault();
-        teste();
+        form_data = {
+          abreviacao: $('#palestras').val()
+        };
+        teste(action, form_data);
     });
 
-    function teste() {
-        var action = 'gerarPresenca',
-            form_data = {
-                abreviacao: $('#palestras').val()
-            };
-        $.ajax({
-            type: 'POST',
-            url: action,
-            data: form_data,
-            beforeSend: function() {
-                $('#result').hide();
-                $('#carregando').html('Pesquisando...').show();
-            },
-            success: function(response) {
-                $('#carregando').hide();
-                $('#result').html(response).show();
-            }
-        });
-    }
-    teste();
+    teste(action, form_data);
 });
 </script>
 @endsection

@@ -41,11 +41,12 @@
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
                         @if ($a->perfil != 'RH')
-                            <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                            <!--<li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>-->
+                            <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                             <li class="divider"></li>
                         @endif
                     @endforeach
-                    <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
+                    <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
                 </ul>
@@ -58,14 +59,14 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A"><a href="RH"><i class="icon-home"></i> <span>Home</span></a></li>
-            <li id="1B"><a href="pagamento"><i class="icon-money"></i> <span>Pagamento</span></a></li>
-            <li id="1C"><a href="controlePresenca"><i class="icon-check"></i> <span>Presença</span></a></li>
-            <li id="1D"><a href="autReinscricao"><i class="icon-repeat"></i> <span>Reinscrição</span></a></li>
-            <li id="1E"><a href="voluntarios"><i class="icon-male"></i> <span>Voluntários</span></a></li>
-            <li id="1F"><a href="usuarios"><i class="icon-group"></i> <span>Usuários</span></a></li>
-            <li id="1G"><a href="controleArtigos"><i class="icon-group"></i> <span>Artigos</span></a></li>
-            <li id="1H"><a href="controleVagas"><i class="icon-money"></i> <span>Vagas</span></a></li>
+            <li id="1A">{{ HTML::decode(HTML::link_to_action('RH@RH', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
+            <li id="1B">{{ HTML::decode(HTML::link_to_action('rh@pagamento', '<i class="icon-money"></i> <span>Pagamento</span>')) }}</li>
+            <li id="1C">{{ HTML::decode(HTML::link_to_action('rh@presenca', '<i class="icon-check"></i> <span>Presença</span>')) }}</li>
+            <li id="1D">{{ HTML::decode(HTML::link_to_action('rh@reinscricao', '<i class="icon-repeat"></i> <span>Reincrição</span>')) }}</li>
+            <li id="1E">{{ HTML::decode(HTML::link_to_action('rh@voluntarios', '<i class="icon-male"></i> <span>Voluntários</span>')) }}</li>
+            <li id="1F">{{ HTML::decode(HTML::link_to_action('rh@usuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
+            <li id="1G">{{ HTML::decode(HTML::link_to_action('rh@artigos', '<i class="icon-group"></i> <span>Artigos</span>')) }}</li>
+            <li id="1H">{{ HTML::decode(HTML::link_to_action('rh@vagas', '<i class="icon-money"></i> <span>Vagas</span>')) }}</li>
         </ul>
     </div>
 
@@ -95,7 +96,7 @@
                 if ($('#notificacao').is(':empty')) {
                 $.ajax({
                     type: 'GET',
-                    url: BASE+'/notificacaoRh',
+                    url: BASE+'/rh/notificacao',
                     beforeSend: function() {
                         $('#notificacao').html('Carregando...');
                     },

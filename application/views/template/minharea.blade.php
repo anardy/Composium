@@ -40,7 +40,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ Auth::user()->firstnome }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
-                        <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                        <!--<li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>-->
+                        <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                         <li class="divider"></li>
                     @endforeach
                     <li><a href="logout">Logout</a></li>
@@ -54,18 +55,18 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A"><a href="minharea"><i class="icon-home"></i> <span>Home</span></a></li>
+            <li id="1A">{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
             @if ((Inscricao::user_pagou(Auth::user()->cpf)) && (Inscricao::user_pagou(Auth::user()->cpf)[0]->status))
-                <li id="1B"><a href="artigo"><i class="icon-paper-clip"></i> <span>Submissão Artigo</span></a></li>
-                <li id="1C"><a href="presenca"><i class="icon-check"></i> <span>Controle Presença</span></a></li>
-                <li id="1D"><a href="certificado"><i class="icon-bookmark"></i> <span>Certificados</span></a></li>
-                <li id="1E"><a href="voluntario"><i class="icon-male"></i> <span>Voluntário</span></a></li>
+                <li id="1B">{{ HTML::decode(HTML::link_to_action('minharea@artigo', '<i class="icon-paper-clip"></i> <span>Submissão Artigo</span>')) }}</li>
+                <li id="1C">{{ HTML::decode(HTML::link_to_action('minharea@presenca', '<i class="icon-check"></i> <span>Controle Presença</span>')) }}</li>
+                <li id="1D">{{ HTML::decode(HTML::link_to_action('minharea@certificado', '<i class="icon-bookmark"></i> <span>Certificados</span>')) }}</li>
+                <li id="1E">{{ HTML::decode(HTML::link_to_action('minharea@voluntario', '<i class="icon-male"></i> <span>Voluntário</span>')) }}</li>
                 <li id="1G"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
             @elseif (Inscricao::user_pagou(Auth::user()->cpf))
-                <li id="1I"><a href="boleto" target="_blank"><i class="icon-barcode"></i> <span>Boleto</span></a></li>
-                <li id="1F"><a href="reinscricao"><i class="icon-bookmark"></i> <span>Reinscrição</span></a></li>
+                <li id="1I">{{ HTML::decode(HTML::link_to_action('minharea@boleto', '<i class="icon-barcode"></i> <span>Boleto</span>')) }}</li>
+                <li id="1F">{{ HTML::decode(HTML::link_to_action('minharea@reinscricao', '<i class="icon-bookmark"></i> <span>Reinscrição</span>')) }}</li>
             @endif
-            <li id="1H"><a href="meudados"><i class="icon-wrench"></i> <span>Meus Dados</span></a></li>
+            <li id="1H">{{ HTML::decode(HTML::link_to_action('minharea@meusdados', '<i class="icon-wrench"></i> <span>Meus Dados</span>')) }}</li>
         </ul>
     </div>
 
@@ -90,7 +91,7 @@
                 if ($('#notificacao').is(':empty')) {
                 $.ajax({
                     type: 'GET',
-                    url: BASE+'/notificacao',
+                    url: BASE+'/minharea/notificacao',
                     beforeSend: function() {
                         $('#notificacao').html('Carregando...');
                     },

@@ -41,11 +41,11 @@
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
                         @if ($a->perfil != 'Coordenador')
-                            <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                            <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                             <li class="divider"></li>
                         @endif
                     @endforeach
-                    <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
+                    <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
                 </ul>
@@ -59,12 +59,12 @@
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
             <li id="1A"><a href="Coordenador"><i class="icon-home"></i> <span>Home</span></a></li>
-            <li id="1B"><a href="Vagas"><i class="icon-money"></i> <span>Vagas</span></a></li>
-            <li id="1C"><a href="Inscricoes"><i class="icon-check"></i> <span>Inscrições</span></a></li>
-            <li id="1D"><a href="Presencas"><i class="icon-repeat"></i> <span>Presenças</span></a></li>
-            <li id="1E"><a href="Contabilidade"><i class="icon-money"></i> <span>Contabilidade</span></a></li>
-            <li id="1F"><a href="Orcamento"><i class="icon-legal"></i> <span>Orçamento</span></a></li>
-            <li id="1G"><a href="controleArtigosCoord"><i class="icon-group"></i> <span>Artigos</span></a></li>
+            <li id="1B">{{ HTML::decode(HTML::link_to_action('coordenador@vagas', '<i class="icon-money"></i> <span>Vagas</span>')) }}</li>
+            <li id="1C">{{ HTML::decode(HTML::link_to_action('coordenador@inscricoes', '<i class="icon-check"></i> <span>Inscrições</span>')) }}</li>
+            <li id="1D">{{ HTML::decode(HTML::link_to_action('coordenador@presencas', '<i class="icon-repeat"></i> <span>Presenças</span>')) }}</li>
+            <li id="1E">{{ HTML::decode(HTML::link_to_action('coordenador@contabilidade', '<i class="icon-money"></i> <span>Contabilidade</span>')) }}</li>
+            <li id="1F">{{ HTML::decode(HTML::link_to_action('coordenador@orcamento', '<i class="icon-legal"></i> <span>Orçamento</span>')) }}</li>
+            <li id="1G">{{ HTML::decode(HTML::link_to_action('coordenador@artigos', '<i class="icon-group"></i> <span>Artigos</span>')) }}</li>
         </ul>
     </div>
 
@@ -94,7 +94,7 @@
                 if ($('#notificacao').is(':empty')) {
                 $.ajax({
                     type: 'GET',
-                    url: BASE+'/notificacaoCoordenador',
+                    url: BASE+'/coordenador/notificacao',
                     beforeSend: function() {
                         $('#notificacao').html('Carregando...');
                     },

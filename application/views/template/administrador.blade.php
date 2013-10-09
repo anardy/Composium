@@ -40,11 +40,11 @@
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
                         @if ($a->perfil != 'Administrador')
-                            <li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>
+                            <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                             <li class="divider"></li>
                         @endif
                     @endforeach
-                    <li>{{ HTML::decode(HTML::link('minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
+                    <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
                     <li><a href="logout">Logout</a></li>
                 </ul>
@@ -57,10 +57,10 @@
 
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
-            <li id="1A">{{ HTML::decode(HTML::link_to_action('administrador@administrador', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
+            <li id="1A">{{ HTML::decode(HTML::link_to_action('Administrador@Administrador', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
             <li id="1B">{{ HTML::decode(HTML::link_to_action('administrador@perfis', '<i class="icon-sitemap"></i> <span>Perfis</span>')) }}</li>
             <li id="1C">{{ HTML::decode(HTML::link_to_action('administrador@usuarios', '<i class="icon-group"></i> <span>Usuários</span>')) }}</li>
-            <li id="1D">{{ HTML::decode(HTML::link('galeria', '<i class="icon-camera"></i> <span>Galeria Fotos</span>')) }}</li>
+            <li id="1D">{{ HTML::decode(HTML::link_to_action('administrador@galeria', '<i class="icon-camera"></i> <span>Galeria Fotos</span>')) }}</li>
             <li id="1E">{{ HTML::decode(HTML::link_to_action('administrador@programacao', '<i class="icon-calendar"></i> <span>Programação</span>')) }}</li>
             <li id="1F">{{ HTML::decode(HTML::link_to_action('administrador@manutencao', '<i class="icon-cogs"></i> <span>Manutenção</span>')) }}</li>
             <li id="1G"><a href="#"><i class="icon-upload-alt"></i> <span>Material</span></a></li>
@@ -93,7 +93,7 @@
                 if ($('#notificacao').is(':empty')) {
                 $.ajax({
                     type: 'GET',
-                    url: BASE+'/notificacaoAdmin',
+                    url: BASE+'/administrador/notificacao',
                     beforeSend: function() {
                         $('#notificacao').html('Carregando...');
                     },

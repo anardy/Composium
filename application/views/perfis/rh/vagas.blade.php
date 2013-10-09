@@ -8,20 +8,20 @@
 <div class="span12">
     <h3>Vagas</h3>
     <div class="row-fluid">
-    <div class="span6 offset3">
-    {{ Form::open('controleVagas', '', array('class' => 'form-inline')) }}
-    {{ Form::select('palestras', array('all' => 'Selecione..') + $palestras, null, array('id' => 'palestras', 'class' => 'span8')) }}
-{{ Form::close() }}
-</div>
+        <div class="span6 offset3">
+            {{ Form::open(action('rh@vagas'), '', array('class' => 'form-inline')) }}
+                {{ Form::select('palestras', array('all' => 'Selecione..') + $palestras, null, array('id' => 'palestras', 'class' => 'span8')) }}
+            {{ Form::close() }}
+        </div>
 
 
-<div class="span11">
-        <hr>
-    <div id="result"></div>
-    <div id="carregando" class="hide"></div>
-</div>
+        <div class="span11">
+            <hr>
+            <div id="result"></div>
+            <div id="carregando" class="hide"></div>
+        </div>
 
-</div>
+    </div>
 </div>
 @endsection
 
@@ -37,7 +37,7 @@ $(document).ready(function(){
     });
 
     function teste() {
-        var action = 'controleVagas',
+        var action = 'vagas',
             form_data = {
                 abreviacao: $('#palestras').val()
             };

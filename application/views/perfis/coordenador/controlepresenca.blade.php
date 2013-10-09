@@ -10,7 +10,7 @@
 					<td>{{$presentes}}</a></td>
 					<td>{{$ausentes}}</td>
 					<td>{{$percentual}}%</td>
-					<td></td>
+					<td>?</td>
 				</tr>
 		</tbody>
 </table>

@@ -17,9 +17,7 @@
 
     <div class="container">
         <div class="row">
-        
-        @yield('content')
-
+            @yield('content')
         </div>
     </div> <!-- .container -->
 

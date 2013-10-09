@@ -12,7 +12,7 @@
 <div class="span12">
 <h3>Voluntários</h3>
 @if ($voluntarios->results)
-	{{ Form::open('autVoluntario') }}
+	{{ Form::open(action('rh@voluntarios')) }}
 		<table class="table table-hover">
 			<tbody>
 				@foreach ($voluntarios->results as $r)

@@ -145,76 +145,15 @@ Route::post('login', function() {
 	}
 });
 
-Route::get('minharea', array('before' => 'auth', 'do' => function() {
-	$cpf = Auth::user()->cpf;
-	$user_pagou = Inscricao::user_pagou($cpf);
-	$horario = Programacao::gerar_horario_user($cpf);
-
-	return View::make('account.area')
-	->with('horario', $horario)
-	->with('user_pagou', $user_pagou);
-}));
-
-Route::get('notificacao', function() {
-	return View::make('account.notificacao');
-});
-
-Route::get('notificacaoRh', function() {
-	return View::make('perfis.rh.notificacao');
-});
-
-Route::get('notificacaoVoluntario', function() {
-	return View::make('perfis.voluntario.notificacao');
-});
-
-Route::get('notificacaoRevisor', function() {
-	return View::make('perfis.revisor.notificacao');
-});
-
-Route::get('notificacaoAdmin', function() {
-	return View::make('perfis.admin.notificacao');
-});
-
-Route::get('notificacaoCoordenador', function() {
-	return View::make('perfis.coordenador.notificacao');
-});
-
-Route::get('reinscricao', function() {
-	$cpf = Auth::user()->cpf;
-	$reinscricao = Reinscricao::get_reinscricao_user($cpf);
-	return View::make('account.reinscricao')
-	->with('reinscricao', $reinscricao);
-});
-
-Route::post('reinscricao', array('before' => 'auth', 'do' => function() {
-	Reinscricao::inserir_reinscricao(Auth::user()->cpf);
-	$notificacao = array(
-			'perfil' => 'rh',
-			'mensagem' => '8'
-		);
-	Notificacao::inserir_notificacao($notificacao);
-	return "<h4>Sua Reinscrição foi enviada com sucesso!!</h4>
-        	<p>Assim que sua Reinscrição for autorizada você receberá um e-mail para realizar a Inscrição novamente</p>
-        	<p>Dúvidas entre em contato: composium@unifei.edu.com.br</p>
-        	<p>Obrigado,</p>
-        	<p>Equipe de Organização do III Composium</p>";
-}));
-
-Route::get('certificado', array('before' => 'auth', 'do' => function() {
-	$cpf =  Auth::user()->cpf;
-	$certificados = Presenca::get_certificados($cpf);
-	$total_presenca_user = Presenca::nrouser_presencauser($cpf);
-	$total_user = Presenca::nrototal_user($cpf);
-	return View::make('account.certificados')
-	->with('certificados', $certificados)
-	->with('total_presenca_user', $total_presenca_user)
-	->with('total_user', $total_user);
+Route::get('logout', array('before' => 'auth', 'do' => function() {
+	Auth::logout();
+	return Redirect::to('/');
 }));
 
 Route::get('certParticipacao', array('before' => 'auth', 'do' => function() {
 	
 	$headers = array('Content-Type' => 'application/pdf');
-$pdf = new Fpdf();
+	$pdf = new Fpdf();
 	$pdf = new FPDF( 'P','cm','A4' );
 	$pdf->Open();
 	$pdf->AddPage();
@@ -254,77 +193,11 @@ $pdf = new Fpdf();
 	$pdf->setX("7.8");
 	$pdf->Multicell(18, 0.8, "Coordenador II Composium");
 
-
-
 //	$pdf->Image('images/certificado.png',2,2,3,2,png);
 
 	$pdf->Output("certificado","I");
 
 	return Response::make($pdf->Output(), 200, $headers);
-}));
-
-Route::get('presenca', array('before' => 'auth', 'do' => function() {
-	$cpf = Auth::user()->cpf;
-	$controle_presenca = Presenca::buscar_presenca($cpf);
-	$nrouser_presencauser = Presenca::nrouser_presencauser($cpf);
-    $nrototal_user = Presenca::nrototal_user($cpf);
-
-    if ($nrototal_user > 0) {
-    	$media_user = ($nrouser_presencauser * 100)/$nrototal_user;
-    } else {
-    	$media_user = 0;
-    }
-
-	return View::make('account.presenca')
-	->with('controle_presenca',$controle_presenca)
-	->with('media_user',round($media_user));
-}));
-
-Route::get('artigo', array('before' => 'auth', 'do' => function() {
-	$msgm = Session::get('artigo');
-	return View::make('account.artigo')->with('msgm', $msgm);
-}));
-
-Route::post('enviarArtigo', array('before' => 'auth', 'do' => function() {
-	$cpf = Auth::user()->cpf;
-	$titulo = Input::get('titulo');
-	$autores = Input::get('autores');
-	$resumo = Input::get('resumo');
-	$palavrachave = Input::get('palavrachave');
-	$artigo = Input::get('artigo');
-
-	$new_date = array(
-		'titulo' => $titulo,
-		'autores' => $autores,
-		'resumo' => $resumo,
-		'palavrachave' => $palavrachave,
-		'artigo' => $artigo
-	);
-
-	$regras = array(
-		'titulo' => 'required',
-		'autores' => 'required',
-		'resumo' => 'required',
-		'palavrachave' => 'required',
-		'artigo' => 'mimes:pdf'
-		);
-
-	$v = Validator::make($new_date, $regras);
-
-	if ($v->fails()) {
-		return Redirect::to('artigo')->with_errors($v)->with_input();
-	}
-
-	$filename = $cpf.'.pdf';
-	Artigo::inserir_artigo($cpf, $titulo, $autores, $resumo, $palavrachave, $filename);
-    Input::upload('artigo', 'public/artigos', $filename);
-    Session::put('artigo', 'enviado');
-	return Redirect::to('artigo');
-}));
-
-Route::get('logout', array('before' => 'auth', 'do' => function() {
-	Auth::logout();
-	return Redirect::to('/');
 }));
 
 Route::get('logar', function() {
@@ -388,37 +261,6 @@ Route::post('cadDadosPessoais', function() {
     	return Redirect::to('/');
     }
 });
-
-Route::post('altDadosPessoais', array('before' => 'auth', 'do' => function() {
-	$new_date = array(
-		'firstnome' => Input::get('firstnome'),
-		'lastnome' => Input::get('lastnome'),
-		'matricula' => Input::get('matricula'),
-		'email' => Input::get('email'),
-		'instituicao' => Input::get('instituicao'),
-		'curso' => Input::get('curso'),
-		'ano' => Input::get('ano'),
-		'periodo' => Input::get('periodo')
-		);
-
-	$regras = array(
-		'firstnome' => 'required',
-		'lastnome' => 'required',
-		'email' => 'required',
-		'ano' => 'required',
-		'periodo' => 'required'
-		);
-
-	$v = Validator::make($new_date, $regras);
-
-	if ($v->fails()) {
-		return Redirect::to('meudados')->with_errors($v)->with_input();
-	}
-
-	Cadastro::atualizar_dados(Auth::user()->cpf, $new_date);
-
-	return Redirect::to('meudados');
-}));
 
 Route::get('iniciarinscricao', array('before' => 'auth', 'do' => function() {
 	$users = Programacao::teste('2012-04-16');
@@ -492,131 +334,11 @@ Route::post('cadTerceirodia', array('before' => 'auth', 'do' => function() {
 
 	$total = (((int) $contaminicuros * (int) $precoMiniCurso)+(int)$precoTaxa);
 
-	//Inscricao::inserir_inscricao($cpf, $total);
+	Inscricao::inserir_inscricao($cpf, $total);
 
 	$nome_minicurso = Presenca::buscar_presenca($cpf);
 
 	return View::make('inscricao.confirmacaoInscricao')->with('total', $total)->with('minicursos', $nome_minicurso)->with('taxa', $precoTaxa)->with('mnicrs', $precoMiniCurso);
-}));
-
-Route::get('meudados', array('before' => 'auth', 'do' => function() {
-	$results = Cadastro::get_dados(Auth::user()->cpf);
-	return View::make('account.dados')->with('results', $results);
-}));
-
-Route::get('voluntario', array('before' => 'auth', 'do' => function() {
-	return View::make('account.voluntario');
-}));
-
-Route::post('cadVoluntario', array('before' => 'auth', 'do' => function() {
-	$new_date = array(
-		'cpf' => Auth::user()->cpf,
-		'primeiraopcao' => Input::get('primeiraopcao'),
-		'segundaopcao' => Input::get('segundaopcao'),
-		'terceiraopcao' => Input::get('terceiraopcao'),
-		'status' => '0'
-		);
-
-	Voluntario::inserir_voluntario($new_date);
-	Reinscricao::inserir_reinscricao(Auth::user()->cpf);
-	$notificacao = array(
-			'perfil' => 'rh',
-			'mensagem' => '9'
-		);
-	Notificacao::inserir_notificacao($notificacao);
-	return Redirect::to('voluntario');
-}));
-
-
-Route::get('boleto', array('before' => 'auth', 'do' => function() {
-	$cpf = Auth::user()->cpf;
-	$result = Cadastro::get_nome($cpf);
-	$total = Inscricao::get_valor($cpf);
-
-	return View::make('inscricao.boleto')
-	->with('total', $total[0]->valor)
-	->with('result', $result);
-}));
-
-Route::get('RH', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.rh.home')
-	->with('c_voluntarios', Voluntario::count_voluntarios())
-	->with('c_reinscricao', Reinscricao::count_reinscricao())
-	->with('c_users', Cadastro::count_users())
-	->with('ultimos_users', Cadastro::ultimos_users())
-	->with('ultimas_realizacoes', Realizacao::ultimas_realizacoes(Auth::user()->cpf));
-}));
-
-Route::get('controlePresenca', array('before' => 'auth', 'do' => function() {
-	$palestras = Programacao::get_palestra();
-	$array = array();
-	foreach($palestras as $p) {
-		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
-	}
-	return View::make('perfis.rh.presenca')->with('palestras',$array);
-}));
-
-Route::post('listarParticipantes', array('before' => 'auth', 'do' => function() {
-	$participantes = Presenca::lista_participantes(Input::get('abreviacao'));
-	$palestra = Programacao::get_infoPalestras(Input::get('abreviacao'));
-
-	return View::make('perfis.rh.participantes')
-	->with('participantes', $participantes)
-	->with('palestra', $palestra);
-}));
-
-Route::post('atuPresenca', array('before' => 'auth', 'do' => function() {
-	$participantes = Input::get('participantes');
-	$abreviacao = Input::get('abreviacao');
-
-	$todos = Presenca::get_all_cpfs($abreviacao);
-
-	$foram = array();
-	$naoforam = array();
-
-	foreach ($participantes as $u) {
-		array_push($foram, $u);
-	}
-
-	foreach ($todos as $u) {
-		array_push($naoforam, $u->cpf);
-	}
-
-	foreach ($naoforam as $key => $t) {
-		foreach ($foram as $key2 => $u) {
-			if ($t == $u) {
-				unset($naoforam[$key]);
-			}
-		}
-	}
-	$realizacao_nok = array();
-	foreach ($naoforam as $u) {
-		Presenca::atualizar_presenca_nok($u, $abreviacao);
-		$realizacao_nok[] = array(
-			'quem' => Auth::user()->cpf,
-			'oque' => 'Removeu presença do usuário ' . $u . ' da ' . $abreviacao
-		);
-	}
-	Realizacao::inserir_realizacao($realizacao_nok);
-	$realizacao_ok = array();
-	foreach ($foram as $u) {
-		Presenca::atualizar_presenca_ok($u, $abreviacao);
-		$realizacao_ok[] = array(
-			'quem' => Auth::user()->cpf,
-			'oque' => 'Lançou presença do usuário ' . $u . ' para ' . $abreviacao
-		);
-	}
-	Realizacao::inserir_realizacao($realizacao_ok);
-	
-	return Redirect::to('controlePresenca');
-}));
-
-Route::get('imprimirListaPresenca/(:any)', array('before' => 'auth', 'do' => function($abreviacao) {
-	$participantes = Presenca::lista_participantes($abreviacao);
-	$palestra = Programacao::get_infoPalestras($abreviacao);
-	return View::make('perfis.rh.Listaparticipantes')
-	->with('participantes',$participantes)
-	->with('palestra',$palestra);
 }));
 
 Route::get('foraLista', array('before' => 'auth', 'do' => function() {
@@ -640,279 +362,75 @@ Route::post('insUserPalestra', array('before' => 'auth', 'do' => function() {
 	}
 }));
 
-Route::get('autReinscricao', array('before' => 'auth', 'do' => function() {
-	$reinscricoes = Reinscricao::get_reinscricoes();
-
-	return View::make('perfis.rh.reinscricao')->with('reinscricoes', $reinscricoes);
-}));
-
-Route::post('buscaAutReinscricao', array('before' => 'auth', 'do' => function() {
-	$reinscricoes = Reinscricao::busca_reinscricoes(Input::get('nome'));
-	return View::make('perfis.rh.reinscricao')
-	->with('reinscricoes', $reinscricoes);
-}));
-
-Route::post('autReinscricao', array('before' => 'auth', 'do' => function() {
-	$teste = Input::get('reinscricao');
-	$notificacao = array();
-	$realizacao = array();
-	foreach ($teste as $u) {
-		Reinscricao::autoriza_reinscricao($u);
-		Inscricao::excluir_inscricao($u);
-		Presenca::excluir_presenca($u);
-		 $notificacao[] = array(
-			'destinatario' => $u,
-			'perfil' => 'usuario',
-			'mensagem' => '1'
-		);
-		$realizacao[] = array(
-			'quem' => Auth::user()->cpf,
-			'oque' => 'Autorizou a reinscrição do usuário ' . $u
-		);
-	}
-	Notificacao::inserir_notificacao($notificacao);
-	Realizacao::inserir_realizacao($realizacao);
-	return Redirect::to('autReinscricao');
-}));
-
-Route::get('voluntarios', array('before' => 'auth', 'do' => function() {
-	$voluntarios = Voluntario::get_voluntarios();
-	return View::make('perfis.rh.voluntarios')->with('voluntarios', $voluntarios);
-}));
-
-Route::post('autVoluntario', array('before' => 'auth', 'do' => function() {
-	$teste = Input::get('cpfs');
-	$voluntario = array();
-	$realizacao = array();
-	foreach ($teste as $u) {
-		Voluntario::autoriza_voluntario($u);
-		$new_date = array(
-			'destinatario' => $u,
-			'perfil' => 'usuario',
-			'mensagem' => '3'
-		);
-		$voluntario[] = array(
-			'cpf' => $u,
-			'perfil' => 'Voluntario'
-		);
-		$realizacao[] = array(
-			'quem' => Auth::user()->cpf,
-			'oque' => 'Credenciou o usuário ' . $u . ' como Voluntário'
-		);
-	}
-	Realizacao::inserir_realizacao($realizacao);
-	Notificacao::inserir_notificacao($new_date);
-	Perfil::inserir_perfil($voluntario);
-	return Redirect::to('voluntarios');
-}));
-
-Route::get('pagamento', array('before' => 'auth', 'do' => function() {
-	$registros = Inscricao::busca_pgto_cpf(Input::get('cpf'));
-
-	$query = Session::get('cu');
-	return View::make('perfis.rh.pagamento')->with('registros',$registros)->with('cu', $query);
-}));
-
-Route::post('pagamento', array('before' => 'auth', 'do' => function() {
-	$registros = Inscricao::busca_pgto_cpf(Input::get('cpf'));
-	$query = Session::get('cu');
-	return View::make('perfis.rh.pagamento')->with('registros', $registros)->with('cu', $query);
-}));
-
-Route::post('estoutestando', array('before' => 'auth', 'do' => function() {
-	Session::put('cu', 'caralho');
-	$cpf = Input::get('cpf');
-	$new_date = array(
-		'destinatario' => $cpf,
-		'perfil' => 'usuario',
-		'mensagem' => '5'
-		);
-	$realizacao = array(
-		'quem' => Auth::user()->cpf,
-		'oque' => 'Realizou o pagamento do usuário ' . $cpf
-		);
-	Inscricao::confirma_pgto_user($cpf);
-	Notificacao::inserir_notificacao($new_date);
-	Realizacao::inserir_realizacao($realizacao);
-	return Redirect::to('pagamento');
-}));
-
-Route::get('usuarios', array('before' => 'auth', 'do' => function() {
-	$registros = Inscricao::busca_cpf(Input::get('cpf'));
-	return View::make('perfis.rh.usuarios')->with('registros', $registros);
-}));
-
-Route::post('usuarios', array('before' => 'auth', 'do' => function() {
-	$registros = Inscricao::busca_cpf(Input::get('cpf'));
-	return View::make('perfis.rh.usuarios')->with('registros', $registros);
-}));
-
-Route::get('controleVagas', array('before' => 'auth', 'do' => function() {
-	$palestras = Programacao::get_palestra();
-	$array = array();
-	foreach($palestras as $p) {
-		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
-	}
-	$topvagas = Programacao::get_topvagas();
-	return View::make('perfis.rh.vagas')
-	->with('palestras',$array)
-	->with('topvagas', $topvagas);
-}));
-
-Route::get('logs', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.admin.log');
-}));
-
-Route::get('galeria', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.admin.galeria');
-}));
-
 /* Rotas do Perfil Administrador */
 Route::controller('administrador');
-Route::get('administrador', array('as' => 'manutencao', 'before' => 'auth', 'uses' => 'administrador@administrador'));
+Route::get('Administrador', array('as' => 'Administrador', 'before' => 'auth', 'uses' => 'Administrador@Administrador'));
 Route::get('administrador/manutencao', array('as' => 'manutencao', 'before' => 'auth', 'uses' => 'administrador@manutencao'));
 Route::get('administrador/programacao', array('as' => 'programacao', 'before' => 'auth', 'uses' => 'administrador@programacao'));
 Route::any('administrador/perfis', array('as' => 'perfis', 'before' => 'auth', 'uses' => 'administrador@perfis'));
 Route::any('administrador/CadPerfil', array('as' => 'CadPerfil', 'before' => 'auth', 'uses' => 'administrador@CadPerfil'));
 Route::any('administrador/AltPerfil/(:any)/(:any)', array('as' => 'AltPerfil', 'before' => 'auth', 'uses' => 'administrador@AltPerfil'));
-Route::get('administrador/RemPerfil/(:any)/(:any)', array('as' => 'AltPerfil', 'before' => 'auth', 'uses' => 'administrador@RemPerfil'));
+Route::get('administrador/RemPerfil/(:any)/(:any)', array('as' => 'RemPerfil', 'before' => 'auth', 'uses' => 'administrador@RemPerfil'));
 Route::any('administrador/usuarios', array('as' => 'usuarios', 'before' => 'auth', 'uses' => 'administrador@usuarios'));
 Route::get('administrador/ConUsuario/(:any)', array('as' => 'ConUsuario', 'before' => 'auth', 'uses' => 'administrador@ConUsuario'));
 Route::get('administrador/RemUsuario/(:any)', array('as' => 'RemUsuario', 'before' => 'auth', 'uses' => 'administrador@RemUsuario'));
+Route::get('administrador/galeria', array('as' => 'galeria', 'before' => 'auth', 'uses' => 'administrador@galeria'));
+Route::get('administrador/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'administrador@notificacao'));
 /* Fim Rotas do Perfil Administrador */
 
-Route::get('Coordenador', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.coordenador.home')
-	->with('c_voluntarios', Voluntario::count_voluntarios())
-	->with('c_artigos', Artigo::count_artigos())
-	->with('c_users', Cadastro::count_users())
-	->with('c_pagantes', Inscricao::count_pagantes());
-}));
+/* Rotas do Perfil Coordenador */
+Route::controller('coordenador');
+Route::get('Coordenador', array('as' => 'Coordenador', 'before' => 'auth', 'uses' => 'Coordenador@Coordenador'));
+Route::any('coordenador/vagas', array('as' => 'vagas', 'before' => 'auth', 'uses' => 'coordenador@vagas'));
+Route::get('coordenador/inscricoes', array('as' => 'inscricoes', 'before' => 'auth', 'uses' => 'coordenador@inscricoes'));
+Route::any('coordenador/presencas', array('as' => 'presencas', 'before' => 'auth', 'uses' => 'coordenador@presencas'));
+Route::get('coordenador/contabilidade', array('as' => 'contabilidade', 'before' => 'auth', 'uses' => 'coordenador@contabilidade'));
+Route::get('coordenador/orcamento', array('as' => 'orcamento', 'before' => 'auth', 'uses' => 'coordenador@orcamento'));
+Route::get('coordenador/artigos', array('as' => 'artigos', 'before' => 'auth', 'uses' => 'coordenador@artigos'));
+Route::get('coordenador/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'coordenador@notificacao'));
+/* Fim Rotas do Perfil Coordenador */
 
-Route::get('Revisor', array('before' => 'auth', 'do' => function() {
-	$all_artigos = Artigo::get_all_artigos();
-	$msgm = Session::get('revisorartigo');
-	return View::make('perfis.revisor.home')
-	->with('msgm', $msgm)
-	->with('artigos', $all_artigos);
-}));
 
-Route::post('aprovarartigo', array('before' => 'auth', 'do' => function() {
-	Artigo::aprovar_artigo(Input::get('cpf'));
-	Session::put('revisorartigo', 'aprovado');
-	return Redirect::to('Revisor');
-}));
+/* Rotas da Minha Área */
+Route::controller('minharea');
+Route::get('Minharea', array('as' => 'Minharea', 'before' => 'auth', 'uses' => 'Minhaarea@Minharea'));
+Route::get('minharea/boleto', array('as' => 'boleto', 'before' => 'auth', 'uses' => 'minharea@boleto'));
+Route::any('minharea/reinscricao', array('as' => 'reinscricao', 'before' => 'auth', 'uses' => 'minharea@reinscricao'));
+Route::get('minharea/meusdados', array('as' => 'meusdados', 'before' => 'auth', 'uses' => 'minharea@meusdados'));
+Route::post('minharea/AltDados', array('as' => 'AltDados', 'before' => 'auth', 'uses' => 'minharea@AltDados'));
+Route::any('minharea/artigo', array('as' => 'artigo', 'before' => 'auth', 'uses' => 'minharea@artigo'));
+Route::get('minharea/presenca', array('as' => 'presenca', 'before' => 'auth', 'uses' => 'minharea@presenca'));
+Route::get('minharea/certificado', array('as' => 'certificado', 'before' => 'auth', 'uses' => 'minharea@certificado'));
+Route::any('minharea/voluntario', array('as' => 'voluntario', 'before' => 'auth', 'uses' => 'minharea@voluntario'));
+Route::get('minharea/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'minharea@notificacao'));
+/* Fim Rotas do Minha Área */
 
-Route::get('conArtigo/(:any)', array('before' => 'auth', 'do' => function($cpf) {
-	if (isset($cpf)) {
-		$results = Artigo::get_artigo($cpf);
-		return View::make('perfis.revisor.conArtigo')->with('results', $results);
-	}
-}));
+/* Rotas do Perfil RH */
+Route::controller('rh');
+Route::get('RH', array('as' => 'RH', 'before' => 'auth', 'uses' => 'RH@RH'));
+Route::any('rh/pagamento', array('as' => 'pagamento', 'before' => 'auth', 'uses' => 'rh@pagamento'));
+Route::post('rh/efetuarpagamento', array('as' => 'efetuarpagamento', 'before' => 'auth', 'uses' => 'rh@efetuarpagamento'));
+Route::any('rh/presenca', array('as' => 'presenca', 'before' => 'auth', 'uses' => 'rh@presenca'));
+Route::post('rh/listapresenca', array('as' => 'listapresenca', 'before' => 'auth', 'uses' => 'rh@listapresenca'));
+Route::get('rh/imprimirlistapresenca', array('as' => 'imprimirlistapresenca', 'before' => 'auth', 'uses' => 'rh@imprimirlistapresenca'));
+Route::any('rh/voluntarios', array('as' => 'voluntarios', 'before' => 'auth', 'uses' => 'rh@voluntarios'));
+Route::any('rh/usuarios', array('as' => 'usuarios', 'before' => 'auth', 'uses' => 'rh@usuarios'));
+Route::get('rh/artigos', array('as' => 'artigos', 'before' => 'auth', 'uses' => 'rh@artigos'));
+Route::any('rh/vagas', array('as' => 'vagas', 'before' => 'auth', 'uses' => 'rh@vagas'));
+Route::any('rh/reinscricao', array('as' => 'reinscricao', 'before' => 'auth', 'uses' => 'rh@reinscricao'));
+Route::post('rh/autorizareinscricao', array('as' => 'autorizareinscricao', 'before' => 'auth', 'uses' => 'rh@autorizareinscricao'));
+Route::get('rh/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'rh@notificacao'));
+/* Fim Rotas do Perfil RH */
 
-Route::get('Voluntario', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.voluntario.voluntario');
-}));
+/* Rotas do Perfil Revisor */
+Route::controller('revisor');
+Route::get('Revisor', array('as' => 'Revisor', 'before' => 'auth', 'uses' => 'Revisor@Revisor'));
+Route::post('revisor/aprovarartigo', array('as' => 'aprovarartigo', 'before' => 'auth', 'uses' => 'revisor@aprovarartigo'));
+Route::get('revisor/ConArtigo/(:any)', array('as' => 'ConArtigo', 'before' => 'auth', 'uses' => 'revisor@ConArtigo'));
+Route::get('revisor/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'revisor@notificacao'));
+/* Fim Rotas do Perfil Revisor */
 
-Route::get('Inscricoes', array('before' => 'auth', 'do' => function() {
-	$porcurso = Cadastro::grafico_porcuros();
-	$porinstuicao = Cadastro::grafico_porinstituicao();
-	$maisprocurados = Presenca::get_maisprocurados();
-	return View::make('perfis.coordenador.inscricoes')
-	->with('porcurso', $porcurso)
-	->with('porinstuicao', $porinstuicao)
-	->with('maisprocurados', $maisprocurados);
-}));
-
-Route::get('Vagas', array('before' => 'auth', 'do' => function() {
-	$palestras = Programacao::get_palestra();
-	$array = array();
-	foreach($palestras as $p) {
-		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
-	}
-	$topvagas = Programacao::get_topvagas();
-	return View::make('perfis.coordenador.vagas')
-	->with('palestras',$array)
-	->with('topvagas', $topvagas);
-}));
-
-Route::get('Contabilidade', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.coordenador.contabilidade')
-	->with('emcaixa', Inscricao::get_emcaixa())
-	->with('areceber', Inscricao::get_areceber());
-}));
-
-Route::get('Presencas', array('before' => 'auth', 'do' => function() {
-	$total = Presenca::get_total();
-	$mediaPresentes = (Presenca::get_all_presentes()/$total)*100;
-	$mediaAusentes = (Presenca::get_all_ausentes()/$total)*100;
-	if ($mediaPresentes > $mediaAusentes) {
-		$texto = "It's Good!!";
-	} else {
-		$texto = "It's Bad!";
-	}
-	$palestras = Programacao::get_palestra();
-	$array = array();
-	foreach($palestras as $p) {
-		$array[$p->abreviacao] = $p->abreviacao.' - '.$p->nome;
-	}
-	$dados = Presenca::get_graph();
-	return View::make('perfis.coordenador.presencas')
-	->with('palestras',$array)
-	->with('dados', json_encode($dados))
-	->with('mediaPresentes', round($mediaPresentes))
-	->with('mediaAusentes', round($mediaAusentes))
-	->with('texto', $texto);
-}));
-
-Route::post('controleVagas', array('before' => 'auth', 'do' => function() {
-	$abreviacao = Input::get('abreviacao');
-	$texto = null;
-	if ($abreviacao == 'all') {
-		$vagas = Programacao::get_topvagas();
-	} else {
-		$vagas = Programacao::get_vagas($abreviacao);
-		$texto = "Vagas Restantes";
-	}
-	return View::make('perfis.coordenador.controlevagas')
-	->with('vagas', $vagas)
-	->with('texto', $texto);
-}));
-
-Route::get('controleArtigos', array('before' => 'auth', 'do' => function() {
-	$all_artigos = Artigo::get_all_artigos();
-	$msgm = Session::get('revisorartigo');
-	return View::make('perfis.rh.artigos')
-	->with('msgm', $msgm)
-	->with('artigos', $all_artigos);
-}));
-
-Route::post('gerarPresenca', array('before' => 'auth', 'do' => function() {
-	$abreviacao = Input::get('abreviacao');
-	if ($abreviacao == 'all') {
-		$dados = Presenca::get_bestpresenca();
-		return View::make('perfis.coordenador.controlepresencatop10')
-		->with('dados', $dados);
-	} else {
-		$presentes = Presenca::get_presentes($abreviacao);
-		$ausentes = Presenca::get_ausentes($abreviacao);
-		$total = Presenca::nrototal_abreviacao($abreviacao);
-		$percentual = ($presentes * 100)/$total;
-		return View::make('perfis.coordenador.controlepresenca')
-		->with('presentes', $presentes)
-		->with('ausentes', $ausentes)
-		->with('percentual', round($percentual));
-	}
-}));
-
-Route::get('Orcamento', array('before' => 'auth', 'do' => function() {
-	return View::make('perfis.coordenador.orcamento');
-}));
-
-Route::get('controleArtigosCoord', array('before' => 'auth', 'do' => function() {
-	$all_artigos = Artigo::get_all_artigos();
-	$msgm = Session::get('revisorartigo');
-	return View::make('perfis.coordenador.artigos')
-	->with('msgm', $msgm)
-	->with('artigos', $all_artigos);
-}));
+/* Rotas do Perfil Voluntário */
+Route::get('Voluntario', array('as' => 'Voluntario', 'before' => 'auth', 'uses' => 'Voluntario@Voluntario'));
+Route::get('voluntario/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'voluntario@notificacao'));
+/* Fim Rotas do Perfil Voluntário */

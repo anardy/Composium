@@ -8,7 +8,7 @@
 
 <div class="span12">
 <h2>Meus Dados</h2>
-    {{ Form::open('altDadosPessoais', '', array('class' => 'form-horizontal')) }}
+    {{ Form::open(action('minharea@AltDados'), '', array('class' => 'form-horizontal')) }}
     <fieldset>
     <legend>Alteração dos Dados</legend>
         <div class="control-group">
@@ -65,7 +65,7 @@
             </div>
         </div>
     </fieldset>
-        {{ Form::close() }}
+    {{ Form::close() }}
 
 <fieldset>
     <legend>Alterar Senha</legend>

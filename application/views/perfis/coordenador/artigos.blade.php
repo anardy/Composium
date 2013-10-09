@@ -1,7 +1,7 @@
-@layout('template.rh')
+@layout('template.coordenador')
 
 @section('title')
-- RH
+- Coordenador
 @endsection
 
 @section('conteudo')

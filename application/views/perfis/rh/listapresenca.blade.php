@@ -1,7 +1,7 @@
 @if ($participantes)
-{{ HTML::link('imprimirListaPresenca/'.$palestra[0]->abreviacao, 'Imprimir Lista de Presença', array('class' => 'btn btn-primary pull-right', 'target' => '_blank')); }}
+{{ HTML::link('rh/imprimirlistapresenca/'.$palestra[0]->abreviacao, 'Imprimir Lista de Presença', array('class' => 'btn btn-primary pull-right', 'target' => '_blank')); }}
 <div class="span6">
-{{ Form::open('atuPresenca') }}
+{{ Form::open(action('rh@presenca')) }}
 <table class="table table-hover">
 	<h5>Título: {{$palestra[0]->nome}}</h5>
 	<h5>Palestrante: 
