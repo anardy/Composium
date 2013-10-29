@@ -14,25 +14,26 @@
 @endsection
 
 @section('conteudo')
-<div class="span5">
-<h2>Controle de Presença</h2>
-<table class="table table-hover">
-    @foreach ($controle_presenca as $d)
-        <tr>
-            <td>{{ $d->abreviacao }} - {{ $d->nome }}</td>
-            @if ($d->presenca == 0)
-                <td><i class="icon-remove"></i></td>
-            @else
-                <td><i class="icon-ok"></i></td>
-            @endif
-        </tr>
-    @endforeach
-</table>
-</div>
-            <div class="span4">
-                <div id="g1"></div>
-            </div>
+<div class="span12 main-content">
+    <div class="span5">
+        <h2>Controle de Presença</h2>
+        <table class="table table-hover">
+            @foreach ($controle_presenca as $d)
+                <tr>
+                    <td>{{ $d->abreviacao }} - {{ $d->nome }}</td>
+                    @if ($d->presenca == 0)
+                        <td><i class="icon-remove"></i></td>
+                    @else
+                        <td><i class="icon-ok"></i></td>
+                    @endif
+                </tr>
+            @endforeach
+        </table>
     </div>
+    <div class="span4">
+        <div id="g1"></div>
+    </div>
+</div>
 @endsection
 
 @section('othersjs')

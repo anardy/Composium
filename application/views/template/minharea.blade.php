@@ -40,11 +40,10 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ Auth::user()->firstnome }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
-                        <!--<li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>-->
                         <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                         <li class="divider"></li>
                     @endforeach
-                    <li><a href="logout">Logout</a></li>
+                    <li>{{ HTML::link_to_action('logout@logout', 'Logout') }}</li>
                 </ul>
             </li>
         </ul>

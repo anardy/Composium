@@ -40,11 +40,7 @@ class Minharea_Controller extends Base_Controller {
 			'mensagem' => '8'
 		);
 		Notificacao::inserir_notificacao($notificacao);
-		return "<h4>Sua Reinscrição foi enviada com sucesso!!</h4>
-        	<p>Assim que sua Reinscrição for autorizada você receberá um e-mail para realizar a Inscrição novamente</p>
-        	<p>Dúvidas entre em contato: composium@unifei.edu.com.br</p>
-        	<p>Obrigado,</p>
-        	<p>Equipe de Organização do III Composium</p>";
+		return View::make('account.EnvioReinscricao');
 	}
 
 	/* Acesso a View Meus Dados */
@@ -164,7 +160,11 @@ class Minharea_Controller extends Base_Controller {
 
 	/* Acesso a View Voluntário */
 	public function get_voluntario() {
-		return View::make('account.voluntario');
+		$data = array(
+				'voluntario' => Voluntario::status_voluntario(Auth::user()->cpf)
+			);
+		
+		return View::make('account.voluntario', $data);
 	}
 
 	public function post_voluntario() {

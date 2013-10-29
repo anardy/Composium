@@ -42,5 +42,3 @@ application/config/
 application/language/
 application/migrations/*.php
 bundles/
-laravel/
-public/laravel/

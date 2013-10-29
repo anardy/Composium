@@ -7,21 +7,13 @@
 @section('conteudo')
 <div class="span8 main-content">
     <h2>Solicitação de Reinscrição</h2>
-        <div id="result" class="well hide"></div>
+        <div id="result" class="hide"></div>
         @if ($reinscricao > 0)
-            <div class="well">
-                <h4>Status Aguardando...</h4>
-                <p>Assim que sua Reinscrição for autorizada você receberá um e-mail para realizar a Inscrição novamente</p>
-                <p>Dúvidas entre em contato: composium@unifei.edu.com.br</p>
-                <p>Obrigado,</p>
-                <p>Equipe de Organização do III Composium</p>
-            </div>
+            @include('account.EnvioReinscricao');
         @else
             <div id="areaSolreins">
                 <p>Caso não esteja satisfeito com a sua inscrição você pode refazê-la.</p>
-                {{ Form::open(action('minharea@reinscricao'), '', array('id' => 'solReins')) }}
-                    <p>{{ Form::submit('Solicitar Reinscrição', array('class' => 'btn btn-large btn btn-primary')) }}</p>
-                {{ Form::close() }}
+                {{ HTML::link('#', 'Solicitar Reinscrição', array('id' => 'enviar', 'class' => 'btn btn-large btn btn-primary')); }}
             </div>
         @endif
 </div>
@@ -32,6 +24,22 @@
 $(document).ready(function(){
     $('#dashboard-menu>li').removeClass('active');
     $("#1F").toggleClass('active');
+
+    $(document).on("click", "#enviar", function () {
+        $.ajax({
+            type: 'POST',
+            url: BASE+'/minharea/reinscricao/',
+            beforeSend: function() {
+                $('#result').html('Carregando...').show();
+            },
+            success: function(data) {
+                $('#areaSolreins').hide();
+                $('#result').html(data).show();
+            }
+        });
+    });
 });
+
+
 </script>
 @endsection

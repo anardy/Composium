@@ -47,11 +47,7 @@ Route::get('/', function() {
     		$perfil = NULL;
     }
 
-	return View::make('home.teste')->with('users',$users)->with('segundo',$segundo)->with('terceiro',$terceiro)->with('perfil',$perfil);
-});
-
-Route::get('help', function() {
-	return View::make('home.index');
+	return View::make('home.index')->with('users',$users)->with('segundo',$segundo)->with('terceiro',$terceiro)->with('perfil',$perfil);
 });
 
 /*
@@ -108,18 +104,15 @@ Event::listen('500', function($exception)
 |
 */
 
-Route::filter('before', function()
-{
+Route::filter('before', function() {
 	// Do stuff before every request to your application...
 });
 
-Route::filter('after', function($response)
-{
+Route::filter('after', function($response) {
 	// Do stuff after every request to your application...
 });
 
-Route::filter('csrf', function()
-{
+Route::filter('csrf', function() {
 	if (Request::forged()) 
 		return Response::error('500');
 });
@@ -139,7 +132,7 @@ Route::post('login', function() {
 		);
 
 	if (Auth::attempt($userdata)) {
-		return Redirect::to('minharea');
+		return Redirect::to_action('Minharea@Minharea');
 	} else {
 		return Redirect::to('login')->with('login_errors', true);
 	}
@@ -341,6 +334,7 @@ Route::post('cadTerceirodia', array('before' => 'auth', 'do' => function() {
 	return View::make('inscricao.confirmacaoInscricao')->with('total', $total)->with('minicursos', $nome_minicurso)->with('taxa', $precoTaxa)->with('mnicrs', $precoMiniCurso);
 }));
 
+/*
 Route::get('foraLista', array('before' => 'auth', 'do' => function() {
 	$palestras = Programacao::get_palestra();
 	$array = array();
@@ -361,6 +355,7 @@ Route::post('insUserPalestra', array('before' => 'auth', 'do' => function() {
 		return "CPF inválido! Tente novamente com outro CPF.";
 	}
 }));
+*/
 
 /* Rotas do Perfil Administrador */
 Route::controller('administrador');
@@ -389,7 +384,6 @@ Route::get('coordenador/orcamento', array('as' => 'orcamento', 'before' => 'auth
 Route::get('coordenador/artigos', array('as' => 'artigos', 'before' => 'auth', 'uses' => 'coordenador@artigos'));
 Route::get('coordenador/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'coordenador@notificacao'));
 /* Fim Rotas do Perfil Coordenador */
-
 
 /* Rotas da Minha Área */
 Route::controller('minharea');

@@ -50,7 +50,7 @@
 <table class="boleto">
   <tr>
     <td colspan="3">{{ HTML::image('img/logoboleto.png', '', array('class' => 'pull-left')); }}</td>
-    <td VALIGN=TOP align="right">Vencimento<br>03/07/2013</td>
+    <td VALIGN=TOP align="right">Vencimento<br>{{ Vencimento::SomaDiasUteis(); }}</td>
   </tr>
   <tr>
     <td>Nome: {{ $result[0]->firstnome . " " . $result[0]->lastnome }}</td>

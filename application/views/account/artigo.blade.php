@@ -10,7 +10,7 @@
         Artigo enviado com Sucesso!
     </div>
 @endif
-<div class="span8 main-content">
+<div class="span12 main-content">
     <h2>Submeter Artigo</h2>
     <p>As normas para artigo e painel estão disponível para <a href='NormasTrabalho.pdf'>download</a>.</p>
     {{ Form::open_for_files(action('minharea@artigo')) }}

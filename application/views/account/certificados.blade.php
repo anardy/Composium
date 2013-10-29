@@ -5,7 +5,7 @@
 @endsection
 
 @section('conteudo')
-<div class="span8 main-content">
+<div class="span12 main-content">
     <h2>Certificados</h2>
     @if ($certificados)
     	@foreach ($certificados as $c)

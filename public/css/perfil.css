@@ -365,3 +365,7 @@ ul.audience-alt {
   -o-border-radius: 4px;
   border-radius: 4px;
   text-align: center; }
+
+  .main-content {
+    padding-left:10px;
+  }
