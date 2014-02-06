@@ -42,6 +42,7 @@ application/config/
 application/language/
 application/migrations/*.php
 bundles/
+laravel/
 public/Gruntfile.js
 public/js/build/
 public/node_modules/
