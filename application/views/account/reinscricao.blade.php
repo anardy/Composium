@@ -5,7 +5,7 @@
 @endsection
 
 @section('conteudo')
-<div class="span8 main-content">
+<div class="span12 main-content">
     <h2>Solicitação de Reinscrição</h2>
         <div id="result" class="hide"></div>
         @if ($reinscricao > 0)

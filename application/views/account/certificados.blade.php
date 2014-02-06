@@ -6,7 +6,7 @@
 
 @section('conteudo')
 <div class="span12 main-content">
-    <h2>Certificados</h2>
+  <h2>Certificados</h2>
     @if ($certificados)
     	@foreach ($certificados as $c)
        		@if ($c->abreviacao[0] == 'M')
@@ -16,10 +16,10 @@
     	@if ($total_presenca_user == $total_user)
     		<h5><i class="icon-bookmark"></i> <a href="certParticipacao">Certificado de Participação</a></h5>
     	@endif
-    	Certificado Voluntário
-    	Certificado Artigo
+    	<h5><i class="icon-bookmark"></i> <a href="#">Certificado Voluntário</a></h5>
+      <h5><i class="icon-bookmark"></i> <a href="#">Certificado Artigo</a></h5>
     @else
-    	Você não tem nenhum certificado
+    	<h4>Você não tem nenhum certificado</h4>
     @endif
 </div>
 @endsection

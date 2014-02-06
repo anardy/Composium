@@ -5,8 +5,7 @@
 @endsection
 
 @section('conteudo')
-
-<div class="span12">
+<div class="span12 main-content">
 <h2>Meus Dados</h2>
     {{ Form::open(action('minharea@AltDados'), '', array('class' => 'form-horizontal')) }}
     <fieldset>

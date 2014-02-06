@@ -5,8 +5,10 @@
 @endsection
 
 @section('conteudo')
+<div class="span12 main-content">
 @if (($user_pagou) || ($user_pagou == 1))
 <h3>Meu Horário</h3>
+<div class="span9 offset1">
 <table class="table table-hover table-striped">
     <tr>
         <th>Horário</th>
@@ -21,6 +23,7 @@
         </tr>
     @endforeach
 </table>
+</div>
 @else
     <h2>Minha Área!</h2>
     Você ainda não fez a inscrição no III Composium?<br>
@@ -30,8 +33,8 @@
     {{ HTML::link('inscricao', 'Faça sua Inscrição', array('class' => 'btn btn-large btn-success')); }}
     <p>HA</p>
 @endif
+</div>
 @endsection
-
 
 @section('othersjs')
 <script>
