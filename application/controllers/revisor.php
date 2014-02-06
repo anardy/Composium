@@ -13,8 +13,18 @@ class Revisor_Controller extends Base_Controller {
 	}
 
 	public function post_aprovarartigo() {
-		Artigo::aprovar_artigo(Input::get('cpf'));
+		$cpf = Input::get('cpf');
+		Artigo::aprovar_artigo($cpf);
+		Artigo::revisar_artigo($cpf, Auth::user()->cpf, $data = date("Y/m/d H:i:s", time()));
 		Session::put('revisorartigo', 'aprovado');
+		
+		$notificacao = array(
+			'destinatario' => $cpf,
+			'perfil' => 'usuario',
+			'mensagem' => '2'
+		);
+		Notificacao::inserir_notificacao($notificacao);
+
 		return Redirect::to_action('Revisor@Revisor');
 	}
 
@@ -27,5 +37,21 @@ class Revisor_Controller extends Base_Controller {
 
 	public function get_notificacao() {
 		return View::make('perfis.revisor.notificacao');
+	}
+
+	public function post_reprovarartigo() {
+		$cpf = Input::get('cpf');
+		Artigo::revisar_artigo($cpf, Auth::user()->cpf, $data = date("Y/m/d H:i:s"));
+		Artigo::reprovar_artigo($cpf);
+		Session::put('revisorartigo', 'reprovado');
+
+		$notificacao = array(
+			'destinatario' => $cpf,
+			'perfil' => 'usuario',
+			'mensagem' => '7'
+		);
+		Notificacao::inserir_notificacao($notificacao);
+		
+		return Redirect::to_action('Revisor@Revisor');
 	}
 }

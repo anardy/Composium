@@ -28,10 +28,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> {{ Auth::user()->firstnome }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                             @if (isset($perfil))
-                                <li><a href="{{$perfil}}"> Área do {{ $perfil }}</a></li>
+                                @foreach ($perfil as $a)
+                                    <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
+                                    <li class="divider"></li>
+                                @endforeach
                             @endif
+                            <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                             <li class="divider"></li>
                             <li><a href="logout">Logout</a></li>
                         </ul>

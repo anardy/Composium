@@ -9,7 +9,7 @@
 @endsection
 
 @section('conteudo')
-<div class="span12">
+<div class="span12 main-content">
     <h3>Programação</h3>
     <div class="row-fluid">  
 <div class="tabbable"> <!-- Only required for left/right tabs -->

@@ -87,7 +87,11 @@ class Minharea_Controller extends Base_Controller {
 		$data = array(
 				'msgm' => Session::get('artigo')
 			);
-		return View::make('account.artigo', $data);
+
+		foreach (Artigo::get_manutencao() as $d) {
+        	$status = $d->status;
+        }
+    	return ($status == 0) ? View::make('account.artigo', $data) : View::make('account.manutencao');
 	}
 
 	public function post_artigo() {
@@ -121,7 +125,8 @@ class Minharea_Controller extends Base_Controller {
 		}
 
 		$filename = $cpf.'.pdf';
-		Artigo::inserir_artigo($cpf, $titulo, $autores, $resumo, $palavrachave, $filename);
+		$data = date("Y/m/d H:i:s", time());
+		Artigo::inserir_artigo($cpf, $titulo, $autores, $resumo, $palavrachave, $filename, $data);
 	    Input::upload('artigo', 'public/artigos', $filename);
 	    Session::put('artigo', 'enviado');
 		return Redirect::to_action('minharea@artigo');
@@ -188,6 +193,10 @@ class Minharea_Controller extends Base_Controller {
 
 	public function get_notificacao() {
 		return View::make('account.notificacao');
+	}
+
+	public function get_teste() {
+		return View::make('account.teste');
 	}
 }
 ?>

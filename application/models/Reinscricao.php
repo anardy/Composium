@@ -8,13 +8,14 @@ class Reinscricao extends Eloquent {
 
 	public static function get_reinscricoes_teste($cpf) {
 		return DB::table('reinscricoes')
-		->select(array(DB::raw('count(cpf) as qnt')))
+		->select(array(DB::raw('count(cpf) as qnt, data')))
 		->where('cpf', '=', $cpf)
 		->get(array('qnt'));
 	}
 
 	public static function get_reinscricoes() {
 		return DB::table('reinscricoes')
+		->select(array(DB::raw('distinct reinscricoes.cpf, cadastros.firstnome, cadastros.lastnome, cadastros.email')))
 		->where('status', '=', '0')
 		->join('cadastros', 'reinscricoes.cpf', '=', 'cadastros.cpf')
 		->paginate(5);

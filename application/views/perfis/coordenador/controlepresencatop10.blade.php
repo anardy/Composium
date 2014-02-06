@@ -4,7 +4,6 @@
 			<th>Presentes</th>
 			<th>Ausentes</th>
 			<th>Percentual</th>
-			<th>Status</th>
 		</thead>
 		<tbody>
 			@foreach ($dados as $d)

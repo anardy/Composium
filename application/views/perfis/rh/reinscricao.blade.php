@@ -31,7 +31,7 @@
 						<td>{{ $r->firstnome }} {{$r->lastnome}}</td>
 						<td>{{ $r->email }}</td>
 						<td>{{ $t->qnt }}</td>
-						<td>{{ date('d/m/Y à\s H:i', strtotime($r->data)) }}</td>
+						<td>{{ date('d/m/Y à\s H:i', strtotime($t->data)) }}</td>
 					</tr>
 					@endforeach
 		        @endforeach

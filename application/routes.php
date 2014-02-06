@@ -38,10 +38,7 @@ Route::get('/', function() {
 	$terceiro = Programacao::teste('2012-04-18');
 
 	if (Auth::check()) {
-		$admin = Perfil::eh_admin(Auth::user()->cpf);
-		foreach ($admin as $a) {
-	        $perfil = $a->perfil;
-	    }
+		$perfil = Perfil::eh_admin(Auth::user()->cpf);
     }
     if (!isset($perfil)) {
     		$perfil = NULL;
@@ -360,7 +357,7 @@ Route::post('insUserPalestra', array('before' => 'auth', 'do' => function() {
 /* Rotas do Perfil Administrador */
 Route::controller('administrador');
 Route::get('Administrador', array('as' => 'Administrador', 'before' => 'auth', 'uses' => 'Administrador@Administrador'));
-Route::get('administrador/manutencao', array('as' => 'manutencao', 'before' => 'auth', 'uses' => 'administrador@manutencao'));
+Route::any('administrador/manutencao', array('as' => 'manutencao', 'before' => 'auth', 'uses' => 'administrador@manutencao'));
 Route::get('administrador/programacao', array('as' => 'programacao', 'before' => 'auth', 'uses' => 'administrador@programacao'));
 Route::any('administrador/perfis', array('as' => 'perfis', 'before' => 'auth', 'uses' => 'administrador@perfis'));
 Route::any('administrador/CadPerfil', array('as' => 'CadPerfil', 'before' => 'auth', 'uses' => 'administrador@CadPerfil'));
@@ -397,6 +394,7 @@ Route::get('minharea/presenca', array('as' => 'presenca', 'before' => 'auth', 'u
 Route::get('minharea/certificado', array('as' => 'certificado', 'before' => 'auth', 'uses' => 'minharea@certificado'));
 Route::any('minharea/voluntario', array('as' => 'voluntario', 'before' => 'auth', 'uses' => 'minharea@voluntario'));
 Route::get('minharea/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'minharea@notificacao'));
+Route::get('minharea/teste', array('as' => 'teste', 'before' => 'auth', 'uses' => 'minharea@teste'));
 /* Fim Rotas do Minha Área */
 
 /* Rotas do Perfil RH */
@@ -422,6 +420,7 @@ Route::get('Revisor', array('as' => 'Revisor', 'before' => 'auth', 'uses' => 'Re
 Route::post('revisor/aprovarartigo', array('as' => 'aprovarartigo', 'before' => 'auth', 'uses' => 'revisor@aprovarartigo'));
 Route::get('revisor/ConArtigo/(:any)', array('as' => 'ConArtigo', 'before' => 'auth', 'uses' => 'revisor@ConArtigo'));
 Route::get('revisor/notificacao', array('as' => 'notificacao', 'before' => 'auth', 'uses' => 'revisor@notificacao'));
+Route::post('revisor/reprovarartigo', array('as' => 'reprovarartigo', 'before' => 'auth', 'uses' => 'revisor@reprovarartigo'));
 /* Fim Rotas do Perfil Revisor */
 
 /* Rotas do Perfil Voluntário */

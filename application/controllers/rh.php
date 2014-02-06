@@ -252,7 +252,7 @@ class RH_Controller extends Base_Controller {
 			Reinscricao::autoriza_reinscricao($u);
 			Inscricao::excluir_inscricao($u);
 			Presenca::excluir_presenca($u);
-			 $notificacao[] = array(
+			$notificacao[] = array(
 				'destinatario' => $u,
 				'perfil' => 'usuario',
 				'mensagem' => '1'

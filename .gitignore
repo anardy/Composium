@@ -42,3 +42,8 @@ application/config/
 application/language/
 application/migrations/*.php
 bundles/
+public/Gruntfile.js
+public/js/build/
+public/node_modules/
+public/package.json
+public/fotos

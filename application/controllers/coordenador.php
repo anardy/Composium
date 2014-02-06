@@ -7,7 +7,9 @@ class Coordenador_Controller extends Base_Controller {
 				'c_voluntarios' => Voluntario::count_voluntarios(),
 				'c_artigos' => Artigo::count_artigos(),
 				'c_users' => Cadastro::count_users(),
-				'c_pagantes' => Inscricao::count_pagantes()
+				'c_pagantes' => Inscricao::count_pagantes(),
+				'ultimos_users' => Cadastro::ultimos_users(),
+				'ultimas_realizacoes' => Realizacao::ultimas_realizacoes_all()
 			);
 		return View::make('perfis.coordenador.home', $data);
 	}

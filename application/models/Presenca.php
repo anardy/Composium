@@ -11,9 +11,10 @@ class Presenca extends Eloquent {
 	}
 
 	public static function buscar_presenca($cpf) {
-		return DB::table('presencas')->join('palestras', 'palestras.abreviacao', '=', 'presencas.abreviacao')
-		->where('presencas.cpf', '=', $cpf)->get(array('presencas.abreviacao', 'palestras.nome',
-		 'presencas.presenca'));
+		return DB::table('presencas')
+		->join('palestras', 'palestras.abreviacao', '=', 'presencas.abreviacao')
+		->where('presencas.cpf', '=', $cpf)
+		->get(array('presencas.abreviacao', 'palestras.nome', 'presencas.presenca'));
 	}
 
 	public static function nrototal_presenca() {

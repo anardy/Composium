@@ -8,43 +8,22 @@
 <div class="span12">
     <h3>Manutenção</h3>
     <div class="row-fluid">
-<div class="box span6">
-    <div class="box-header">
-        <h2><i class="icon-signal"></i><span class="break"></span>Páginas em Manutenção</h2>
-    </div>
-    <div class="sparkLineStats">
-        <div class="box-content">
-    <label class="checkbox">
-        Página Principal
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Página Inscrições
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Página Minha Área
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Formulário Submissão de Artigos
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Página RH
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Página Revisor
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Página Coordenador
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
+    {{ Form::open(action('administrador@manutencao')) }}
+    <div class="box span6">
+        <div class="box-header">
+            <h2><i class="icon-signal"></i><span class="break"></span>Páginas em Manutenção</h2>
         </div>
-</div>
-</div>
+        <div class="sparkLineStats">
+            <div class="box-content">
+                @foreach ($manutencao as $m)
+                    <label class="checkbox">
+                        {{$m->pagina}}
+                        {{Form::checkbox('manutencao[]', $m->pagina, $m->status); }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
+    </div>
 
 <div class="box span6">
     <div class="box-header">
@@ -52,35 +31,20 @@
     </div>
     <div class="sparkLineStats">
         <div class="box-content">
-    <label class="checkbox">
-        Inscrições
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Submissão de Artigos
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-    <label class="checkbox">
-        Candidatura de Voluntário
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-
-    <label class="checkbox">
-        Solicitação de Reinscrição
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
-
-    <label class="checkbox">
-        Notificações
-        {{Form::checkbox('name', 'value', Input::had('name')); }}
-    </label>
+            @foreach ($desativar as $d)
+                <label class="checkbox">
+                    {{$d->pagina}}
+                    {{Form::checkbox('desativar[]', $d->pagina, $d->status); }}
+                </label>
+            @endforeach
         </div>
-</div>
+    </div>
 </div>
 
 <div class="span12">
-{{ HTML::link('#', 'Atualizar', array('class' => 'btn btn-large btn btn-success')); }}
+{{ Form::submit('Atualizar', array('class' => 'btn btn-large btn btn-success')); }}
 </div>
+{{ Form::close() }}
 </div>
 </div>
 @endsection

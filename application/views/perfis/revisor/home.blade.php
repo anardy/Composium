@@ -9,10 +9,15 @@
 
 @section('conteudo')
 <h3>Artigos</h3>
-@if ($msgm)
-    <div class="alert alert-success">  
-        Artigo autorizado com Sucesso!
+
+@if ($msgm === 'aprovado')
+	<div class="alert alert-success">
+    	Artigo aprovado com Sucesso!
     </div>
+@elseif ($msgm === 'reprovado')
+	<div class="alert alert-success">
+		Artigo reprovado com Sucesso!
+	</div>
 @endif
 <?php Session::forget('revisorartigo');?>
 @if ($artigos->results)
@@ -24,32 +29,45 @@
 			<th>Data Revisão</th>
 			<th>Arquivo</th>
 			<th>Status</th>
-			<th>Rating</th>
+				<th></th>
+				<th></th>
 		</thead>
 		<tbody>
 			@foreach ($artigos->results as $a)
 				<tr>
 					<td><a href="#myModal" role="button" class="tnc" data-toggle="modal" data-id="{{$a->cpf}}">{{ $a->titulo }}</a></td>
-					<td>{{ date('d/m/Y à\s H:i', strtotime($a->data)) }}</td>
-					<td>Quem revisou</td>
-					<td>Data Revisão</td>
+					<td>{{ date('d/m/Y à\s H:i', strtotime($a->dataenvio)) }}</td>
+					<td>{{$a->firstnome}} {{$a->lastnome}}</td>
+					<td>{{$a->datarevisao}}</td>
 					<td>{{ HTML::link('../artigos/'.$a->nome_arquivo, 'Download'); }}</td>
+					<td>
+					@if ($a->status == 0)
+						<span class="label label-info">PENDENTE</span>
+					@elseif ($a->status == 1)
+						<span class="label label-success">APROVADO</span>
+					@else
+						<span class="label label-important">REPROVADO</span>
+					@endif
+					</td>
 					@if ($a->status == 0)
 						<td>
 							{{ Form::open(action('revisor@aprovarartigo'), $a->cpf) }}
-                                {{ Form::hidden('cpf',$a->cpf) }}
-                                {{Form::submit('Aprovar', array('class' => 'btn btn-success')) }}
-                            {{ Form::close() }}
-                        </td>
-					@else
-						<td><span class="label label-success">APROVADO</span></td>
+	                            {{ Form::hidden('cpf',$a->cpf) }}
+	                            {{Form::submit('Aprovar', array('class' => 'btn btn-success')) }}
+	                        {{ Form::close() }}
+						</td>
+						<td>
+							{{ Form::open(action('revisor@reprovarartigo'), $a->cpf) }}
+	                            {{ Form::hidden('cpf',$a->cpf) }}
+	                            {{Form::submit('Reprovar', array('class' => 'btn btn-danger')) }}
+	                        {{ Form::close() }}
+						</td>
 					@endif
-					<td><div id="raty"></div></td>
 				</tr>
 		       @endforeach
 		   </tbody>
 	</table>
-	{{ $artigos->links(); }}
+
 @else
 	<h3>Nenhum Artigo para revisão</h3>
 @endif
@@ -67,7 +85,6 @@
 @endsection
 
 @section('othersjs')
-{{ HTML::script('js/jquery.raty.min.js'); }}
 <script>
 $(document).ready(function(){
 	$(document).on("click", ".tnc", function () {
@@ -85,24 +102,7 @@ $(document).ready(function(){
 		    }
     	});
 	});
-var teste;
-$('#raty').raty({
-  starOff: '../img/star-off.png',
-  iconRange: [
-    { range: 1, on: '../img/star-on.png' },
-    { range: 2, on: '../img/star-on.png' },
-    { range: 3, on: '../img/star-on.png' },
-    { range: 4, on: '../img/star-on.png' },
-    { range: 5, on: '../img/star-on.png' }
-  ],
-  hints: ['0-10', '11-30', '31-50', '51-80', '81-100'],
-  click: function(score, evt) {
-    teste = score;
-  }
-});
-$('#raty').click(function() {
-	console.log(teste);
-});
+
     $('#dashboard-menu>li').removeClass('active');
     $("#1A").toggleClass('active');
 });

@@ -114,7 +114,51 @@ class Administrador_Controller extends Base_Controller {
 
 	/* Acesso a View Manutenção */
 	public function get_manutencao() {
-		return View::make('perfis.admin.manutencao');
+		$data = array(
+				'manutencao' => Manutencao::get_manutencao(),
+				'desativar' => Manutencao::get_desativar()
+			);
+		return View::make('perfis.admin.manutencao', $data);
+	}
+
+	public function post_manutencao() {
+		$manutencao = Input::get('manutencao');
+		$desativar = Input::get('desativar');
+
+		$paginas = Manutencao::get_paginas();
+
+		$ok = array();
+		$nok = array();
+
+		foreach ($manutencao as $u) {
+			array_push($ok, $u);
+		}
+
+		foreach ($desativar as $u) {
+			array_push($ok, $u);
+		}
+
+		foreach ($paginas as $u) {
+			array_push($nok, $u->pagina);
+		}
+
+		foreach ($nok as $key => $t) {
+			foreach ($ok as $key2 => $u) {
+				if ($t == $u) {
+					unset($nok[$key]);
+				}
+			}
+		}
+
+		foreach ($nok as $u) {
+			Manutencao::atualizar_manutencao_nok($u);
+		}
+
+		foreach ($ok as $u) {
+			Manutencao::atualizar_manutencao_ok($u);
+		}
+
+		return Redirect::to_action('administrador@manutencao');
 	}
 
 	/* Acesso a View Galeria de Fotos */
