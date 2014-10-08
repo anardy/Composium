@@ -47,7 +47,7 @@
                     @endforeach
                     <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
-                    <li><a href="logout">Logout</a></li>
+                    <li>{{ HTML::link_to_action('home@logout', 'Logout') }}</li>
                 </ul>
             </li>
         </ul>

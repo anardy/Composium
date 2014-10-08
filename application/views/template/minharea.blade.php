@@ -43,7 +43,7 @@
                         <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                         <li class="divider"></li>
                     @endforeach
-                    <li>{{ HTML::link_to_action('logout@logout', 'Logout') }}</li>
+                    <li>{{ HTML::link_to_action('home@logout', 'Logout') }}</li>
                 </ul>
             </li>
         </ul>
@@ -55,6 +55,7 @@
     <div id="sidebar-nav">
         <ul id="dashboard-menu" class="nav nav-list">
             <li id="1A">{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-home"></i> <span>Home</span>')) }}</li>
+            {{Inscricao::user_pagou(Auth::user()->cpf)[0]->status}}
             @if ((Inscricao::user_pagou(Auth::user()->cpf)) && (Inscricao::user_pagou(Auth::user()->cpf)[0]->status))
                 <li id="1B">{{ HTML::decode(HTML::link_to_action('minharea@artigo', '<i class="icon-paper-clip"></i> <span>Submissão Artigo</span>')) }}</li>
                 <li id="1C">{{ HTML::decode(HTML::link_to_action('minharea@presenca', '<i class="icon-check"></i> <span>Controle Presença</span>')) }}</li>

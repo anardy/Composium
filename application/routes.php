@@ -135,10 +135,7 @@ Route::post('login', function() {
 	}
 });
 
-Route::get('logout', array('before' => 'auth', 'do' => function() {
-	Auth::logout();
-	return Redirect::to('/');
-}));
+Route::get('logout', array('as' => 'logout', 'uses' => 'home@logout'));
 
 Route::get('certParticipacao', array('before' => 'auth', 'do' => function() {
 	

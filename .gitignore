@@ -36,8 +36,14 @@ dwsync.xml
 intermediate
 publish
 .idea
+.travis.yml
+license
+CONTRIBUTING.md
+paths
 
+public/laravel
 storage/
+artisan
 application/config/
 application/language/
 application/migrations/*.php

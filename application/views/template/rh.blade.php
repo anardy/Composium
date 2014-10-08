@@ -41,14 +41,13 @@
                 <ul class="dropdown-menu">
                     @foreach (Perfil::eh_admin(Auth::user()->cpf) as $a)
                         @if ($a->perfil != 'RH')
-                            <!--<li><a href="{{$a->perfil}}"> Área do {{ $a->perfil }}</a></li>-->
                             <li>{{ HTML::link_to_action($a->perfil.'@'.$a->perfil, 'Área do ' . $a->perfil) }}</li>
                             <li class="divider"></li>
                         @endif
                     @endforeach
                     <li>{{ HTML::decode(HTML::link_to_action('Minharea@Minharea', '<i class="icon-map-marker"></i> <span>Minha Área</span>')) }}</li>
                     <li class="divider"></li>
-                    <li><a href="logout">Logout</a></li>
+                    <li>{{ HTML::link_to_action('home@logout', 'Logout') }}</li>
                 </ul>
             </li>
         </ul>

@@ -35,4 +35,9 @@ class Home_Controller extends Base_Controller {
 		return View::make('home.index');
 	}
 
+	public function get_logout() {
+		Auth::logout();
+		return Redirect::to('/');
+	}
+
 }
